@@ -1,63 +1,45 @@
-<h1 align="center">Hi 👋, I'm Ibnu Putra Ardiansyah</h1>
-<h3 align="center">
-Mobile Developer · Fullstack Developer · Nintendo Switch Homebrew Dev · AI Enthusiast
-</h3>
+# 👋 Hi, I'm Ibnu Putra Ardiansyah
+
+🚀 **Mobile · Fullstack · Switch Developer · AI Enthusiast**  
+Passionate in building apps, systems, and experimenting with low-level & AI technologies.
 
 ---
 
-## 👨‍💻 About Me
-- 📱 **Mobile Development**: Kotlin, Flutter, React Native
-- 🌐 **Fullstack Web**: Next.js, Vite, Express, Sequelize
-- 🎮 **Nintendo Switch Development**: C / C++ (Homebrew & Low-level)
-- 🤖 **AI Enthusiast**: Exploring AI agents, automation, and intelligent systems
-- 🧠 Strong interest in **systems, performance, and how things work under the hood**
+## 🧠 About Me
+- 📱 **Mobile Development**: Kotlin, Flutter, React Native  
+- 🌐 **Fullstack Development**: Next.js, Vite, Express, Sequelize  
+- 🎮 **Nintendo Switch Development**: C, C++ (Homebrew / System-level)  
+- 🤖 **AI Enthusiast**: Exploring AI-powered systems & automation  
+- 🛠️ Love building real-world projects & learning by doing
 
 ---
 
-## 🛠️ Tech Stack
-
-### 📱 Mobile
-![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=kotlin&logoColor=white)
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat&logo=flutter&logoColor=white)
-![React Native](https://img.shields.io/badge/React_Native-20232A?style=flat&logo=react&logoColor=61DAFB)
-
-### 🌐 Web / Backend
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
-![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=flat&logo=sequelize&logoColor=white)
-
-### 🎮 Low-level / Systems
-![C](https://img.shields.io/badge/C-00599C?style=flat&logo=c&logoColor=white)
-![C++](https://img.shields.io/badge/C++-00599C?style=flat&logo=c%2B%2B&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)
-
-### 🤖 AI & Tools
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
-![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)
+## 🌍 Websites
+- 🧩 https://papanmeme.xyz  
+- 🎉 https://copasin.fun  
 
 ---
 
-## 📊 GitHub Stats
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Ibnuard&show_icons=true&theme=tokyonight&hide_border=true&cache_seconds=86400" height="150"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ibnuard&layout=compact&theme=tokyonight&hide_border=true&cache_seconds=86400" height="150"/>
-</p>
+## 📊 GitHub Activity
+<img src="https://github-readme-activity-graph.vercel.app/graph?username=Ibnuard&theme=tokyo-night&hide_border=true" />
 
 ---
 
-## 🎯 Current Focus
-- Building **cross-platform mobile apps**
-- Developing **fullstack web systems**
-- Experimenting with **Nintendo Switch homebrew**
-- Learning & applying **AI in real-world products**
+## 🔧 Tech Stack
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)
+![C++](https://img.shields.io/badge/C++-004482?style=for-the-badge&logo=cplusplus&logoColor=white)
 
 ---
 
-## 📫 Connect
-- GitHub: **[@Ibnuard](https://github.com/Ibnuard)**
+## 📫 Connect With Me
+- 💼 LinkedIn: https://www.linkedin.com/in/ibnuard/  
+- 📧 Email: ibnuputraard@gmail.com  
 
 ---
 
-⭐ *Always learning, always building.*
+> _"Always learning, always building."_ 🚀
