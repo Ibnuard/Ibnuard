@@ -13,6 +13,33 @@
 
 ---
 
+## 🕹️ The Dev Arcade (Stats & Custom Cards)
+
+<p align="center">
+  Here is my developer character sheet and live contributions represented as retro-gaming elements.
+</p>
+
+<table align="center" border="0" cellpadding="10" cellspacing="0">
+  <tr>
+    <td valign="top" align="center" width="260">
+      <strong>🃏 The Hacker Joker</strong>
+      <br /><br />
+      <img src="balatro_joker.svg" width="240" alt="Balatro Joker" />
+    </td>
+    <td valign="top" align="center" width="340">
+      <strong>👾 Commit Tetris</strong>
+      <br /><br />
+      <img src="tetris_contributions.svg" width="320" alt="Tetris Contributions" />
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="https://github-readme-streak-stats-eight.vercel.app?user=Ibnuard&theme=tokyonight&hide_border=true" height="150" alt="GitHub Streak" />
+</p>
+
+---
+
 ### 👤 Profile Config
 
 ```yaml
@@ -46,19 +73,6 @@ developer:
 > A quick clipboard sharing and instant text copy tool built for seamless text and code exchange.
 >
 > `Next.js` · `Vite` · `Express` · `Sequelize`
-
----
-
-### 📊 GitHub Analytics
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Ibnuard&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=github" height="150" alt="GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Ibnuard&layout=compact&theme=tokyonight&hide_border=true" height="150" alt="Top Languages" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-streak-stats-eight.vercel.app?user=Ibnuard&theme=tokyonight&hide_border=true" height="150" alt="GitHub Streak" />
-</p>
 
 ---
 
