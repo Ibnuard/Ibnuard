@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-python: '3.x'
+          python-version: '3.x'
 
       - name: Generate Custom Gaming SVGs
         run: python generate_svgs.py
@@ -25,5 +25,5 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add balatro_joker.svg bomberman_contributions.svg
+          git add contributions.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update contribution widgets data" && git push)

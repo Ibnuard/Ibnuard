@@ -13,23 +13,20 @@
 
 ---
 
-## 🕹️ The Dev Arcade (Interactive Web App)
-
-👉 🌟 **[Click here to Enter the Interactive Dev Arcade!](https://ibnuard.github.io/Ibnuard/)**
-*(Play Bomberman using your keyboard, drop bombs to blast away empty days, and hover/click the Balatro card to score multipliers in real-time 3D!)*
-
----
-
-## 🎮 Profile Widgets
+## 🕹️ The Dev Arcade
 
 ### 🃏 The Hacker Joker
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/balatro_joker.svg?v=2.0" width="100%" alt="Balatro Joker" />
+  <a href="https://ibnuard.github.io/Ibnuard/balatro.html">
+    <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/balatro_preview.svg?v=1.0" width="100%" alt="Balatro Joker" />
+  </a>
 </p>
 
 ### 👾 Bomberman Contributions
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/bomberman_contributions.svg?v=2.0" width="100%" alt="Bomberman Contributions" />
+  <a href="https://ibnuard.github.io/Ibnuard/bomberman.html">
+    <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/bomberman_preview.svg?v=1.0" width="100%" alt="Bomberman Contributions" />
+  </a>
 </p>
 
 ---
