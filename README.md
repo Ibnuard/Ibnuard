@@ -24,12 +24,12 @@
 
 ### 🃏 The Hacker Joker
 <p align="center">
-  <img src="balatro_joker.svg" width="100%" alt="Balatro Joker" />
+  <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/balatro_joker.svg?v=2.0" width="100%" alt="Balatro Joker" />
 </p>
 
 ### 👾 Bomberman Contributions
 <p align="center">
-  <img src="bomberman_contributions.svg" width="100%" alt="Bomberman Contributions" />
+  <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/bomberman_contributions.svg?v=2.0" width="100%" alt="Bomberman Contributions" />
 </p>
 
 ---
