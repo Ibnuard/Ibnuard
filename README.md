@@ -13,26 +13,21 @@
 
 ---
 
-## 🕹️ The Dev Arcade (Stats & Custom Cards)
+## 🕹️ The Dev Arcade (Interactive Cards & stats)
 
 <p align="center">
-  Here is my developer character sheet and live contributions represented as retro-gaming elements.
+  Hover over the Joker Card to see details and trigger multiplier popups!
 </p>
 
-<table align="center" border="0" cellpadding="10" cellspacing="0">
-  <tr>
-    <td valign="top" align="center" width="260">
-      <strong>🃏 The Hacker Joker</strong>
-      <br /><br />
-      <img src="balatro_joker.svg" width="240" alt="Balatro Joker" />
-    </td>
-    <td valign="top" align="center" width="340">
-      <strong>👾 Commit Tetris</strong>
-      <br /><br />
-      <img src="tetris_contributions.svg" width="320" alt="Tetris Contributions" />
-    </td>
-  </tr>
-</table>
+### 🃏 The Hacker Joker (Card Inspect UI)
+<p align="center">
+  <img src="balatro_joker.svg" width="100%" alt="Balatro Joker Shop Inspect" />
+</p>
+
+### 👾 Commit Tetris (Full-Width Contribution Board)
+<p align="center">
+  <img src="tetris_contributions.svg" width="100%" alt="Commit Tetris Board" />
+</p>
 
 <p align="center">
   <img src="https://github-readme-streak-stats-eight.vercel.app?user=Ibnuard&theme=tokyonight&hide_border=true" height="150" alt="GitHub Streak" />

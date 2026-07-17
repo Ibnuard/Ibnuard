@@ -1,4 +1,4 @@
-<svg viewBox="0 0 320 270" width="320" height="270" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <!-- CRT Glow effect for retro screen -->
     <filter id="screen-glow" x="-10%" y="-10%" width="120%" height="120%">
@@ -8,18 +8,23 @@
 
     <!-- Scanline overlay pattern -->
     <pattern id="scanlines" width="100" height="3" patternUnits="userSpaceOnUse">
-      <rect width="100" height="1" fill="#000000" opacity="0.25" />
+      <rect width="100" height="1" fill="#000000" opacity="0.2" />
     </pattern>
 
-    <!-- 3D Beveled Tetris Block Definition -->
-    <g id="cube">
-      <rect x="0" y="0" width="12" height="12" rx="1.5" />
+    <!-- Background dots pattern (53 cols x 7 rows, cell step 12.5px) -->
+    <pattern id="grid-dots" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="1.2" fill="#313244" opacity="0.45" />
+    </pattern>
+
+    <!-- 3D Beveled Tetris Block Definition (10x10px size) -->
+    <g id="mini-cube">
+      <rect x="0" y="0" width="10" height="10" rx="1.5" />
       <!-- Light highlight (top and left) -->
-      <rect x="1" y="1" width="10" height="1.5" fill="#ffffff" opacity="0.4" />
-      <rect x="1" y="1" width="1.5" height="10" fill="#ffffff" opacity="0.4" />
+      <rect x="0.8" y="0.8" width="8.4" height="1.2" fill="#ffffff" opacity="0.4" />
+      <rect x="0.8" y="0.8" width="1.2" height="8.4" fill="#ffffff" opacity="0.4" />
       <!-- Dark shadow (bottom and right) -->
-      <rect x="1" y="9.5" width="10" height="1.5" fill="#000000" opacity="0.45" />
-      <rect x="9.5" y="1" width="1.5" height="10" fill="#000000" opacity="0.45" />
+      <rect x="0.8" y="8" width="8.4" height="1.2" fill="#000000" opacity="0.45" />
+      <rect x="8" y="0.8" width="1.2" height="8.4" fill="#000000" opacity="0.45" />
     </g>
   </defs>
 
@@ -30,194 +35,150 @@
       font-weight: 900;
     }
     
-    /* Animation Loop: 12 seconds total */
+    /* Loop: 12 seconds total */
     
-    /* 1. I-Piece (Medium Green Level 3) Falling and Splitting */
+    /* 1. J-Piece falling in Col 45 (x=582.5). Lands on Row 4 and 5 (translation N=50px). */
+    @keyframes j-fall {
+      0% { transform: translateY(-80px); opacity: 0; }
+      5% { transform: translateY(-50px); opacity: 1; }
+      35% { transform: translateY(50px); opacity: 1; } /* Lands on Row 4/5 */
+      85% { transform: translateY(50px); opacity: 1; }
+      90%, 100% { opacity: 0; } /* Reset */
+    }
+    .j-piece-fall {
+      animation: j-fall 8s infinite steps(1);
+    }
+    
+    /* 2. I-Piece (2 blocks tall) falling in Col 48 (x=620). Lands on Row 3 and 4 (translation N=37.5px). */
     @keyframes i-fall {
-      0% { transform: translateY(-60px); opacity: 1; }
-      5% { transform: translateY(0px); opacity: 1; }
-      25% { transform: translateY(190px); opacity: 1; } /* Lands on row 12 (y=190) */
-      65% { transform: translateY(190px); opacity: 1; }
-      65.1% { transform: translateY(204px); opacity: 1; } /* Drops 1 cell down after row 15 clear */
-      95% { transform: translateY(204px); opacity: 1; }
-      96%, 100% { opacity: 0; } /* Reset phase */
+      0%, 40% { transform: translateY(-80px); opacity: 0; }
+      45% { transform: translateY(-50px); opacity: 1; }
+      75% { transform: translateY(37.5px); opacity: 1; } /* Lands on Row 3/4 */
+      90% { transform: translateY(37.5px); opacity: 1; }
+      95%, 100% { opacity: 0; } /* Reset */
     }
     .i-piece-fall {
-      animation: i-fall 12s infinite steps(1);
-    }
-    
-    /* Row 15 blocks flash and clear */
-    @keyframes row-clear-flash {
-      0%, 55% { opacity: 1; }
-      56%, 58%, 60%, 62% { filter: brightness(2.5); opacity: 1; }
-      57%, 59%, 61%, 63% { filter: none; opacity: 1; }
-      64% { filter: brightness(2.5); opacity: 1; }
-      65%, 95% { opacity: 0; }
-      96%, 100% { opacity: 1; }
-    }
-    .row15-clear {
-      animation: row-clear-flash 12s infinite;
-    }
-    
-    /* Remaining blocks drop after row 15 clear */
-    @keyframes block-drop {
-      0%, 65% { transform: translateY(0px); }
-      65.1%, 95% { transform: translateY(14px); }
-      96%, 100% { transform: translateY(0px); }
-    }
-    .row14-drop {
-      animation: block-drop 12s infinite steps(1);
+      animation: i-fall 8s infinite steps(1);
     }
 
-    /* 2. T-Piece (Bright Green Level 4) Falling and Landing */
-    @keyframes t-fall {
-      0%, 68% { transform: translateY(-60px); opacity: 0; }
-      69% { transform: translateY(-40px); opacity: 1; }
-      85% { transform: translateY(148px); opacity: 1; } /* Lands on top of dropped pile */
-      95% { transform: translateY(148px); opacity: 1; }
-      96%, 100% { opacity: 0; } /* Reset phase */
+    /* Floating glowing animations for scores */
+    @keyframes stat-flicker {
+      0%, 100% { fill: #a6e3a1; }
+      50% { fill: #89b4fa; }
     }
-    .t-piece-fall {
-      animation: t-fall 12s infinite steps(1);
-    }
-
-    /* Score Indicator Animation */
-    @keyframes score-tick {
-      0%, 55% { fill: #fab387; }
-      56% { fill: #ffffff; }
-      60%, 100% { fill: #a6e3a1; }
-    }
-    .score-val {
-      animation: score-tick 12s infinite;
-    }
-
-    .grid-dot {
-      fill: #313244;
+    .score-glowing {
+      animation: stat-flicker 4s infinite;
     }
   </style>
 
-  <!-- Main Arcade Frame (Retro CRT Monitor styling) -->
-  <rect x="5" y="5" width="310" height="260" rx="12" ry="12" fill="#11111b" stroke="#7aa2f7" stroke-width="4" filter="url(#screen-glow)" />
-  <!-- CRT Screen Inner Screen -->
-  <rect x="12" y="12" width="296" height="246" rx="8" ry="8" fill="#181825" />
-  <!-- Scanline Overlay -->
-  <rect x="12" y="12" width="296" height="246" rx="8" ry="8" fill="url(#scanlines)" pointer-events="none" />
+  <!-- Main Arcade Frame (Cabinet Box) -->
+  <rect x="5" y="5" width="810" height="170" rx="12" ry="12" fill="#11111b" stroke="#7aa2f7" stroke-width="4" filter="url(#screen-glow)" />
+  <rect x="12" y="12" width="796" height="156" rx="8" ry="8" fill="#181825" />
+  <rect x="12" y="12" width="796" height="156" rx="8" ry="8" fill="url(#scanlines)" pointer-events="none" />
 
-  <!-- ================= PLAYING BOARD ================= -->
-  <!-- Board Inner Frame -->
-  <rect x="20" y="20" width="144" height="230" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
+  <!-- ================= PLAYING BOARD (53 cols x 7 rows) ================= -->
+  <!-- Board Borders -->
+  <rect x="20" y="25" width="665" height="92" rx="4" fill="#11111b" stroke="#45475a" stroke-width="1.5" />
   
-  <!-- Grid Dots Background -->
-  <g opacity="0.25">
-    <!-- Col dots: x=27, 41, 55, 69, 83, 97, 111, 125, 139, 153 -->
-    <!-- Rows: y=27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195, 209, 223, 237 -->
-    <rect x="27" y="27" width="2" height="2" class="grid-dot" /><rect x="41" y="27" width="2" height="2" class="grid-dot" /><rect x="55" y="27" width="2" height="2" class="grid-dot" /><rect x="69" y="27" width="2" height="2" class="grid-dot" /><rect x="83" y="27" width="2" height="2" class="grid-dot" /><rect x="97" y="27" width="2" height="2" class="grid-dot" /><rect x="111" y="27" width="2" height="2" class="grid-dot" /><rect x="125" y="27" width="2" height="2" class="grid-dot" /><rect x="139" y="27" width="2" height="2" class="grid-dot" /><rect x="153" y="27" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="41" width="2" height="2" class="grid-dot" /><rect x="41" y="41" width="2" height="2" class="grid-dot" /><rect x="55" y="41" width="2" height="2" class="grid-dot" /><rect x="69" y="41" width="2" height="2" class="grid-dot" /><rect x="83" y="41" width="2" height="2" class="grid-dot" /><rect x="97" y="41" width="2" height="2" class="grid-dot" /><rect x="111" y="41" width="2" height="2" class="grid-dot" /><rect x="125" y="41" width="2" height="2" class="grid-dot" /><rect x="139" y="41" width="2" height="2" class="grid-dot" /><rect x="153" y="41" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="55" width="2" height="2" class="grid-dot" /><rect x="41" y="55" width="2" height="2" class="grid-dot" /><rect x="55" y="55" width="2" height="2" class="grid-dot" /><rect x="69" y="55" width="2" height="2" class="grid-dot" /><rect x="83" y="55" width="2" height="2" class="grid-dot" /><rect x="97" y="55" width="2" height="2" class="grid-dot" /><rect x="111" y="55" width="2" height="2" class="grid-dot" /><rect x="125" y="55" width="2" height="2" class="grid-dot" /><rect x="139" y="55" width="2" height="2" class="grid-dot" /><rect x="153" y="55" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="69" width="2" height="2" class="grid-dot" /><rect x="41" y="69" width="2" height="2" class="grid-dot" /><rect x="55" y="69" width="2" height="2" class="grid-dot" /><rect x="69" y="69" width="2" height="2" class="grid-dot" /><rect x="83" y="69" width="2" height="2" class="grid-dot" /><rect x="97" y="69" width="2" height="2" class="grid-dot" /><rect x="111" y="69" width="2" height="2" class="grid-dot" /><rect x="125" y="69" width="2" height="2" class="grid-dot" /><rect x="139" y="69" width="2" height="2" class="grid-dot" /><rect x="153" y="69" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="83" width="2" height="2" class="grid-dot" /><rect x="41" y="83" width="2" height="2" class="grid-dot" /><rect x="55" y="83" width="2" height="2" class="grid-dot" /><rect x="69" y="83" width="2" height="2" class="grid-dot" /><rect x="83" y="83" width="2" height="2" class="grid-dot" /><rect x="97" y="83" width="2" height="2" class="grid-dot" /><rect x="111" y="83" width="2" height="2" class="grid-dot" /><rect x="125" y="83" width="2" height="2" class="grid-dot" /><rect x="139" y="83" width="2" height="2" class="grid-dot" /><rect x="153" y="83" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="97" width="2" height="2" class="grid-dot" /><rect x="41" y="97" width="2" height="2" class="grid-dot" /><rect x="55" y="97" width="2" height="2" class="grid-dot" /><rect x="69" y="97" width="2" height="2" class="grid-dot" /><rect x="83" y="97" width="2" height="2" class="grid-dot" /><rect x="97" y="97" width="2" height="2" class="grid-dot" /><rect x="111" y="97" width="2" height="2" class="grid-dot" /><rect x="125" y="97" width="2" height="2" class="grid-dot" /><rect x="139" y="97" width="2" height="2" class="grid-dot" /><rect x="153" y="97" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="111" width="2" height="2" class="grid-dot" /><rect x="41" y="111" width="2" height="2" class="grid-dot" /><rect x="55" y="111" width="2" height="2" class="grid-dot" /><rect x="69" y="111" width="2" height="2" class="grid-dot" /><rect x="83" y="111" width="2" height="2" class="grid-dot" /><rect x="97" y="111" width="2" height="2" class="grid-dot" /><rect x="111" y="111" width="2" height="2" class="grid-dot" /><rect x="125" y="111" width="2" height="2" class="grid-dot" /><rect x="139" y="111" width="2" height="2" class="grid-dot" /><rect x="153" y="111" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="125" width="2" height="2" class="grid-dot" /><rect x="41" y="125" width="2" height="2" class="grid-dot" /><rect x="55" y="125" width="2" height="2" class="grid-dot" /><rect x="69" y="125" width="2" height="2" class="grid-dot" /><rect x="83" y="125" width="2" height="2" class="grid-dot" /><rect x="97" y="125" width="2" height="2" class="grid-dot" /><rect x="111" y="125" width="2" height="2" class="grid-dot" /><rect x="125" y="125" width="2" height="2" class="grid-dot" /><rect x="139" y="125" width="2" height="2" class="grid-dot" /><rect x="153" y="125" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="139" width="2" height="2" class="grid-dot" /><rect x="41" y="139" width="2" height="2" class="grid-dot" /><rect x="55" y="139" width="2" height="2" class="grid-dot" /><rect x="69" y="139" width="2" height="2" class="grid-dot" /><rect x="83" y="139" width="2" height="2" class="grid-dot" /><rect x="97" y="139" width="2" height="2" class="grid-dot" /><rect x="111" y="139" width="2" height="2" class="grid-dot" /><rect x="125" y="139" width="2" height="2" class="grid-dot" /><rect x="139" y="139" width="2" height="2" class="grid-dot" /><rect x="153" y="139" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="153" width="2" height="2" class="grid-dot" /><rect x="41" y="153" width="2" height="2" class="grid-dot" /><rect x="55" y="153" width="2" height="2" class="grid-dot" /><rect x="69" y="153" width="2" height="2" class="grid-dot" /><rect x="83" y="153" width="2" height="2" class="grid-dot" /><rect x="97" y="153" width="2" height="2" class="grid-dot" /><rect x="111" y="153" width="2" height="2" class="grid-dot" /><rect x="125" y="153" width="2" height="2" class="grid-dot" /><rect x="139" y="153" width="2" height="2" class="grid-dot" /><rect x="153" y="153" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="167" width="2" height="2" class="grid-dot" /><rect x="41" y="167" width="2" height="2" class="grid-dot" /><rect x="55" y="167" width="2" height="2" class="grid-dot" /><rect x="69" y="167" width="2" height="2" class="grid-dot" /><rect x="83" y="167" width="2" height="2" class="grid-dot" /><rect x="97" y="167" width="2" height="2" class="grid-dot" /><rect x="111" y="167" width="2" height="2" class="grid-dot" /><rect x="125" y="167" width="2" height="2" class="grid-dot" /><rect x="139" y="167" width="2" height="2" class="grid-dot" /><rect x="153" y="167" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="181" width="2" height="2" class="grid-dot" /><rect x="41" y="181" width="2" height="2" class="grid-dot" /><rect x="55" y="181" width="2" height="2" class="grid-dot" /><rect x="69" y="181" width="2" height="2" class="grid-dot" /><rect x="83" y="181" width="2" height="2" class="grid-dot" /><rect x="97" y="181" width="2" height="2" class="grid-dot" /><rect x="111" y="181" width="2" height="2" class="grid-dot" /><rect x="125" y="181" width="2" height="2" class="grid-dot" /><rect x="139" y="181" width="2" height="2" class="grid-dot" /><rect x="153" y="181" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="195" width="2" height="2" class="grid-dot" /><rect x="41" y="195" width="2" height="2" class="grid-dot" /><rect x="55" y="195" width="2" height="2" class="grid-dot" /><rect x="69" y="195" width="2" height="2" class="grid-dot" /><rect x="83" y="195" width="2" height="2" class="grid-dot" /><rect x="97" y="195" width="2" height="2" class="grid-dot" /><rect x="111" y="195" width="2" height="2" class="grid-dot" /><rect x="125" y="195" width="2" height="2" class="grid-dot" /><rect x="139" y="195" width="2" height="2" class="grid-dot" /><rect x="153" y="195" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="209" width="2" height="2" class="grid-dot" /><rect x="41" y="209" width="2" height="2" class="grid-dot" /><rect x="55" y="209" width="2" height="2" class="grid-dot" /><rect x="69" y="209" width="2" height="2" class="grid-dot" /><rect x="83" y="209" width="2" height="2" class="grid-dot" /><rect x="97" y="209" width="2" height="2" class="grid-dot" /><rect x="111" y="209" width="2" height="2" class="grid-dot" /><rect x="125" y="209" width="2" height="2" class="grid-dot" /><rect x="139" y="209" width="2" height="2" class="grid-dot" /><rect x="153" y="209" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="223" width="2" height="2" class="grid-dot" /><rect x="41" y="223" width="2" height="2" class="grid-dot" /><rect x="55" y="223" width="2" height="2" class="grid-dot" /><rect x="69" y="223" width="2" height="2" class="grid-dot" /><rect x="83" y="223" width="2" height="2" class="grid-dot" /><rect x="97" y="223" width="2" height="2" class="grid-dot" /><rect x="111" y="223" width="2" height="2" class="grid-dot" /><rect x="125" y="223" width="2" height="2" class="grid-dot" /><rect x="139" y="223" width="2" height="2" class="grid-dot" /><rect x="153" y="223" width="2" height="2" class="grid-dot" />
-    <rect x="27" y="237" width="2" height="2" class="grid-dot" /><rect x="41" y="237" width="2" height="2" class="grid-dot" /><rect x="55" y="237" width="2" height="2" class="grid-dot" /><rect x="69" y="237" width="2" height="2" class="grid-dot" /><rect x="83" y="237" width="2" height="2" class="grid-dot" /><rect x="97" y="237" width="2" height="2" class="grid-dot" /><rect x="111" y="237" width="2" height="2" class="grid-dot" /><rect x="125" y="237" width="2" height="2" class="grid-dot" /><rect x="139" y="237" width="2" height="2" class="grid-dot" /><rect x="153" y="237" width="2" height="2" class="grid-dot" />
-  </g>
+  <!-- Grid Dots Background Pattern (fills the board) -->
+  <rect x="20" y="25" width="665" height="92" rx="4" fill="url(#grid-dots)" />
+
+  <!-- Label Calendar Headings -->
+  <text x="25" y="132" fill="#585b70" font-size="8" class="retro-font">Jul</text>
+  <text x="120" y="132" fill="#585b70" font-size="8" class="retro-font">Sep</text>
+  <text x="220" y="132" fill="#585b70" font-size="8" class="retro-font">Nov</text>
+  <text x="320" y="132" fill="#585b70" font-size="8" class="retro-font">Jan</text>
+  <text x="420" y="132" fill="#585b70" font-size="8" class="retro-font">Mar</text>
+  <text x="520" y="132" fill="#585b70" font-size="8" class="retro-font">May</text>
+  <text x="620" y="132" fill="#585b70" font-size="8" class="retro-font">Jul</text>
 
   <!-- ================= ANIMATED FALLING PIECES ================= -->
-  <!-- 1. I-Piece (Level 3 Green #26a641): Drops down column 2 (x=50) -->
-  <g class="i-piece-fall">
-    <!-- Block 0: Row 12 (y=190 when landed) -->
-    <use href="#cube" x="50" y="0" fill="#26a641" class="row14-drop" />
-    <!-- Block 1: Row 13 (y=204 when landed) -->
-    <use href="#cube" x="50" y="14" fill="#26a641" class="row14-drop" />
-    <!-- Block 2: Row 14 (y=218 when landed) -->
-    <use href="#cube" x="50" y="28" fill="#26a641" class="row14-drop" />
-    <!-- Block 3: Row 15 (y=232 when landed) -> Clears! -->
-    <use href="#cube" x="50" y="42" fill="#26a641" class="row15-clear" />
+  <!-- 1. J-Piece (x = 20 + 45 * 12.5 = 582.5). Lands on Row 4/5. -->
+  <g class="j-piece-fall" fill="#26a641">
+    <!-- Block 0: Drawn at Row 0 (y=30) -->
+    <use href="#mini-cube" x="582.5" y="30" />
+    <!-- Block 1: Drawn at Row 1 (y=42.5) -->
+    <use href="#mini-cube" x="582.5" y="42.5" />
+    <!-- Block 2: Drawn at Row 1 (y=42.5, Col 44) -->
+    <use href="#mini-cube" x="570.0" y="42.5" />
   </g>
 
-  <!-- 2. T-Piece (Level 4 Green #39d353): Drops in columns 4, 5, 6 (starts at 7.5s) -->
-  <g class="t-piece-fall">
-    <!-- Center bottom block -->
-    <use href="#cube" x="92" y="14" fill="#39d353" />
-    <!-- Top row blocks -->
-    <use href="#cube" x="78" y="0" fill="#39d353" />
-    <use href="#cube" x="92" y="0" fill="#39d353" />
-    <use href="#cube" x="106" y="0" fill="#39d353" />
+  <!-- 2. I-Piece (x = 20 + 48 * 12.5 = 620). Lands on Row 3/4. -->
+  <g class="i-piece-fall" fill="#39d353">
+    <!-- Block 0: Drawn at Row 0 (y=30) -->
+    <use href="#mini-cube" x="620.0" y="30" />
+    <!-- Block 1: Drawn at Row 1 (y=42.5) -->
+    <use href="#mini-cube" x="620.0" y="42.5" />
   </g>
 
-  <!-- ================= STATIC STACKED PILE ================= -->
-  <!-- Based on real contribution history: Dense and active on right, sparse on left. -->
-  <g stroke-width="0">
-    <!-- ROW 15 (y = 232). Bottom-most row. Clears at 65% in loop! -->
-    <use href="#cube" x="22" y="232" fill="#0e4429" class="row15-clear" /> <!-- Col 0 -->
-    <use href="#cube" x="36" y="232" fill="#006d32" class="row15-clear" /> <!-- Col 1 -->
-    <!-- Col 2 is empty for I-piece to drop in -->
-    <use href="#cube" x="64" y="232" fill="#0e4429" class="row15-clear" /> <!-- Col 3 -->
-    <use href="#cube" x="78" y="232" fill="#006d32" class="row15-clear" /> <!-- Col 4 -->
-    <use href="#cube" x="92" y="232" fill="#26a641" class="row15-clear" /> <!-- Col 5 -->
-    <use href="#cube" x="106" y="232" fill="#39d353" class="row15-clear" /> <!-- Col 6 -->
-    <use href="#cube" x="120" y="232" fill="#39d353" class="row15-clear" /> <!-- Col 7 -->
-    <use href="#cube" x="134" y="232" fill="#39d353" class="row15-clear" /> <!-- Col 8 -->
-    <use href="#cube" x="148" y="232" fill="#26a641" class="row15-clear" /> <!-- Col 9 -->
+  <!-- ================= STATIC CONTRIBUTION PILE ================= -->
+  <!-- Matches real data profile: Sparse on left (older), dense wall on right (recent May-July).
+       Col coordinate: 20 + col * 12.5
+       Row coordinate: 30 + row * 12.5
+  -->
+  <g>
+    <!-- Older months (Col 0 to 25): Sparse level 1/2 blocks -->
+    <use href="#mini-cube" x="57.5" y="105" fill="#0e4429" /> <!-- Col 3, Row 6 -->
+    <use href="#mini-cube" x="120.0" y="105" fill="#0e4429" /> <!-- Col 8, Row 6 -->
+    <use href="#mini-cube" x="195.0" y="105" fill="#006d32" /> <!-- Col 14, Row 6 -->
+    <use href="#mini-cube" x="270.0" y="105" fill="#0e4429" /> <!-- Col 20, Row 6 -->
+    <use href="#mini-cube" x="270.0" y="92.5" fill="#0e4429" /> <!-- Col 20, Row 5 -->
 
-    <!-- ROW 14 (y = 218). Drops down to Row 15 at 65% -->
-    <use href="#cube" x="36" y="218" fill="#0e4429" class="row14-drop" /> <!-- Col 1 -->
-    <use href="#cube" x="78" y="218" fill="#26a641" class="row14-drop" /> <!-- Col 4 -->
-    <use href="#cube" x="92" y="218" fill="#0e4429" class="row14-drop" /> <!-- Col 5 -->
-    <use href="#cube" x="106" y="218" fill="#006d32" class="row14-drop" /> <!-- Col 6 -->
-    <use href="#cube" x="120" y="218" fill="#26a641" class="row14-drop" /> <!-- Col 7 -->
-    <use href="#cube" x="134" y="218" fill="#39d353" class="row14-drop" /> <!-- Col 8 -->
-    <use href="#cube" x="148" y="218" fill="#006d32" class="row14-drop" /> <!-- Col 9 -->
+    <!-- Spring months (Col 26 to 40): Moderate stack heights -->
+    <use href="#mini-cube" x="345.0" y="105" fill="#0e4429" /> <!-- Col 26, Row 6 -->
+    <use href="#mini-cube" x="357.5" y="105" fill="#006d32" /> <!-- Col 27, Row 6 -->
+    <use href="#mini-cube" x="370.0" y="105" fill="#0e4429" /> <!-- Col 28, Row 6 -->
+    <use href="#mini-cube" x="395.0" y="105" fill="#006d32" /> <!-- Col 30, Row 6 -->
+    <use href="#mini-cube" x="395.0" y="92.5" fill="#0e4429" /> <!-- Col 30, Row 5 -->
+    <use href="#mini-cube" x="457.5" y="105" fill="#006d32" /> <!-- Col 35, Row 6 -->
+    <use href="#mini-cube" x="457.5" y="92.5" fill="#26a641" /> <!-- Col 35, Row 5 -->
+    <use href="#mini-cube" x="457.5" y="80" fill="#0e4429" /> <!-- Col 35, Row 4 -->
 
-    <!-- ROW 13 (y = 204). Drops down to Row 14 at 65% -->
-    <use href="#cube" x="106" y="204" fill="#0e4429" class="row14-drop" /> <!-- Col 6 -->
-    <use href="#cube" x="120" y="204" fill="#26a641" class="row14-drop" /> <!-- Col 7 -->
-    <use href="#cube" x="134" y="204" fill="#26a641" class="row14-drop" /> <!-- Col 8 -->
-    <use href="#cube" x="148" y="204" fill="#0e4429" class="row14-drop" /> <!-- Col 9 -->
-
-    <!-- ROW 12 (y = 190). Drops down to Row 13 at 65% -->
-    <use href="#cube" x="120" y="190" fill="#006d32" class="row14-drop" /> <!-- Col 7 -->
+    <!-- Late/Recent Active months (Col 41 to 52): Dense stacked blocks (Green wall) -->
+    <!-- Col 41 -->
+    <use href="#mini-cube" x="532.5" y="105" fill="#006d32" /><use href="#mini-cube" x="532.5" y="92.5" fill="#0e4429" />
+    <!-- Col 42 -->
+    <use href="#mini-cube" x="545.0" y="105" fill="#26a641" /><use href="#mini-cube" x="545.0" y="92.5" fill="#006d32" /><use href="#mini-cube" x="545.0" y="80" fill="#0e4429" />
+    <!-- Col 43 -->
+    <use href="#mini-cube" x="557.5" y="105" fill="#39d353" /><use href="#mini-cube" x="557.5" y="92.5" fill="#26a641" /><use href="#mini-cube" x="557.5" y="80" fill="#006d32" /><use href="#mini-cube" x="557.5" y="67.5" fill="#0e4429" />
+    <!-- Col 44 -->
+    <use href="#mini-cube" x="570.0" y="105" fill="#39d353" /><use href="#mini-cube" x="570.0" y="92.5" fill="#26a641" /><use href="#mini-cube" x="570.0" y="80" fill="#26a641" /><use href="#mini-cube" x="570.0" y="67.5" fill="#006d32" />
+    <!-- Col 45 (Lands bottom piece of J-Piece on Row 5, Row 6 is static) -->
+    <use href="#mini-cube" x="582.5" y="105" fill="#006d32" />
+    <!-- Col 46 -->
+    <use href="#mini-cube" x="595.0" y="105" fill="#39d353" /><use href="#mini-cube" x="595.0" y="92.5" fill="#39d353" /><use href="#mini-cube" x="595.0" y="80" fill="#26a641" />
+    <!-- Col 47 -->
+    <use href="#mini-cube" x="607.5" y="105" fill="#26a641" /><use href="#mini-cube" x="607.5" y="92.5" fill="#26a641" /><use href="#mini-cube" x="607.5" y="80" fill="#006d32" />
+    <!-- Col 48 -->
+    <use href="#mini-cube" x="620.0" y="105" fill="#39d353" /><use href="#mini-cube" x="620.0" y="92.5" fill="#006d32" />
+    <!-- Col 49 -->
+    <use href="#mini-cube" x="632.5" y="105" fill="#39d353" /><use href="#mini-cube" x="632.5" y="92.5" fill="#39d353" /><use href="#mini-cube" x="632.5" y="80" fill="#26a641" />
+    <!-- Col 50 -->
+    <use href="#mini-cube" x="645.0" y="105" fill="#26a641" /><use href="#mini-cube" x="645.0" y="92.5" fill="#26a641" /><use href="#mini-cube" x="645.0" y="80" fill="#006d32" /><use href="#mini-cube" x="645.0" y="67.5" fill="#0e4429" />
+    <!-- Col 51 -->
+    <use href="#mini-cube" x="657.5" y="105" fill="#39d353" /><use href="#mini-cube" x="657.5" y="92.5" fill="#26a641" /><use href="#mini-cube" x="657.5" y="80" fill="#26a641" /><use href="#mini-cube" x="657.5" y="67.5" fill="#006d32" /><use href="#mini-cube" x="657.5" y="55" fill="#0e4429" />
+    <!-- Col 52 -->
+    <use href="#mini-cube" x="670.0" y="105" fill="#26a641" /><use href="#mini-cube" x="670.0" y="92.5" fill="#006d32" /><use href="#mini-cube" x="670.0" y="80" fill="#0e4429" />
   </g>
 
-  <!-- ================= SIDE PANEL SECTION ================= -->
-  <!-- Score Display Panel (Total Contributions) -->
-  <g transform="translate(178, 20)">
-    <rect x="0" y="0" width="122" height="52" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
-    <text x="12" y="18" fill="#a6adc8" font-size="8.5" class="retro-font" letter-spacing="0.5">SCORE (TOTAL)</text>
-    <text x="12" y="40" fill="#fab387" font-size="18" class="retro-font score-val">002388</text>
+  <!-- ================= RIGHT PANEL: STATS DISPLAY ================= -->
+  <!-- Score Panel -->
+  <g transform="translate(695, 25)">
+    <rect x="0" y="0" width="105" height="42" rx="4" fill="#11111b" stroke="#313244" stroke-width="1.5" />
+    <text x="10" y="14" fill="#a6adc8" font-size="7.5" class="retro-font">SCORE</text>
+    <text x="10" y="32" fill="#fab387" font-size="14" class="retro-font score-glowing">002388</text>
   </g>
 
-  <!-- Yearly Contribution Panel (Real data count) -->
-  <g transform="translate(178, 82)">
-    <rect x="0" y="0" width="122" height="52" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
-    <text x="12" y="18" fill="#a6adc8" font-size="8.5" class="retro-font" letter-spacing="0.5">YEARLY CONTRIB</text>
-    <text x="12" y="40" fill="#a6e3a1" font-size="18" class="retro-font">001143</text>
+  <!-- Yearly contributions panel -->
+  <g transform="translate(695, 75)">
+    <rect x="0" y="0" width="105" height="42" rx="4" fill="#11111b" stroke="#313244" stroke-width="1.5" />
+    <text x="10" y="14" fill="#a6adc8" font-size="7.5" class="retro-font">YEARLY</text>
+    <text x="10" y="32" fill="#a6e3a1" font-size="14" class="retro-font">001143</text>
   </g>
 
-  <!-- Next Piece Preview -->
-  <g transform="translate(178, 144)">
-    <rect x="0" y="0" width="122" height="106" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
-    <text x="12" y="18" fill="#a6adc8" font-size="8.5" class="retro-font" letter-spacing="0.5">NEXT</text>
-    
-    <!-- Drawing a 3D pixel J-Piece inside preview grid -->
-    <g fill="#89b4fa">
-      <use href="#cube" x="42" y="38" />
-      <use href="#cube" x="42" y="52" />
-      <use href="#cube" x="56" y="52" />
-      <use href="#cube" x="70" y="52" />
-    </g>
-    
-    <!-- Mini arcade details -->
-    <circle cx="20" cy="85" r="3" fill="#f38ba8" />
-    <circle cx="32" cy="85" r="3" fill="#f9e2af" />
-    <circle cx="44" cy="85" r="3" fill="#a6e3a1" />
-    <text x="110" y="90" fill="#585b70" font-size="8" class="retro-font" text-anchor="end">LVL 04</text>
-  </g>
+  <!-- Decorative Console details -->
+  <circle cx="705" cy="136" r="3" fill="#f38ba8" />
+  <circle cx="717" cy="136" r="3" fill="#f9e2af" />
+  <circle cx="729" cy="136" r="3" fill="#a6e3a1" />
+  <text x="795" y="140" fill="#585b70" font-size="8.5" class="retro-font" text-anchor="end">LVL 04</text>
 </svg>
