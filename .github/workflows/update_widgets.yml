@@ -25,5 +25,5 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add contributions.json
+          git add contributions.json balatro_preview.svg bomberman_preview.svg balatro_joker.svg bomberman_contributions.svg
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-update contribution widgets data" && git push)

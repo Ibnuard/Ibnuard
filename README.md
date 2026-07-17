@@ -17,16 +17,12 @@
 
 ### 🃏 The Hacker Joker
 <p align="center">
-  <a href="https://ibnuard.github.io/Ibnuard/balatro.html">
-    <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/balatro_preview.svg?v=1.0" width="100%" alt="Balatro Joker" />
-  </a>
+  <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/balatro_preview.svg?v=2.0" width="100%" alt="Balatro Joker widget" />
 </p>
 
 ### 👾 Bomberman Contributions
 <p align="center">
-  <a href="https://ibnuard.github.io/Ibnuard/bomberman.html">
-    <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/bomberman_preview.svg?v=1.0" width="100%" alt="Bomberman Contributions" />
-  </a>
+  <img src="https://raw.githubusercontent.com/Ibnuard/Ibnuard/main/bomberman_preview.svg?v=2.0" width="100%" alt="Bomberman Contributions widget" />
 </p>
 
 ---
