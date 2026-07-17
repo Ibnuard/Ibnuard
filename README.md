@@ -1,89 +1,76 @@
-<h1 align="center">Ibnu Putra Ardiansyah</h1>
+# ⚡ Hello, World! I'm Ibnu Putra Ardiansyah `[ibnuard]`
 
 <p align="center">
-  I build mobile apps, web systems, low-level experiments, and AI-powered tools.
+  <a href="https://papanmeme.xyz"><img src="https://img.shields.io/badge/papanmeme.xyz-%231a1b26.svg?style=for-the-badge&logoColor=white&color=7aa2f7" /></a>
+  <a href="https://copasin.fun"><img src="https://img.shields.io/badge/copasin.fun-%231a1b26.svg?style=for-the-badge&logoColor=white&color=bb9af7" /></a>
+  <a href="https://www.linkedin.com/in/ibnuard/"><img src="https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+  <a href="mailto:ibnuputraard@gmail.com"><img src="https://img.shields.io/badge/email-%23D14836.svg?style=for-the-badge&logo=gmail&logoColor=white" /></a>
 </p>
 
 <p align="center">
-  <a href="https://papanmeme.xyz">papanmeme.xyz</a>
-  ·
-  <a href="https://copasin.fun">copasin.fun</a>
-  ·
-  <a href="https://www.linkedin.com/in/ibnuard/">linkedin</a>
-  ·
-  <a href="mailto:ibnuputraard@gmail.com">email</a>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3500&pause=1000&color=bb9af7&center=true&vCenter=true&width=650&lines=I+build+mobile+apps+%26+web+systems...;Hacking+Nintendo+Switch+homebrew...;Exploring+AI+automation+%26+workflows...;build+-%3E+break+-%3E+understand+-%3E+ship;" alt="Typing SVG" />
 </p>
 
 ---
 
-### Short Version
-
-I'm a developer who likes building across layers.
-
-Most days I work around mobile development, fullstack products, backend systems, and experiments with AI automation. Outside the usual app stack, I also enjoy exploring lower-level programming, especially Nintendo Switch homebrew and system-level development.
-
-I like software that is practical, fast enough to feel good, and interesting enough to keep learning from.
-
----
-
-### Builder Profile
+### 💻 System Boot Sequence
 
 ```txt
-main_focus      mobile apps, fullstack systems, AI experiments
-mobile_stack    Kotlin, Flutter, React Native
-web_stack       Next.js, Vite, Express, Sequelize
-low_level       C, C++, Switch homebrew
-current_mode    learning by building real things
+[   0.000000] Booting Ibnu OS Kernel...
+[   0.104231] Initializing Mobile Stack: Kotlin | Flutter | React Native... OK
+[   0.312952] Connecting Web Systems: Next.js + Express + Sequelize... Connected.
+[   0.672019] Loading low-level modules... (C, C++, devkitA64) OK
+[   0.942183] Executing Switch homebrew environment... Loaded.
+[   1.239410] AI Workflow Automation engines... Active.
+[   1.500000] Status: READY. Motto: "Build. Break. Understand. Ship."
 ```
 
 ---
 
-### Things I Care About
+### 🛠️ Tech Stack & Toolkit
 
-- Building apps that solve actual problems
-- Keeping products simple, useful, and maintainable
-- Exploring how AI can improve developer workflows
-- Understanding systems closer to the metal
-- Shipping small experiments instead of only collecting ideas
+```c
+// tech_stack.h
+#define EXPERIENCE_LEVEL "Fullstack & Low-level"
+
+const char* mobile[]   = {"Kotlin", "Flutter", "React Native"};
+const char* web[]      = {"Next.js", "Vite", "Express", "Sequelize"};
+const char* low_level[] = {"C", "C++", "Nintendo Switch Homebrew", "Sysdev"};
+const char* workflow[]  = {"AI Automation", "Shell Scripting", "Docker"};
+```
 
 ---
 
-### Projects
+### 📂 Featured Projects
 
 <table>
   <tr>
-    <td width="180"><strong>papanmeme.xyz</strong></td>
+    <td width="200" align="center">
+      <h3>🔊 papanmeme.xyz</h3>
+      <a href="https://papanmeme.xyz">
+        <img src="https://img.shields.io/badge/Visit_Site-7aa2f7?style=for-the-badge&logo=googlechrome&logoColor=white" />
+      </a>
+    </td>
     <td>
-      <a href="https://papanmeme.xyz">Visit site</a>
+      A fun soundboard & Indonesian meme audio sharing platform. Built to make sharing meme sounds fast, engaging, and simple.
     </td>
   </tr>
   <tr>
-    <td><strong>copasin.fun</strong></td>
+    <td width="200" align="center">
+      <h3>📋 copasin.fun</h3>
+      <a href="https://copasin.fun">
+        <img src="https://img.shields.io/badge/Visit_Site-bb9af7?style=for-the-badge&logo=googlechrome&logoColor=white" />
+      </a>
+    </td>
     <td>
-      <a href="https://copasin.fun">Visit site</a>
+      Quick clipboard sharing and instant text copy tool designed for productivity and friction-free code snippet or text exchange.
     </td>
   </tr>
 </table>
 
 ---
 
-### Stack
-
-<p>
-  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
-  <img src="https://img.shields.io/badge/React_Native-20232A?style=flat-square&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=nextdotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" />
-  <img src="https://img.shields.io/badge/Express-404D59?style=flat-square" />
-  <img src="https://img.shields.io/badge/Sequelize-52B0E7?style=flat-square&logo=sequelize&logoColor=white" />
-  <img src="https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white" />
-  <img src="https://img.shields.io/badge/C++-004482?style=flat-square&logo=cplusplus&logoColor=white" />
-</p>
-
----
-
-### GitHub Activity
+### 📊 GitHub Activity & Stats
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=Ibnuard&show_icons=true&theme=tokyonight&hide_border=true&rank_icon=github" height="165" />
@@ -96,18 +83,6 @@ current_mode    learning by building real things
 
 ---
 
-### Notes
-
-I don't stick to one box for too long. Sometimes I build mobile apps, sometimes backend systems, sometimes AI experiments, and sometimes I go lower-level just to understand how things really work.
-
-For me, the best way to learn is still simple:
-
-```txt
-build -> break -> understand -> improve -> ship
-```
-
----
-
 <p align="center">
-  Always learning, always building.
+  <i>"I don't stick to one box for too long. If it's interesting, I'll build it. If it's closed, I'll break it."</i>
 </p>
