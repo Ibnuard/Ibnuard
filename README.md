@@ -52,14 +52,14 @@ developer:
 ### 📂 Featured Projects
 
 > ### 🔊 [papanmeme.xyz](https://papanmeme.xyz)
-> An Indonesian soundboard & meme audio sharing platform. Designed to make discovering and sharing meme sounds fast, lightweight, and engaging.
+> A canvas-style meme board for uploading and placing memes directly onto a shared visual space.
 >
-> `Next.js` · `Vite` · `Express` · `Sequelize`
+> `Next.js` · `Canvas`
 
 > ### 📋 [copasin.fun](https://copasin.fun)
-> A quick clipboard sharing and instant text copy tool built for seamless text and code exchange.
+> A super lightweight, serverless note app with in-browser AES-GCM encryption, original URL sharing, optional short URLs, QR codes, and password-protected view-only notes.
 >
-> `Next.js` · `Vite` · `Express` · `Sequelize`
+> `HTML` · `TailwindCSS` · `Vanilla JS` · `Web Crypto API` · `Cloudflare Workers KV`
 
 ---
 

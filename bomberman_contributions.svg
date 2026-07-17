@@ -42,12 +42,14 @@
     .lvl4 { fill: #9effc6; }
 
     @keyframes bomberman-route {
-      0.0% { transform: translate(112.5px, 85.0px); }
-      20.0% { transform: translate(237.5px, 60.0px); }
-      40.0% { transform: translate(375.0px, 97.5px); }
-      60.0% { transform: translate(512.5px, 72.5px); }
-      80.0% { transform: translate(625.0px, 47.5px); }
-      100.0% { transform: translate(112.5px, 85.0px); }
+      0% { transform: translate(112.5px, 85.0px); }
+      12% { transform: translate(112.5px, 85.0px); }
+      25% { transform: translate(237.5px, 60.0px); }
+      38% { transform: translate(375.0px, 97.5px); }
+      51% { transform: translate(512.5px, 72.5px); }
+      64% { transform: translate(625.0px, 47.5px); }
+      88% { transform: translate(625.0px, 47.5px); }
+      100% { transform: translate(112.5px, 85.0px); }
     }
     .bomberman-char {
       animation: bomberman-route 16s infinite ease-in-out;

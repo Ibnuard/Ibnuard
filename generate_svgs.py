@@ -283,10 +283,13 @@ bomb_svg_content = "\n".join(
 )
 
 route_points = [cell_center(c, r) for c, r in blast_points]
-route_points.append(route_points[0])
+route_keyframes = [(0, route_points[0]), (12, route_points[0])]
+for index in range(1, len(route_points)):
+    route_keyframes.append((phase_timings[index][0] - 6, route_points[index]))
+route_keyframes.extend([(88, route_points[-1]), (100, route_points[0])])
 bomberman_route_css = "\n".join(
-    f"      {round((index / (len(route_points) - 1)) * 100, 1)}% {{ transform: translate({x:.1f}px, {y:.1f}px); }}"
-    for index, (x, y) in enumerate(route_points)
+    f"      {percent}% {{ transform: translate({x:.1f}px, {y:.1f}px); }}"
+    for percent, (x, y) in route_keyframes
 )
 
 # Build XML for green contribution cells only. The destroyable clay layer is
