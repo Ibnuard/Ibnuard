@@ -213,7 +213,6 @@ else:
 col = 0
 row = start_row
 commit_blocks_xml = []
-brick_phase_xml = [[] for _ in range(5)]
 blast_points = [(7, 4), (17, 2), (28, 5), (39, 3), (48, 1)]
 phase_timings = [(18, 25), (31, 38), (44, 51), (57, 64), (70, 78)]
 
@@ -290,8 +289,8 @@ bomberman_route_css = "\n".join(
     for index, (x, y) in enumerate(route_points)
 )
 
-# Build XML for every contribution cell. Empty days start as clay bricks, but
-# the bricks are animated in five group waves instead of per-cell animations.
+# Build XML for green contribution cells only. The destroyable clay layer is
+# drawn with a repeating SVG pattern so it stays light even while fully visible.
 for i, day in enumerate(days):
     if col >= 53:
         break
@@ -301,23 +300,23 @@ for i, day in enumerate(days):
 
     if level > 0:
         commit_blocks_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level}" />')
-    else:
-        phase = min(4, col // 11)
-        brick_phase_xml[phase].append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick" />')
 
     row += 1
     if row == 7:
         row = 0
         col += 1
 
-brick_groups_xml = []
-for phase, brick_xml in enumerate(brick_phase_xml):
-    if brick_xml:
-        brick_groups_xml.append(
-            f'<g class="brick-wave brick-wave-{phase}">\n      ' + "\n      ".join(brick_xml) + "\n    </g>"
-        )
+brick_wave_rects = []
+for phase in range(5):
+    start_col = phase * 11
+    col_count = min(11, 53 - start_col)
+    if col_count <= 0:
+        continue
+    brick_wave_rects.append(
+        f'<rect x="{20 + start_col * 12.5:.1f}" y="30" width="{col_count * 12.5:.1f}" height="87.5" fill="url(#brick-field)" class="brick-wave brick-wave-{phase}" />'
+    )
 
-cubes_svg_content = "\n    ".join(brick_groups_xml + commit_blocks_xml)
+cubes_svg_content = "\n    ".join(brick_wave_rects + commit_blocks_xml)
 
 bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -335,6 +334,13 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
     <pattern id="grid-dots" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
       <circle cx="6" cy="6" r="1.2" fill="#2d3139" opacity="0.8" />
     </pattern>
+    <pattern id="brick-field" x="20" y="30" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="10" height="10" rx="1" fill="#45475a" />
+      <rect x="0.8" y="0.8" width="8.4" height="1.4" fill="#ffffff" opacity="0.2" />
+      <rect x="0.8" y="0.8" width="1.4" height="8.4" fill="#ffffff" opacity="0.16" />
+      <rect x="0.8" y="8.2" width="8.4" height="1" fill="#000000" opacity="0.36" />
+      <rect x="8.2" y="0.8" width="1" height="8.4" fill="#000000" opacity="0.32" />
+    </pattern>
 
     <!-- Hard block definition -->
     <g id="mini-cube">
@@ -345,19 +351,6 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
       <rect x="8.0" y="0.8" width="1.2" height="8.4" fill="#000000" opacity="0.5" />
     </g>
 
-    <!-- Destructible clay brick definition -->
-    <g id="brick-cube">
-      <rect x="0" y="0" width="10" height="10" rx="1" />
-      <rect x="1" y="1" width="8" height="3" fill="#ffffff" opacity="0.15" />
-      <line x1="5" y1="1" x2="5" y2="4" stroke="#000000" stroke-width="0.8" opacity="0.2" />
-      <line x1="3" y1="5" x2="3" y2="9" stroke="#000000" stroke-width="0.8" opacity="0.2" />
-      <line x1="7" y1="5" x2="7" y2="9" stroke="#000000" stroke-width="0.8" opacity="0.2" />
-      <line x1="0" y1="4.5" x2="10" y2="4.5" stroke="#000000" stroke-width="0.8" opacity="0.3" />
-      <rect x="0.5" y="0.5" width="9" height="1" fill="#ffffff" opacity="0.25" />
-      <rect x="0.5" y="0.5" width="1" height="9" fill="#ffffff" opacity="0.25" />
-      <rect x="0.5" y="8.5" width="9" height="1" fill="#000000" opacity="0.4" />
-      <rect x="8.5" y="0.5" width="1" height="9" fill="#000000" opacity="0.4" />
-    </g>
   </defs>
 
   <style>
@@ -367,7 +360,6 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
     .lvl2 {{ fill: #1fb35a; }}
     .lvl3 {{ fill: #3ee27b; }}
     .lvl4 {{ fill: #9effc6; }}
-    .destructible-brick {{ fill: #45475a; }}
 
     @keyframes bomberman-route {{
 {bomberman_route_css}

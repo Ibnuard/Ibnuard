@@ -14,6 +14,13 @@
     <pattern id="grid-dots" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
       <circle cx="6" cy="6" r="1.2" fill="#2d3139" opacity="0.8" />
     </pattern>
+    <pattern id="brick-field" x="20" y="30" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="10" height="10" rx="1" fill="#45475a" />
+      <rect x="0.8" y="0.8" width="8.4" height="1.4" fill="#ffffff" opacity="0.2" />
+      <rect x="0.8" y="0.8" width="1.4" height="8.4" fill="#ffffff" opacity="0.16" />
+      <rect x="0.8" y="8.2" width="8.4" height="1" fill="#000000" opacity="0.36" />
+      <rect x="8.2" y="0.8" width="1" height="8.4" fill="#000000" opacity="0.32" />
+    </pattern>
 
     <!-- Hard block definition -->
     <g id="mini-cube">
@@ -24,19 +31,6 @@
       <rect x="8.0" y="0.8" width="1.2" height="8.4" fill="#000000" opacity="0.5" />
     </g>
 
-    <!-- Destructible clay brick definition -->
-    <g id="brick-cube">
-      <rect x="0" y="0" width="10" height="10" rx="1" />
-      <rect x="1" y="1" width="8" height="3" fill="#ffffff" opacity="0.15" />
-      <line x1="5" y1="1" x2="5" y2="4" stroke="#000000" stroke-width="0.8" opacity="0.2" />
-      <line x1="3" y1="5" x2="3" y2="9" stroke="#000000" stroke-width="0.8" opacity="0.2" />
-      <line x1="7" y1="5" x2="7" y2="9" stroke="#000000" stroke-width="0.8" opacity="0.2" />
-      <line x1="0" y1="4.5" x2="10" y2="4.5" stroke="#000000" stroke-width="0.8" opacity="0.3" />
-      <rect x="0.5" y="0.5" width="9" height="1" fill="#ffffff" opacity="0.25" />
-      <rect x="0.5" y="0.5" width="1" height="9" fill="#ffffff" opacity="0.25" />
-      <rect x="0.5" y="8.5" width="9" height="1" fill="#000000" opacity="0.4" />
-      <rect x="8.5" y="0.5" width="1" height="9" fill="#000000" opacity="0.4" />
-    </g>
   </defs>
 
   <style>
@@ -46,7 +40,6 @@
     .lvl2 { fill: #1fb35a; }
     .lvl3 { fill: #3ee27b; }
     .lvl4 { fill: #9effc6; }
-    .destructible-brick { fill: #45475a; }
 
     @keyframes bomberman-route {
       0.0% { transform: translate(112.5px, 85.0px); }
@@ -215,207 +208,11 @@
   <text x="620" y="132" fill="#585b70" font-size="8" class="retro-font">Jul</text>
 
   <!-- Contribution Grid Blocks -->
-  <g class="brick-wave brick-wave-0">
-      <use href="#brick-cube" x="20.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="20.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="20.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="20.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="20.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="32.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="32.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="32.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="32.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="32.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="32.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="45.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="45.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="45.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="45.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="45.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="57.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="57.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="57.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="57.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="70.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="82.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="82.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="82.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="82.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="82.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="82.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="95.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="95.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="107.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="107.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="107.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="120.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="120.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="120.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="120.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="132.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="132.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="132.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="132.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="132.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="132.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="145.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="145.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="145.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="145.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="145.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="145.0" y="105.0" class="destructible-brick" />
-    </g>
-    <g class="brick-wave brick-wave-1">
-      <use href="#brick-cube" x="157.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="157.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="157.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="170.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="170.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="170.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="170.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="170.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="182.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="182.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="182.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="182.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="182.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="195.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="207.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="207.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="207.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="220.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="232.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="232.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="232.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="232.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="232.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="245.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="245.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="245.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="245.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="257.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="257.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="270.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="270.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="270.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="282.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="282.5" y="67.5" class="destructible-brick" />
-    </g>
-    <g class="brick-wave brick-wave-2">
-      <use href="#brick-cube" x="295.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="295.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="295.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="295.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="307.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="307.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="307.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="307.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="307.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="307.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="320.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="320.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="320.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="320.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="320.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="332.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="332.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="332.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="345.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="357.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="357.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="357.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="357.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="357.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="370.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="395.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="395.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="395.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="407.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="407.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="407.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="407.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="407.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="407.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="420.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="420.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="420.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="420.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="420.0" y="92.5" class="destructible-brick" />
-    </g>
-    <g class="brick-wave brick-wave-3">
-      <use href="#brick-cube" x="432.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="432.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="432.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="445.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="445.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="445.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="457.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="457.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="457.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="457.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="457.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="482.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="495.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="495.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="495.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="507.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="507.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="507.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="507.5" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="520.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="520.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="520.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="520.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="520.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="520.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="532.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="532.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="532.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="532.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="532.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="545.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="545.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="545.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="545.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="557.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="557.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="557.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="557.5" y="105.0" class="destructible-brick" />
-    </g>
-    <g class="brick-wave brick-wave-4">
-      <use href="#brick-cube" x="570.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="582.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="595.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="607.5" y="30.0" class="destructible-brick" />
-      <use href="#brick-cube" x="607.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="607.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="607.5" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="607.5" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="620.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="620.0" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="620.0" y="105.0" class="destructible-brick" />
-      <use href="#brick-cube" x="632.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="632.5" y="92.5" class="destructible-brick" />
-      <use href="#brick-cube" x="645.0" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="645.0" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="645.0" y="67.5" class="destructible-brick" />
-      <use href="#brick-cube" x="645.0" y="80.0" class="destructible-brick" />
-      <use href="#brick-cube" x="657.5" y="42.5" class="destructible-brick" />
-      <use href="#brick-cube" x="657.5" y="55.0" class="destructible-brick" />
-      <use href="#brick-cube" x="657.5" y="67.5" class="destructible-brick" />
-    </g>
+  <rect x="20.0" y="30" width="137.5" height="87.5" fill="url(#brick-field)" class="brick-wave brick-wave-0" />
+    <rect x="157.5" y="30" width="137.5" height="87.5" fill="url(#brick-field)" class="brick-wave brick-wave-1" />
+    <rect x="295.0" y="30" width="137.5" height="87.5" fill="url(#brick-field)" class="brick-wave brick-wave-2" />
+    <rect x="432.5" y="30" width="137.5" height="87.5" fill="url(#brick-field)" class="brick-wave brick-wave-3" />
+    <rect x="570.0" y="30" width="112.5" height="87.5" fill="url(#brick-field)" class="brick-wave brick-wave-4" />
     <use href="#mini-cube" x="20.0" y="30.0" class="lvl1" />
     <use href="#mini-cube" x="20.0" y="55.0" class="lvl1" />
     <use href="#mini-cube" x="32.5" y="55.0" class="lvl1" />
