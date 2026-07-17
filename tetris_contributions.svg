@@ -8,118 +8,109 @@
 
     <!-- Scanline overlay pattern -->
     <pattern id="scanlines" width="100" height="3" patternUnits="userSpaceOnUse">
-      <rect width="100" height="1" fill="#000000" opacity="0.2" />
+      <rect width="100" height="1" fill="#000000" opacity="0.25" />
     </pattern>
+
+    <!-- 3D Beveled Tetris Block Definition -->
+    <g id="cube">
+      <rect x="0" y="0" width="12" height="12" rx="1.5" />
+      <!-- Light highlight (top and left) -->
+      <rect x="1" y="1" width="10" height="1.5" fill="#ffffff" opacity="0.4" />
+      <rect x="1" y="1" width="1.5" height="10" fill="#ffffff" opacity="0.4" />
+      <!-- Dark shadow (bottom and right) -->
+      <rect x="1" y="9.5" width="10" height="1.5" fill="#000000" opacity="0.45" />
+      <rect x="9.5" y="1" width="1.5" height="10" fill="#000000" opacity="0.45" />
+    </g>
   </defs>
 
   <style>
     /* Global Styles */
     .retro-font {
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
       font-weight: 900;
     }
     
     /* Animation Loop: 12 seconds total */
     
-    /* 1. O-Piece (Bright Green Level 4) Falling & Splitting */
-    @keyframes o-fall {
-      0% { transform: translateY(-40px); }
-      5% { transform: translateY(0px); }
-      35% { transform: translateY(182px); } /* Lands on row 14 (y=182) */
-      75% { transform: translateY(182px); }
-      75.1% { transform: translateY(196px); } /* Drops 1 cell down */
-      100% { transform: translateY(196px); }
-    }
-    .o-piece-fall {
-      animation: o-fall 12s infinite steps(1);
-    }
-    
-    /* O-Piece Bottom blocks flash & clear */
-    @keyframes row-clear-flash {
-      0%, 70% { opacity: 1; fill: inherit; }
-      71%, 73% { fill: #ffffff; opacity: 1; }
-      72%, 74% { fill: inherit; opacity: 1; }
-      75% { fill: #ffffff; opacity: 1; }
-      75.1%, 100% { opacity: 0; }
-    }
-    .o-piece-bottom-clear {
-      animation: row-clear-flash 12s infinite;
-    }
-    
-    /* O-Piece Top blocks drop after clear */
-    @keyframes block-drop {
-      0%, 75% { transform: translateY(0px); }
-      75.1%, 100% { transform: translateY(14px); }
-    }
-    .o-piece-top-drop {
-      animation: block-drop 12s infinite steps(1);
-    }
-
-    /* 2. I-Piece (Medium Green Level 3) Falling & Splitting */
+    /* 1. I-Piece (Medium Green Level 3) Falling and Splitting */
     @keyframes i-fall {
-      0%, 35% { transform: translateY(-80px); }
-      40% { transform: translateY(0px); }
-      68% { transform: translateY(140px); } /* Lands on row 12 (y=140) */
-      75% { transform: translateY(140px); }
-      75.1% { transform: translateY(154px); } /* Drops 1 cell down */
-      100% { transform: translateY(154px); }
+      0% { transform: translateY(-60px); opacity: 1; }
+      5% { transform: translateY(0px); opacity: 1; }
+      25% { transform: translateY(190px); opacity: 1; } /* Lands on row 12 (y=190) */
+      65% { transform: translateY(190px); opacity: 1; }
+      65.1% { transform: translateY(204px); opacity: 1; } /* Drops 1 cell down after row 15 clear */
+      95% { transform: translateY(204px); opacity: 1; }
+      96%, 100% { opacity: 0; } /* Reset phase */
     }
     .i-piece-fall {
       animation: i-fall 12s infinite steps(1);
     }
-    .i-piece-bottom-clear {
-      animation: row-clear-flash 12s infinite;
+    
+    /* Row 15 blocks flash and clear */
+    @keyframes row-clear-flash {
+      0%, 55% { opacity: 1; }
+      56%, 58%, 60%, 62% { filter: brightness(2.5); opacity: 1; }
+      57%, 59%, 61%, 63% { filter: none; opacity: 1; }
+      64% { filter: brightness(2.5); opacity: 1; }
+      65%, 95% { opacity: 0; }
+      96%, 100% { opacity: 1; }
     }
-    .i-piece-top-drop {
-      animation: block-drop 12s infinite steps(1);
-    }
-
-    /* 3. Static Blocks Row 15 Clears */
     .row15-clear {
       animation: row-clear-flash 12s infinite;
     }
-
-    /* 4. Static Blocks Row 14 Drops */
+    
+    /* Remaining blocks drop after row 15 clear */
+    @keyframes block-drop {
+      0%, 65% { transform: translateY(0px); }
+      65.1%, 95% { transform: translateY(14px); }
+      96%, 100% { transform: translateY(0px); }
+    }
     .row14-drop {
       animation: block-drop 12s infinite steps(1);
     }
 
-    /* 5. Score Increase Glitch Animation */
-    @keyframes score-bump {
-      0%, 75% { fill: #fab387; }
-      76% { fill: #ffffff; }
-      80%, 100% { fill: #a6e3a1; }
+    /* 2. T-Piece (Bright Green Level 4) Falling and Landing */
+    @keyframes t-fall {
+      0%, 68% { transform: translateY(-60px); opacity: 0; }
+      69% { transform: translateY(-40px); opacity: 1; }
+      85% { transform: translateY(148px); opacity: 1; } /* Lands on top of dropped pile */
+      95% { transform: translateY(148px); opacity: 1; }
+      96%, 100% { opacity: 0; } /* Reset phase */
     }
-    .score-val {
-      animation: score-bump 12s infinite;
+    .t-piece-fall {
+      animation: t-fall 12s infinite steps(1);
     }
 
-    /* 6. Grid Background dots styling */
+    /* Score Indicator Animation */
+    @keyframes score-tick {
+      0%, 55% { fill: #fab387; }
+      56% { fill: #ffffff; }
+      60%, 100% { fill: #a6e3a1; }
+    }
+    .score-val {
+      animation: score-tick 12s infinite;
+    }
+
     .grid-dot {
       fill: #313244;
     }
   </style>
 
-  <!-- Main Arcade Frame -->
-  <rect x="5" y="5" width="310" height="260" rx="12" ry="12" fill="#11111b" stroke="#313244" stroke-width="4" filter="url(#screen-glow)" />
-  
-  <!-- CRT Screen Background -->
+  <!-- Main Arcade Frame (Retro CRT Monitor styling) -->
+  <rect x="5" y="5" width="310" height="260" rx="12" ry="12" fill="#11111b" stroke="#7aa2f7" stroke-width="4" filter="url(#screen-glow)" />
+  <!-- CRT Screen Inner Screen -->
   <rect x="12" y="12" width="296" height="246" rx="8" ry="8" fill="#181825" />
-  
-  <!-- Scanline Pattern Overlay -->
+  <!-- Scanline Overlay -->
   <rect x="12" y="12" width="296" height="246" rx="8" ry="8" fill="url(#scanlines)" pointer-events="none" />
 
-  <!-- ================= BOARD SECTION ================= -->
-  <!-- Board Border -->
+  <!-- ================= PLAYING BOARD ================= -->
+  <!-- Board Inner Frame -->
   <rect x="20" y="20" width="144" height="230" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
   
-  <!-- Grid Dots (10 cols x 16 rows) -->
-  <!-- Generated via loop simulation in SVG -->
-  <g opacity="0.3">
-    <!-- Row 0 to 15 -->
-    <!-- Col 0 to 9, spacing 14px -->
-    <!-- We draw small 2x2 rects for dots -->
+  <!-- Grid Dots Background -->
+  <g opacity="0.25">
     <!-- Col dots: x=27, 41, 55, 69, 83, 97, 111, 125, 139, 153 -->
+    <!-- Rows: y=27, 41, 55, 69, 83, 97, 111, 125, 139, 153, 167, 181, 195, 209, 223, 237 -->
     <rect x="27" y="27" width="2" height="2" class="grid-dot" /><rect x="41" y="27" width="2" height="2" class="grid-dot" /><rect x="55" y="27" width="2" height="2" class="grid-dot" /><rect x="69" y="27" width="2" height="2" class="grid-dot" /><rect x="83" y="27" width="2" height="2" class="grid-dot" /><rect x="97" y="27" width="2" height="2" class="grid-dot" /><rect x="111" y="27" width="2" height="2" class="grid-dot" /><rect x="125" y="27" width="2" height="2" class="grid-dot" /><rect x="139" y="27" width="2" height="2" class="grid-dot" /><rect x="153" y="27" width="2" height="2" class="grid-dot" />
     <rect x="27" y="41" width="2" height="2" class="grid-dot" /><rect x="41" y="41" width="2" height="2" class="grid-dot" /><rect x="55" y="41" width="2" height="2" class="grid-dot" /><rect x="69" y="41" width="2" height="2" class="grid-dot" /><rect x="83" y="41" width="2" height="2" class="grid-dot" /><rect x="97" y="41" width="2" height="2" class="grid-dot" /><rect x="111" y="41" width="2" height="2" class="grid-dot" /><rect x="125" y="41" width="2" height="2" class="grid-dot" /><rect x="139" y="41" width="2" height="2" class="grid-dot" /><rect x="153" y="41" width="2" height="2" class="grid-dot" />
     <rect x="27" y="55" width="2" height="2" class="grid-dot" /><rect x="41" y="55" width="2" height="2" class="grid-dot" /><rect x="55" y="55" width="2" height="2" class="grid-dot" /><rect x="69" y="55" width="2" height="2" class="grid-dot" /><rect x="83" y="55" width="2" height="2" class="grid-dot" /><rect x="97" y="55" width="2" height="2" class="grid-dot" /><rect x="111" y="55" width="2" height="2" class="grid-dot" /><rect x="125" y="55" width="2" height="2" class="grid-dot" /><rect x="139" y="55" width="2" height="2" class="grid-dot" /><rect x="153" y="55" width="2" height="2" class="grid-dot" />
@@ -138,98 +129,95 @@
     <rect x="27" y="237" width="2" height="2" class="grid-dot" /><rect x="41" y="237" width="2" height="2" class="grid-dot" /><rect x="55" y="237" width="2" height="2" class="grid-dot" /><rect x="69" y="237" width="2" height="2" class="grid-dot" /><rect x="83" y="237" width="2" height="2" class="grid-dot" /><rect x="97" y="237" width="2" height="2" class="grid-dot" /><rect x="111" y="237" width="2" height="2" class="grid-dot" /><rect x="125" y="237" width="2" height="2" class="grid-dot" /><rect x="139" y="237" width="2" height="2" class="grid-dot" /><rect x="153" y="237" width="2" height="2" class="grid-dot" />
   </g>
 
-  <!-- ================= PLAYING PIECES ================= -->
-  <!-- 1. O-piece (Bright Green, Level 4: #39d353) -->
-  <!-- Drops in columns 3 and 4 (starting x=64, lands on row 14) -->
-  <!-- Board origin: x=22, y=22. Grid cells 14px size. -->
-  <g class="o-piece-fall" fill="#39d353" stroke="#11111b" stroke-width="1">
-    <!-- Top Row of O-piece (Row 14 when landed) -->
-    <rect x="64" y="22" width="12" height="12" rx="1.5" class="o-piece-top-drop" />
-    <rect x="78" y="22" width="12" height="12" rx="1.5" class="o-piece-top-drop" />
-    <!-- Bottom Row of O-piece (Row 15 when landed) -->
-    <rect x="64" y="36" width="12" height="12" rx="1.5" class="o-piece-bottom-clear" />
-    <rect x="78" y="36" width="12" height="12" rx="1.5" class="o-piece-bottom-clear" />
+  <!-- ================= ANIMATED FALLING PIECES ================= -->
+  <!-- 1. I-Piece (Level 3 Green #26a641): Drops down column 2 (x=50) -->
+  <g class="i-piece-fall">
+    <!-- Block 0: Row 12 (y=190 when landed) -->
+    <use href="#cube" x="50" y="0" fill="#26a641" class="row14-drop" />
+    <!-- Block 1: Row 13 (y=204 when landed) -->
+    <use href="#cube" x="50" y="14" fill="#26a641" class="row14-drop" />
+    <!-- Block 2: Row 14 (y=218 when landed) -->
+    <use href="#cube" x="50" y="28" fill="#26a641" class="row14-drop" />
+    <!-- Block 3: Row 15 (y=232 when landed) -> Clears! -->
+    <use href="#cube" x="50" y="42" fill="#26a641" class="row15-clear" />
   </g>
 
-  <!-- 2. I-piece (Medium-Light Green, Level 3: #26a641) -->
-  <!-- Drops in column 8 (starting x=134, lands on row 12) -->
-  <g class="i-piece-fall" fill="#26a641" stroke="#11111b" stroke-width="1">
-    <!-- Row 12 block -->
-    <rect x="134" y="22" width="12" height="12" rx="1.5" class="i-piece-top-drop" />
-    <!-- Row 13 block -->
-    <rect x="134" y="36" width="12" height="12" rx="1.5" class="i-piece-top-drop" />
-    <!-- Row 14 block -->
-    <rect x="134" y="50" width="12" height="12" rx="1.5" class="i-piece-top-drop" />
-    <!-- Row 15 block (Bottom) -->
-    <rect x="134" y="64" width="12" height="12" rx="1.5" class="i-piece-bottom-clear" />
+  <!-- 2. T-Piece (Level 4 Green #39d353): Drops in columns 4, 5, 6 (starts at 7.5s) -->
+  <g class="t-piece-fall">
+    <!-- Center bottom block -->
+    <use href="#cube" x="92" y="14" fill="#39d353" />
+    <!-- Top row blocks -->
+    <use href="#cube" x="78" y="0" fill="#39d353" />
+    <use href="#cube" x="92" y="0" fill="#39d353" />
+    <use href="#cube" x="106" y="0" fill="#39d353" />
   </g>
 
-  <!-- ================= STATIC STACKED BLOCKS ================= -->
-  <!-- Stored in standard GitHub colors:
-       Dark Green (Level 1): #0e4429
-       Medium Green (Level 2): #006d32
-       Medium-Light (Level 3): #26a641
-       Bright Green (Level 4): #39d353
-  -->
-  <g stroke="#11111b" stroke-width="1">
-    <!-- Row 15 (y = 232). Bottom-most row. Clears at 75.1%! -->
-    <!-- Col 0, 1, 2, 5, 6, 7, 9 -->
-    <rect x="22" y="232" width="12" height="12" rx="1.5" fill="#0e4429" class="row15-clear" />
-    <rect x="36" y="232" width="12" height="12" rx="1.5" fill="#006d32" class="row15-clear" />
-    <rect x="50" y="232" width="12" height="12" rx="1.5" fill="#0e4429" class="row15-clear" />
-    <!-- Col 3, 4 filled by O-piece -->
-    <rect x="92" y="232" width="12" height="12" rx="1.5" fill="#006d32" class="row15-clear" />
-    <rect x="106" y="232" width="12" height="12" rx="1.5" fill="#26a641" class="row15-clear" />
-    <rect x="120" y="232" width="12" height="12" rx="1.5" fill="#0e4429" class="row15-clear" />
-    <!-- Col 8 filled by I-piece -->
-    <rect x="148" y="232" width="12" height="12" rx="1.5" fill="#006d32" class="row15-clear" />
+  <!-- ================= STATIC STACKED PILE ================= -->
+  <!-- Based on real contribution history: Dense and active on right, sparse on left. -->
+  <g stroke-width="0">
+    <!-- ROW 15 (y = 232). Bottom-most row. Clears at 65% in loop! -->
+    <use href="#cube" x="22" y="232" fill="#0e4429" class="row15-clear" /> <!-- Col 0 -->
+    <use href="#cube" x="36" y="232" fill="#006d32" class="row15-clear" /> <!-- Col 1 -->
+    <!-- Col 2 is empty for I-piece to drop in -->
+    <use href="#cube" x="64" y="232" fill="#0e4429" class="row15-clear" /> <!-- Col 3 -->
+    <use href="#cube" x="78" y="232" fill="#006d32" class="row15-clear" /> <!-- Col 4 -->
+    <use href="#cube" x="92" y="232" fill="#26a641" class="row15-clear" /> <!-- Col 5 -->
+    <use href="#cube" x="106" y="232" fill="#39d353" class="row15-clear" /> <!-- Col 6 -->
+    <use href="#cube" x="120" y="232" fill="#39d353" class="row15-clear" /> <!-- Col 7 -->
+    <use href="#cube" x="134" y="232" fill="#39d353" class="row15-clear" /> <!-- Col 8 -->
+    <use href="#cube" x="148" y="232" fill="#26a641" class="row15-clear" /> <!-- Col 9 -->
 
-    <!-- Row 14 (y = 218). Drops to Row 15 at 75.1%. -->
-    <!-- Col 0, 1, 6 -->
-    <rect x="22" y="218" width="12" height="12" rx="1.5" fill="#26a641" class="row14-drop" />
-    <rect x="36" y="218" width="12" height="12" rx="1.5" fill="#0e4429" class="row14-drop" />
-    <rect x="106" y="218" width="12" height="12" rx="1.5" fill="#006d32" class="row14-drop" />
+    <!-- ROW 14 (y = 218). Drops down to Row 15 at 65% -->
+    <use href="#cube" x="36" y="218" fill="#0e4429" class="row14-drop" /> <!-- Col 1 -->
+    <use href="#cube" x="78" y="218" fill="#26a641" class="row14-drop" /> <!-- Col 4 -->
+    <use href="#cube" x="92" y="218" fill="#0e4429" class="row14-drop" /> <!-- Col 5 -->
+    <use href="#cube" x="106" y="218" fill="#006d32" class="row14-drop" /> <!-- Col 6 -->
+    <use href="#cube" x="120" y="218" fill="#26a641" class="row14-drop" /> <!-- Col 7 -->
+    <use href="#cube" x="134" y="218" fill="#39d353" class="row14-drop" /> <!-- Col 8 -->
+    <use href="#cube" x="148" y="218" fill="#006d32" class="row14-drop" /> <!-- Col 9 -->
 
-    <!-- Row 13 (y = 204). Drops to Row 14 at 75.1%. -->
-    <!-- Col 1 -->
-    <rect x="36" y="204" width="12" height="12" rx="1.5" fill="#006d32" class="row14-drop" />
+    <!-- ROW 13 (y = 204). Drops down to Row 14 at 65% -->
+    <use href="#cube" x="106" y="204" fill="#0e4429" class="row14-drop" /> <!-- Col 6 -->
+    <use href="#cube" x="120" y="204" fill="#26a641" class="row14-drop" /> <!-- Col 7 -->
+    <use href="#cube" x="134" y="204" fill="#26a641" class="row14-drop" /> <!-- Col 8 -->
+    <use href="#cube" x="148" y="204" fill="#0e4429" class="row14-drop" /> <!-- Col 9 -->
+
+    <!-- ROW 12 (y = 190). Drops down to Row 13 at 65% -->
+    <use href="#cube" x="120" y="190" fill="#006d32" class="row14-drop" /> <!-- Col 7 -->
   </g>
-
 
   <!-- ================= SIDE PANEL SECTION ================= -->
-  <!-- Score Display Panel -->
+  <!-- Score Display Panel (Total Contributions) -->
   <g transform="translate(178, 20)">
-    <rect x="0" y="0" width="122" height="52" rx="4" fill="#11111b" stroke="#313244" stroke-width="2" />
-    <text x="12" y="18" fill="#a6adc8" font-size="9" class="retro-font" letter-spacing="1">SCORE</text>
-    <!-- Total Contributions -->
+    <rect x="0" y="0" width="122" height="52" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
+    <text x="12" y="18" fill="#a6adc8" font-size="8.5" class="retro-font" letter-spacing="0.5">SCORE (TOTAL)</text>
     <text x="12" y="40" fill="#fab387" font-size="18" class="retro-font score-val">002388</text>
   </g>
 
-  <!-- Streak Display Panel -->
+  <!-- Yearly Contribution Panel (Real data count) -->
   <g transform="translate(178, 82)">
-    <rect x="0" y="0" width="122" height="52" rx="4" fill="#11111b" stroke="#313244" stroke-width="2" />
-    <text x="12" y="18" fill="#a6adc8" font-size="9" class="retro-font" letter-spacing="1">STREAK</text>
-    <!-- Longest streak -->
-    <text x="12" y="40" fill="#a6e3a1" font-size="18" class="retro-font">037 days</text>
+    <rect x="0" y="0" width="122" height="52" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
+    <text x="12" y="18" fill="#a6adc8" font-size="8.5" class="retro-font" letter-spacing="0.5">YEARLY CONTRIB</text>
+    <text x="12" y="40" fill="#a6e3a1" font-size="18" class="retro-font">001143</text>
   </g>
 
   <!-- Next Piece Preview -->
   <g transform="translate(178, 144)">
-    <rect x="0" y="0" width="122" height="106" rx="4" fill="#11111b" stroke="#313244" stroke-width="2" />
-    <text x="12" y="18" fill="#a6adc8" font-size="9" class="retro-font" letter-spacing="1">NEXT</text>
+    <rect x="0" y="0" width="122" height="106" rx="4" fill="#11111b" stroke="#45475a" stroke-width="2" />
+    <text x="12" y="18" fill="#a6adc8" font-size="8.5" class="retro-font" letter-spacing="0.5">NEXT</text>
     
-    <!-- Drawing a pixel J-Piece inside preview grid -->
-    <g fill="#89b4fa" stroke="#11111b" stroke-width="1">
-      <rect x="42" y="38" width="12" height="12" rx="1.5" />
-      <rect x="42" y="52" width="12" height="12" rx="1.5" />
-      <rect x="56" y="52" width="12" height="12" rx="1.5" />
-      <rect x="70" y="52" width="12" height="12" rx="1.5" />
+    <!-- Drawing a 3D pixel J-Piece inside preview grid -->
+    <g fill="#89b4fa">
+      <use href="#cube" x="42" y="38" />
+      <use href="#cube" x="42" y="52" />
+      <use href="#cube" x="56" y="52" />
+      <use href="#cube" x="70" y="52" />
     </g>
     
-    <!-- Mini decorative controller details -->
+    <!-- Mini arcade details -->
     <circle cx="20" cy="85" r="3" fill="#f38ba8" />
     <circle cx="32" cy="85" r="3" fill="#f9e2af" />
     <circle cx="44" cy="85" r="3" fill="#a6e3a1" />
-    <text x="110" y="90" fill="#585b70" font-size="8" class="retro-font" text-anchor="end">LEVEL 04</text>
+    <text x="110" y="90" fill="#585b70" font-size="8" class="retro-font" text-anchor="end">LVL 04</text>
   </g>
 </svg>

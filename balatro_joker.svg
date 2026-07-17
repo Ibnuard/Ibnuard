@@ -8,191 +8,229 @@
 
     <!-- CRT Scanline Pattern -->
     <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">
-      <rect width="100" height="1" fill="#000000" opacity="0.15" />
+      <rect width="100" height="1" fill="#000000" opacity="0.2" />
     </pattern>
 
-    <!-- Holographic Rainbow Gradient -->
+    <!-- Moving Holo Rainbow Gradient -->
     <linearGradient id="holo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff007f" stop-opacity="0.6" />
-      <stop offset="15%" stop-color="#ff00ff" stop-opacity="0.5" />
-      <stop offset="30%" stop-color="#7f00ff" stop-opacity="0.5" />
-      <stop offset="45%" stop-color="#0000ff" stop-opacity="0.5" />
-      <stop offset="60%" stop-color="#00ffff" stop-opacity="0.5" />
-      <stop offset="75%" stop-color="#00ff00" stop-opacity="0.5" />
-      <stop offset="90%" stop-color="#ffff00" stop-opacity="0.5" />
-      <stop offset="100%" stop-color="#ff007f" stop-opacity="0.6" />
+      <stop offset="0%" stop-color="#ff0055" stop-opacity="0.3" />
+      <stop offset="20%" stop-color="#ff00ff" stop-opacity="0.25" />
+      <stop offset="40%" stop-color="#7f00ff" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#00aaff" stop-opacity="0.25" />
+      <stop offset="80%" stop-color="#00ff88" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#ffcc00" stop-opacity="0.3" />
     </linearGradient>
 
-    <!-- Card Clip Path for the holographic sheen -->
+    <!-- Sharp Holo Light Flash -->
+    <linearGradient id="flash-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.6" />
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Card Clip Path -->
     <clipPath id="card-clip">
       <rect x="10" y="10" width="220" height="340" rx="16" ry="16" />
     </clipPath>
   </defs>
 
   <style>
-    /* Card Floating Animation */
-    @keyframes float {
+    /* 3D Floating and Tilting Perspective Animation */
+    @keyframes float-3d {
       0% {
-        transform: translateY(0px) rotate(0deg);
+        transform: perspective(600px) rotateX(2deg) rotateY(-3deg) translateY(0px);
       }
       25% {
-        transform: translateY(-5px) rotate(1deg);
+        transform: perspective(600px) rotateX(-2deg) rotateY(3deg) translateY(-5px);
       }
       50% {
-        transform: translateY(-8px) rotate(0deg);
+        transform: perspective(600px) rotateX(-4deg) rotateY(-2deg) translateY(-8px);
       }
       75% {
-        transform: translateY(-4px) rotate(-1deg);
+        transform: perspective(600px) rotateX(2deg) rotateY(2deg) translateY(-4px);
       }
       100% {
-        transform: translateY(0px) rotate(0deg);
+        transform: perspective(600px) rotateX(2deg) rotateY(-3deg) translateY(0px);
       }
     }
 
-    /* Holographic Shimmer Animation */
-    @keyframes holo-shimmer {
+    /* Holographic Shimmer Move */
+    @keyframes holo-move {
       0% {
-        transform: translate(-100px, -100px) rotate(0deg);
+        transform: translate(-150px, -150px) rotate(0deg);
       }
       50% {
         transform: translate(100px, 100px) rotate(180deg);
       }
       100% {
-        transform: translate(-100px, -100px) rotate(360deg);
+        transform: translate(-150px, -150px) rotate(360deg);
       }
     }
 
-    /* Pixel Glitch Animation */
-    @keyframes glitch {
-      0% { opacity: 0.95; }
-      5% { opacity: 0.75; }
-      10% { opacity: 0.95; }
-      45% { opacity: 0.95; }
-      50% { opacity: 0.6; }
-      55% { opacity: 0.95; }
-      100% { opacity: 0.95; }
+    /* Holographic Light Sweep */
+    @keyframes sweep-move {
+      0% {
+        transform: translate(-200px, -200px);
+      }
+      100% {
+        transform: translate(200px, 200px);
+      }
     }
 
-    /* Holographic Hue Rotation */
-    @keyframes hue-rotate {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
+    /* Star Sparkle Animations */
+    @keyframes sparkle-odd {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.9; transform: scale(1.2); }
+    }
+    @keyframes sparkle-even {
+      0%, 100% { opacity: 0.9; transform: scale(1.2); }
+      50% { opacity: 0.2; transform: scale(0.8); }
+    }
+
+    /* Monitor Scanline Blinking */
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 0.1; }
     }
 
     .card-container {
+      transform-style: preserve-3d;
       transform-origin: center center;
-      animation: float 6s ease-in-out infinite;
+      animation: float-3d 6s ease-in-out infinite;
     }
 
     .holo-overlay {
-      animation: holo-shimmer 8s linear infinite, hue-rotate 12s linear infinite;
+      animation: holo-move 10s linear infinite;
       mix-blend-mode: color-dodge;
       pointer-events: none;
     }
 
-    .retro-text {
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: 900;
+    .sweep-overlay {
+      animation: sweep-move 4s ease-in-out infinite;
+      mix-blend-mode: overlay;
+      pointer-events: none;
     }
 
-    .pixel-text {
-      font-family: 'Courier New', Courier, monospace;
-      font-weight: bold;
+    /* High Readability Typography */
+    .font-retro-bold {
+      font-family: 'Fira Code', 'Courier New', Courier, monospace;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
 
-    .glitch-text {
-      animation: glitch 4s infinite;
+    .font-body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 600;
     }
+
+    .font-body-desc {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .sparkle-1 { animation: sparkle-odd 2s infinite; transform-origin: 30px 105px; }
+    .sparkle-2 { animation: sparkle-even 2.5s infinite; transform-origin: 210px 145px; }
+    .sparkle-3 { animation: sparkle-odd 3s infinite; transform-origin: 40px 290px; }
+    .sparkle-4 { animation: sparkle-even 1.8s infinite; transform-origin: 200px 75px; }
   </style>
 
   <g class="card-container">
-    <!-- Card Shadow & Border -->
-    <rect x="10" y="10" width="220" height="340" rx="16" ry="16" fill="#11111b" stroke="#313244" stroke-width="6" filter="url(#glow)" />
+    <!-- Card Shadow and Border (Tokyo Night Purple/Grey vibe) -->
+    <rect x="10" y="10" width="220" height="340" rx="16" ry="16" fill="#11111b" stroke="#7aa2f7" stroke-width="4" filter="url(#glow)" />
     <!-- Inner Card Background -->
-    <rect x="13" y="13" width="214" height="334" rx="13" ry="13" fill="#181825" />
+    <rect x="12" y="12" width="216" height="336" rx="14" ry="14" fill="#181825" />
 
     <!-- Card Background Grid Pattern -->
-    <g opacity="0.15">
-      <line x1="13" y1="50" x2="227" y2="50" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="13" y1="100" x2="227" y2="100" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="13" y1="150" x2="227" y2="150" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="13" y1="200" x2="227" y2="200" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="13" y1="250" x2="227" y2="250" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="13" y1="300" x2="227" y2="300" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="50" y1="13" x2="50" y2="347" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="100" y1="13" x2="100" y2="347" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="150" y1="13" x2="150" y2="347" stroke="#cdd6f4" stroke-width="1" />
-      <line x1="200" y1="13" x2="200" y2="347" stroke="#cdd6f4" stroke-width="1" />
+    <g opacity="0.12">
+      <line x1="12" y1="50" x2="228" y2="50" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="12" y1="100" x2="228" y2="100" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="12" y1="150" x2="228" y2="150" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="12" y1="200" x2="228" y2="200" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="12" y1="250" x2="228" y2="250" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="12" y1="300" x2="228" y2="300" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="50" y1="12" x2="50" y2="348" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="100" y1="12" x2="100" y2="348" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="150" y1="12" x2="150" y2="348" stroke="#cdd6f4" stroke-width="1" />
+      <line x1="200" y1="12" x2="200" y2="348" stroke="#cdd6f4" stroke-width="1" />
     </g>
 
     <!-- Top Label/Banner -->
-    <rect x="25" y="25" width="190" height="22" rx="4" fill="#313244" />
-    <text x="120" y="40" fill="#cdd6f4" text-anchor="middle" font-size="11" class="retro-text" letter-spacing="1">IBNUARD JOKER</text>
+    <rect x="25" y="24" width="190" height="24" rx="4" fill="#313244" stroke="#45475a" stroke-width="1" />
+    <text x="120" y="41" fill="#cdd6f4" text-anchor="middle" font-size="11" class="font-retro-bold">IBNUARD JOKER</text>
 
     <!-- Card Art Container (Pixel Screen style) -->
-    <rect x="25" y="57" width="190" height="130" rx="8" fill="#11111b" stroke="#f5c2e7" stroke-width="2" />
+    <rect x="25" y="58" width="190" height="130" rx="8" fill="#11111b" stroke="#f5c2e7" stroke-width="2" />
     <!-- CRT Scanlines overlay on Screen -->
-    <rect x="27" y="59" width="186" height="126" rx="6" fill="url(#scanlines)" />
+    <rect x="27" y="60" width="186" height="126" rx="6" fill="url(#scanlines)" />
 
-    <!-- Joker / Hacker Pixel-Art Illustration inside screen -->
-    <g class="glitch-text">
-      <!-- Matrix background codes (subtle digital rain effect) -->
-      <text x="35" y="75" fill="#a6e3a1" opacity="0.3" font-size="8" class="retro-text">01001001</text>
-      <text x="145" y="75" fill="#a6e3a1" opacity="0.3" font-size="8" class="retro-text">01000010</text>
-      <text x="35" y="170" fill="#a6e3a1" opacity="0.3" font-size="8" class="retro-text">01001110</text>
-      <text x="145" y="170" fill="#a6e3a1" opacity="0.3" font-size="8" class="retro-text">01010101</text>
+    <!-- Decorative Legendary Stars -->
+    <g fill="#f9e2af" opacity="0.8">
+      <!-- Star 1 -->
+      <polygon points="30,100 32,103 36,103 33,105 34,109 30,107 26,109 27,105 24,103 28,103" class="sparkle-1" />
+      <!-- Star 2 -->
+      <polygon points="210,140 212,143 216,143 213,145 214,149 210,147 206,149 207,145 204,143 208,143" class="sparkle-2" />
+      <!-- Star 3 -->
+      <polygon points="40,285 42,288 46,288 43,290 44,294 40,292 36,294 37,290 34,288 38,288" class="sparkle-3" />
+      <!-- Star 4 -->
+      <polygon points="200,70 202,73 206,73 203,75 204,79 200,77 196,79 197,75 194,73 198,73" class="sparkle-4" />
+    </g>
 
-      <!-- Retro Terminal Shell Icon -->
-      <!-- Computer Monitor drawing -->
-      <rect x="65" y="75" width="110" height="90" rx="6" fill="#1e1e2e" stroke="#fab387" stroke-width="2" />
-      <rect x="70" y="80" width="100" height="65" rx="3" fill="#000000" />
-      <!-- Stand -->
-      <path d="M 105 147 L 135 147 L 145 160 L 95 160 Z" fill="#585b70" />
+    <!-- Inside the screen: Computer Monitor drawing -->
+    <g>
+      <!-- Stand and Monitor casing -->
+      <path d="M 105 152 L 135 152 L 142 165 L 98 165 Z" fill="#585b70" />
+      <rect x="65" y="78" width="110" height="75" rx="6" fill="#1e1e2e" stroke="#fab387" stroke-width="2" />
+      <rect x="70" y="83" width="100" height="55" rx="3" fill="#000000" />
       
-      <!-- Code inside Monitor -->
-      <text x="75" y="93" fill="#a6e3a1" font-size="9" class="retro-text">&gt;_ ibnuard</text>
-      <text x="75" y="105" fill="#89b4fa" font-size="7" class="retro-text">status: active</text>
-      <text x="75" y="115" fill="#f5c2e7" font-size="7" class="retro-text">mindset: break</text>
-      <text x="75" y="125" fill="#f9e2af" font-size="7" class="retro-text">ship: fast_dev</text>
+      <!-- Monospace terminal lines -->
+      <text x="75" y="96" fill="#a6e3a1" font-size="9.5" class="font-retro-bold">&gt;_ ibnuard</text>
+      <text x="75" y="108" fill="#89b4fa" font-size="7.5" class="font-retro-bold">status: active</text>
+      <text x="75" y="118" fill="#f5c2e7" font-size="7.5" class="font-retro-bold">mindset: break</text>
+      <text x="75" y="128" fill="#f9e2af" font-size="7.5" class="font-retro-bold">ship: fast_dev</text>
       
-      <!-- Flashing Cursor -->
-      <rect x="135" y="86" width="5" height="8" fill="#a6e3a1" opacity="0.8">
-        <animate attributeName="opacity" values="0.8;0.1;0.8" dur="1s" repeatCount="indefinite" />
+      <!-- Blinking Cursor -->
+      <rect x="138" y="89" width="5" height="8" fill="#a6e3a1" class="blink-cursor">
+        <animate attributeName="opacity" values="0.8;0.1;0.8" dur="0.8s" repeatCount="indefinite" />
       </rect>
     </g>
 
     <!-- Card Description Area -->
-    <rect x="25" y="197" width="190" height="115" rx="8" fill="#11111b" stroke="#45475a" stroke-width="1" />
+    <rect x="25" y="198" width="190" height="116" rx="8" fill="#11111b" stroke="#45475a" stroke-width="1.5" />
     
     <!-- Rarity / Type label -->
-    <text x="35" y="215" fill="#f38ba8" font-size="9" class="retro-text" font-weight="bold" letter-spacing="0.5">LEGENDARY JOKER</text>
+    <text x="35" y="216" fill="#f38ba8" font-size="9" class="font-retro-bold" font-weight="900" letter-spacing="1">LEGENDARY JOKER</text>
     
     <!-- Balatro-style Mult Modifiers -->
     <!-- Modifier 1: Red box (+8 Mult) -->
-    <g transform="translate(35, 225)">
-      <rect x="0" y="0" width="50" height="16" rx="4" fill="#f38ba8" />
-      <text x="25" y="12" fill="#11111b" font-size="9" text-anchor="middle" class="retro-text" font-weight="900">+8 Mult</text>
+    <g transform="translate(35, 226)">
+      <rect x="0" y="0" width="52" height="16" rx="4" fill="#f38ba8" />
+      <text x="26" y="12" fill="#11111b" font-size="9" text-anchor="middle" class="font-retro-bold" font-weight="900">+8 Mult</text>
     </g>
-    <text x="93" y="237" fill="#cdd6f4" font-size="8.5" class="pixel-text">for low-level experiments</text>
+    <text x="94" y="238" fill="#cdd6f4" font-size="9" class="font-body">for low-level hacks</text>
 
     <!-- Modifier 2: Blue box (X1.5 Mult) -->
-    <g transform="translate(35, 248)">
-      <rect x="0" y="0" width="50" height="16" rx="4" fill="#89b4fa" />
-      <text x="25" y="12" fill="#11111b" font-size="9" text-anchor="middle" class="retro-text" font-weight="900">X1.5 Mult</text>
+    <g transform="translate(35, 249)">
+      <rect x="0" y="0" width="52" height="16" rx="4" fill="#89b4fa" />
+      <text x="26" y="12" fill="#11111b" font-size="9" text-anchor="middle" class="font-retro-bold" font-weight="900">X1.5 Mult</text>
     </g>
-    <text x="93" y="260" fill="#cdd6f4" font-size="8.5" class="pixel-text">when building mobile/web</text>
+    <text x="94" y="261" fill="#cdd6f4" font-size="9" class="font-body">when shipping products</text>
 
-    <!-- Explanatory joker passive text -->
-    <text x="35" y="280" fill="#a6adc8" font-size="8" class="pixel-text">"1 in 4 chance to double your speed</text>
-    <text x="35" y="292" fill="#a6adc8" font-size="8" class="pixel-text"> and compile with zero errors."</text>
+    <!-- Quote/Passive Description -->
+    <rect x="32" y="273" width="176" height="1" fill="#313244" />
+    <text x="35" y="286" fill="#a6adc8" font-size="8.5" class="font-body-desc">"1 in 4 chance to double speed</text>
+    <text x="35" y="298" fill="#a6adc8" font-size="8.5" class="font-body-desc"> and compile with zero errors."</text>
 
-    <!-- Small footer code stamps -->
-    <text x="35" y="332" fill="#585b70" font-size="8" class="retro-text">#001</text>
-    <text x="205" y="332" fill="#585b70" font-size="8" class="retro-text" text-anchor="end">v2.0.0</text>
+    <!-- Footer stamps -->
+    <text x="35" y="334" fill="#585b70" font-size="8.5" class="font-retro-bold">#001</text>
+    <text x="205" y="334" fill="#585b70" font-size="8.5" class="font-retro-bold" text-anchor="end">v2.0.0</text>
 
-    <!-- Holographic Foil Effect Overlay (Clipped to Card Shape) -->
+    <!-- Dual Holographic Foil Overlay (Rainbow + Sweep light, clipped) -->
     <g clip-path="url(#card-clip)">
       <rect x="-100" y="-100" width="440" height="560" fill="url(#holo-grad)" class="holo-overlay" />
+      <rect x="-100" y="-100" width="440" height="560" fill="url(#flash-grad)" class="sweep-overlay" />
     </g>
   </g>
 </svg>
