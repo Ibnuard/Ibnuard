@@ -44,7 +44,7 @@
     /* 3D Floating/Tilt Keyframes */
     @keyframes card-float {
       0%, 100% {
-        transform: perspective(600px) rotateX(1deg) rotateY(-2deg) translateY(0px);
+        transform: perspective(600px) rotateX(1.5deg) rotateY(-2deg) translateY(0px);
       }
       50% {
         transform: perspective(600px) rotateX(-2deg) rotateY(2deg) translateY(-5px);
@@ -69,12 +69,18 @@
       50% { opacity: 0.9; transform: scale(1.2); }
     }
 
-    /* Floating Mult Score popups on hover */
-    @keyframes mult-bounce {
-      0% { transform: translateY(0px) scale(0.8); opacity: 0; }
-      20% { transform: translateY(-25px) scale(1.1); opacity: 1; }
-      80% { transform: translateY(-40px) scale(1.0); opacity: 1; }
-      100% { transform: translateY(-55px) scale(0.9); opacity: 0; }
+    /* Automated Looping popup for the Mult Tag (Fires every 6 seconds) */
+    @keyframes mult-bounce-loop {
+      0%, 75% { transform: translateY(0px) scale(0.8); opacity: 0; }
+      80% { transform: translateY(-25px) scale(1.1); opacity: 1; }
+      90% { transform: translateY(-40px) scale(1.0); opacity: 1; }
+      95%, 100% { transform: translateY(-55px) scale(0.9); opacity: 0; }
+    }
+
+    /* Pulsating glow for the Upgrade Button */
+    @keyframes button-glow {
+      0%, 100% { fill: #f5c2e7; filter: none; }
+      50% { fill: #f8cde7; filter: url(#neon-glow); }
     }
 
     /* Glitch screen effect */
@@ -83,7 +89,6 @@
       50% { opacity: 0.7; }
     }
 
-    /* Base Interactive classes */
     .joker-card-group {
       transform-style: preserve-3d;
       transform-origin: 95px 125px;
@@ -91,7 +96,7 @@
       cursor: pointer;
     }
 
-    /* Hover States */
+    /* Hover States (Activated if SVG is opened directly in a tab) */
     .joker-card-group:hover {
       animation-play-state: paused;
       transform: perspective(600px) rotateX(8deg) rotateY(-10deg) scale(1.05) translateY(-4px);
@@ -101,12 +106,13 @@
 
     .mult-pop {
       fill: #f38ba8;
-      opacity: 0;
+      animation: mult-bounce-loop 6s infinite ease-out;
+      transform-origin: 95px 125px;
       pointer-events: none;
     }
-    .joker-card-group:hover .mult-pop {
-      animation: mult-bounce 0.8s ease-out forwards;
-      transform-origin: 95px 125px;
+
+    .buy-btn {
+      animation: button-glow 3s infinite ease-in-out;
     }
 
     .foil-overlay {
@@ -144,20 +150,13 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       font-weight: 500;
     }
-
-    /* Glow buttons on hover */
-    .buy-btn:hover {
-      fill: #f5c2e7;
-      filter: url(#neon-glow);
-      cursor: pointer;
-    }
     
     .buy-btn-text {
       pointer-events: none;
     }
   </style>
 
-  <!-- ================= ARCADE BACKGROUND CABINET ================= -->
+  <!-- ================= ARCADE BACKGROUND cabinet ================= -->
   <!-- Main Cabinet Border -->
   <rect x="5" y="5" width="590" height="240" rx="12" ry="12" fill="#11111b" stroke="#313244" stroke-width="4" />
   <rect x="12" y="12" width="576" height="226" rx="8" ry="8" fill="#181825" />
@@ -222,7 +221,7 @@
       <rect x="-105" y="-75" width="400" height="400" fill="url(#sweep-grad)" class="sweep-overlay" />
     </g>
 
-    <!-- Bouncing Mult Popup (Triggers on Hover) -->
+    <!-- Bouncing Mult Popup (Triggers automatically on loop) -->
     <text x="95" y="120" font-size="20" class="font-retro mult-pop" text-anchor="middle" font-weight="900">+999 Mult</text>
   </g>
 

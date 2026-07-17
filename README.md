@@ -13,24 +13,16 @@
 
 ---
 
-## 🕹️ The Dev Arcade (Interactive Cards & stats)
+## 🕹️ The Dev Arcade
 
+### 🃏 The Hacker Joker
 <p align="center">
-  Hover over the Joker Card to see details and trigger multiplier popups!
+  <img src="balatro_joker.svg" width="100%" alt="Balatro Joker" />
 </p>
 
-### 🃏 The Hacker Joker (Card Inspect UI)
+### 👾 Commit Tetris
 <p align="center">
-  <img src="balatro_joker.svg" width="100%" alt="Balatro Joker Shop Inspect" />
-</p>
-
-### 👾 Commit Tetris (Full-Width Contribution Board)
-<p align="center">
-  <img src="tetris_contributions.svg" width="100%" alt="Commit Tetris Board" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-streak-stats-eight.vercel.app?user=Ibnuard&theme=tokyonight&hide_border=true" height="150" alt="GitHub Streak" />
+  <img src="tetris_contributions.svg" width="100%" alt="Commit Tetris" />
 </p>
 
 ---

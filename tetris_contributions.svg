@@ -8,12 +8,12 @@
 
     <!-- Scanline overlay pattern -->
     <pattern id="scanlines" width="100" height="3" patternUnits="userSpaceOnUse">
-      <rect width="100" height="1" fill="#000000" opacity="0.2" />
+      <rect width="100" height="1" fill="#000000" opacity="0.25" />
     </pattern>
 
     <!-- Background dots pattern (53 cols x 7 rows, cell step 12.5px) -->
     <pattern id="grid-dots" width="12.5" height="12.5" patternUnits="userSpaceOnUse">
-      <circle cx="6" cy="6" r="1.2" fill="#313244" opacity="0.45" />
+      <circle cx="6" cy="6" r="1.2" fill="#2d3139" opacity="0.8" />
     </pattern>
 
     <!-- 3D Beveled Tetris Block Definition (10x10px size) -->
@@ -23,8 +23,8 @@
       <rect x="0.8" y="0.8" width="8.4" height="1.2" fill="#ffffff" opacity="0.4" />
       <rect x="0.8" y="0.8" width="1.2" height="8.4" fill="#ffffff" opacity="0.4" />
       <!-- Dark shadow (bottom and right) -->
-      <rect x="0.8" y="8" width="8.4" height="1.2" fill="#000000" opacity="0.45" />
-      <rect x="8" y="0.8" width="1.2" height="8.4" fill="#000000" opacity="0.45" />
+      <rect x="0.8" y="8.0" width="8.4" height="1.2" fill="#000000" opacity="0.5" />
+      <rect x="8.0" y="0.8" width="1.2" height="8.4" fill="#000000" opacity="0.5" />
     </g>
   </defs>
 
@@ -34,56 +34,48 @@
       font-family: 'Fira Code', 'Courier New', Courier, monospace;
       font-weight: 900;
     }
+
+    /* Vibrant tailored green colors for high contrast */
+    .lvl1 { fill: #104d2e; } /* Rich Dark Green */
+    .lvl2 { fill: #1b894c; } /* Medium Fresh Green */
+    .lvl3 { fill: #33cf73; } /* Bright Minty Green */
+    .lvl4 { fill: #82ffb4; } /* Glowing Neon Lime Green */
     
-    /* Loop: 12 seconds total */
-    
-    /* 1. J-Piece falling in Col 45 (x=582.5). Lands on Row 4 and 5 (translation N=50px). */
-    @keyframes j-fall {
+    /* Animation Loop for falling piece in Column 52 (current week) */
+    @keyframes fall-curr-week {
       0% { transform: translateY(-80px); opacity: 0; }
       5% { transform: translateY(-50px); opacity: 1; }
-      35% { transform: translateY(50px); opacity: 1; } /* Lands on Row 4/5 */
-      85% { transform: translateY(50px); opacity: 1; }
+      45% { transform: translateY(12.5px); opacity: 1; } /* Lands on Row 1, 2, 3 (Translation 12.5px) */
+      85% { transform: translateY(12.5px); opacity: 1; }
       90%, 100% { opacity: 0; } /* Reset */
     }
-    .j-piece-fall {
-      animation: j-fall 8s infinite steps(1);
-    }
-    
-    /* 2. I-Piece (2 blocks tall) falling in Col 48 (x=620). Lands on Row 3 and 4 (translation N=37.5px). */
-    @keyframes i-fall {
-      0%, 40% { transform: translateY(-80px); opacity: 0; }
-      45% { transform: translateY(-50px); opacity: 1; }
-      75% { transform: translateY(37.5px); opacity: 1; } /* Lands on Row 3/4 */
-      90% { transform: translateY(37.5px); opacity: 1; }
-      95%, 100% { opacity: 0; } /* Reset */
-    }
-    .i-piece-fall {
-      animation: i-fall 8s infinite steps(1);
+    .curr-week-fall {
+      animation: fall-curr-week 8s infinite steps(1);
     }
 
     /* Floating glowing animations for scores */
-    @keyframes stat-flicker {
-      0%, 100% { fill: #a6e3a1; }
-      50% { fill: #89b4fa; }
+    @keyframes stat-pulse {
+      0%, 100% { fill: #82ffb4; }
+      50% { fill: #33cf73; }
     }
     .score-glowing {
-      animation: stat-flicker 4s infinite;
+      animation: stat-pulse 3s infinite;
     }
   </style>
 
   <!-- Main Arcade Frame (Cabinet Box) -->
-  <rect x="5" y="5" width="810" height="170" rx="12" ry="12" fill="#11111b" stroke="#7aa2f7" stroke-width="4" filter="url(#screen-glow)" />
+  <rect x="5" y="5" width="810" height="170" rx="12" ry="12" fill="#11111b" stroke="#313244" stroke-width="4" filter="url(#screen-glow)" />
   <rect x="12" y="12" width="796" height="156" rx="8" ry="8" fill="#181825" />
   <rect x="12" y="12" width="796" height="156" rx="8" ry="8" fill="url(#scanlines)" pointer-events="none" />
 
   <!-- ================= PLAYING BOARD (53 cols x 7 rows) ================= -->
   <!-- Board Borders -->
-  <rect x="20" y="25" width="665" height="92" rx="4" fill="#11111b" stroke="#45475a" stroke-width="1.5" />
+  <rect x="20" y="25" width="665" height="92" rx="4" fill="#0f0f15" stroke="#313244" stroke-width="1.5" />
   
-  <!-- Grid Dots Background Pattern (fills the board) -->
+  <!-- Grid Dots Background Pattern (empty days) -->
   <rect x="20" y="25" width="665" height="92" rx="4" fill="url(#grid-dots)" />
 
-  <!-- Label Calendar Headings -->
+  <!-- Calendar Label Headings -->
   <text x="25" y="132" fill="#585b70" font-size="8" class="retro-font">Jul</text>
   <text x="120" y="132" fill="#585b70" font-size="8" class="retro-font">Sep</text>
   <text x="220" y="132" fill="#585b70" font-size="8" class="retro-font">Nov</text>
@@ -92,73 +84,97 @@
   <text x="520" y="132" fill="#585b70" font-size="8" class="retro-font">May</text>
   <text x="620" y="132" fill="#585b70" font-size="8" class="retro-font">Jul</text>
 
-  <!-- ================= ANIMATED FALLING PIECES ================= -->
-  <!-- 1. J-Piece (x = 20 + 45 * 12.5 = 582.5). Lands on Row 4/5. -->
-  <g class="j-piece-fall" fill="#26a641">
-    <!-- Block 0: Drawn at Row 0 (y=30) -->
-    <use href="#mini-cube" x="582.5" y="30" />
-    <!-- Block 1: Drawn at Row 1 (y=42.5) -->
-    <use href="#mini-cube" x="582.5" y="42.5" />
-    <!-- Block 2: Drawn at Row 1 (y=42.5, Col 44) -->
-    <use href="#mini-cube" x="570.0" y="42.5" />
-  </g>
-
-  <!-- 2. I-Piece (x = 20 + 48 * 12.5 = 620). Lands on Row 3/4. -->
-  <g class="i-piece-fall" fill="#39d353">
-    <!-- Block 0: Drawn at Row 0 (y=30) -->
-    <use href="#mini-cube" x="620.0" y="30" />
-    <!-- Block 1: Drawn at Row 1 (y=42.5) -->
-    <use href="#mini-cube" x="620.0" y="42.5" />
-  </g>
-
-  <!-- ================= STATIC CONTRIBUTION PILE ================= -->
-  <!-- Matches real data profile: Sparse on left (older), dense wall on right (recent May-July).
-       Col coordinate: 20 + col * 12.5
-       Row coordinate: 30 + row * 12.5
+  <!-- ================= CHRONOLOGICAL CONTRIBUTION MAP (VIBRANT DATA RECTANGLES) ================= -->
+  <!-- Represents the real distribution: Jul-Dec sparse, Feb-Jul dense active green.
+       Col step: 12.5px. Row step: 12.5px.
+       X coordinate: 20 + col * 12.5
+       Y coordinate: 30 + row * 12.5
   -->
   <g>
-    <!-- Older months (Col 0 to 25): Sparse level 1/2 blocks -->
-    <use href="#mini-cube" x="57.5" y="105" fill="#0e4429" /> <!-- Col 3, Row 6 -->
-    <use href="#mini-cube" x="120.0" y="105" fill="#0e4429" /> <!-- Col 8, Row 6 -->
-    <use href="#mini-cube" x="195.0" y="105" fill="#006d32" /> <!-- Col 14, Row 6 -->
-    <use href="#mini-cube" x="270.0" y="105" fill="#0e4429" /> <!-- Col 20, Row 6 -->
-    <use href="#mini-cube" x="270.0" y="92.5" fill="#0e4429" /> <!-- Col 20, Row 5 -->
+    <!-- July - Dec 2025 (Cols 0-24) -->
+    <use href="#mini-cube" x="32.5" y="42.5" class="lvl1" />   <!-- Col 1, Row 1 -->
+    <use href="#mini-cube" x="82.5" y="42.5" class="lvl1" />   <!-- Col 5, Row 1 -->
+    <use href="#mini-cube" x="95.0" y="30.0" class="lvl2" />   <!-- Col 6, Row 0 -->
+    <use href="#mini-cube" x="95.0" y="42.5" class="lvl1" />   <!-- Col 6, Row 1 -->
+    <use href="#mini-cube" x="95.0" y="55.0" class="lvl1" />   <!-- Col 6, Row 2 -->
+    <use href="#mini-cube" x="120.0" y="80.0" class="lvl1" />  <!-- Col 8, Row 4 -->
+    <use href="#mini-cube" x="145.0" y="55.0" class="lvl1" />  <!-- Col 10, Row 2 -->
+    <use href="#mini-cube" x="245.0" y="67.5" class="lvl2" />  <!-- Col 18, Row 3 -->
+    <use href="#mini-cube" x="295.0" y="80.0" class="lvl1" />  <!-- Col 22, Row 4 -->
 
-    <!-- Spring months (Col 26 to 40): Moderate stack heights -->
-    <use href="#mini-cube" x="345.0" y="105" fill="#0e4429" /> <!-- Col 26, Row 6 -->
-    <use href="#mini-cube" x="357.5" y="105" fill="#006d32" /> <!-- Col 27, Row 6 -->
-    <use href="#mini-cube" x="370.0" y="105" fill="#0e4429" /> <!-- Col 28, Row 6 -->
-    <use href="#mini-cube" x="395.0" y="105" fill="#006d32" /> <!-- Col 30, Row 6 -->
-    <use href="#mini-cube" x="395.0" y="92.5" fill="#0e4429" /> <!-- Col 30, Row 5 -->
-    <use href="#mini-cube" x="457.5" y="105" fill="#006d32" /> <!-- Col 35, Row 6 -->
-    <use href="#mini-cube" x="457.5" y="92.5" fill="#26a641" /> <!-- Col 35, Row 5 -->
-    <use href="#mini-cube" x="457.5" y="80" fill="#0e4429" /> <!-- Col 35, Row 4 -->
+    <!-- Jan - Mar 2026 (Cols 25-36) -->
+    <use href="#mini-cube" x="345.0" y="67.5" class="lvl1" />  <!-- Col 26, Row 3 -->
+    <use href="#mini-cube" x="395.0" y="30.0" class="lvl2" />  <!-- Col 30, Row 0 -->
+    <use href="#mini-cube" x="395.0" y="55.0" class="lvl1" />  <!-- Col 30, Row 2 -->
+    <use href="#mini-cube" x="395.0" y="80.0" class="lvl1" />  <!-- Col 30, Row 4 -->
+    <use href="#mini-cube" x="407.5" y="42.5" class="lvl2" />  <!-- Col 31, Row 1 -->
+    <use href="#mini-cube" x="407.5" y="67.5" class="lvl1" />  <!-- Col 31, Row 3 -->
+    <use href="#mini-cube" x="420.0" y="55.0" class="lvl1" />  <!-- Col 32, Row 2 -->
+    <use href="#mini-cube" x="420.0" y="67.5" class="lvl2" />  <!-- Col 32, Row 3 -->
+    <use href="#mini-cube" x="420.0" y="92.5" class="lvl1" />  <!-- Col 32, Row 5 -->
+    <use href="#mini-cube" x="445.0" y="42.5" class="lvl2" />  <!-- Col 34, Row 1 -->
+    <use href="#mini-cube" x="445.0" y="55.0" class="lvl1" />  <!-- Col 34, Row 2 -->
+    <use href="#mini-cube" x="445.0" y="80.0" class="lvl1" />  <!-- Col 34, Row 4 -->
+    <use href="#mini-cube" x="457.5" y="30.0" class="lvl1" />  <!-- Col 35, Row 0 -->
+    <use href="#mini-cube" x="457.5" y="67.5" class="lvl2" />  <!-- Col 35, Row 3 -->
 
-    <!-- Late/Recent Active months (Col 41 to 52): Dense stacked blocks (Green wall) -->
-    <!-- Col 41 -->
-    <use href="#mini-cube" x="532.5" y="105" fill="#006d32" /><use href="#mini-cube" x="532.5" y="92.5" fill="#0e4429" />
-    <!-- Col 42 -->
-    <use href="#mini-cube" x="545.0" y="105" fill="#26a641" /><use href="#mini-cube" x="545.0" y="92.5" fill="#006d32" /><use href="#mini-cube" x="545.0" y="80" fill="#0e4429" />
-    <!-- Col 43 -->
-    <use href="#mini-cube" x="557.5" y="105" fill="#39d353" /><use href="#mini-cube" x="557.5" y="92.5" fill="#26a641" /><use href="#mini-cube" x="557.5" y="80" fill="#006d32" /><use href="#mini-cube" x="557.5" y="67.5" fill="#0e4429" />
-    <!-- Col 44 -->
-    <use href="#mini-cube" x="570.0" y="105" fill="#39d353" /><use href="#mini-cube" x="570.0" y="92.5" fill="#26a641" /><use href="#mini-cube" x="570.0" y="80" fill="#26a641" /><use href="#mini-cube" x="570.0" y="67.5" fill="#006d32" />
-    <!-- Col 45 (Lands bottom piece of J-Piece on Row 5, Row 6 is static) -->
-    <use href="#mini-cube" x="582.5" y="105" fill="#006d32" />
+    <!-- April - May 2026 (Cols 37-44) -->
+    <use href="#mini-cube" x="495.0" y="30.0" class="lvl2" />  <!-- Col 38, Row 0 -->
+    <use href="#mini-cube" x="495.0" y="42.5" class="lvl1" />  <!-- Col 38, Row 1 -->
+    <use href="#mini-cube" x="495.0" y="67.5" class="lvl2" />  <!-- Col 38, Row 3 -->
+    <use href="#mini-cube" x="495.0" y="92.5" class="lvl1" />  <!-- Col 38, Row 5 -->
+    <use href="#mini-cube" x="507.5" y="55.0" class="lvl3" />  <!-- Col 39, Row 2 -->
+    <use href="#mini-cube" x="507.5" y="80.0" class="lvl1" />  <!-- Col 39, Row 4 -->
+    <use href="#mini-cube" x="507.5" y="105.0" class="lvl2" /> <!-- Col 39, Row 6 -->
+    <use href="#mini-cube" x="520.0" y="42.5" class="lvl1" />  <!-- Col 40, Row 1 -->
+    <use href="#mini-cube" x="520.0" y="67.5" class="lvl3" />  <!-- Col 40, Row 3 -->
+    <use href="#mini-cube" x="520.0" y="92.5" class="lvl2" />  <!-- Col 40, Row 5 -->
+    <use href="#mini-cube" x="532.5" y="42.5" class="lvl2" />  <!-- Col 41, Row 1 -->
+    <use href="#mini-cube" x="532.5" y="55.0" class="lvl1" />  <!-- Col 41, Row 2 -->
+    <use href="#mini-cube" x="532.5" y="67.5" class="lvl2" />  <!-- Col 41, Row 3 -->
+    <use href="#mini-cube" x="532.5" y="80.0" class="lvl1" />  <!-- Col 41, Row 4 -->
+    <use href="#mini-cube" x="545.0" y="55.0" class="lvl3" />  <!-- Col 42, Row 2 -->
+    <use href="#mini-cube" x="545.0" y="67.5" class="lvl2" />  <!-- Col 42, Row 3 -->
+    <use href="#mini-cube" x="545.0" y="80.0" class="lvl2" />  <!-- Col 42, Row 4 -->
+    <use href="#mini-cube" x="545.0" y="92.5" class="lvl1" />  <!-- Col 42, Row 5 -->
+    <use href="#mini-cube" x="557.5" y="30.0" class="lvl1" />  <!-- Col 43, Row 0 -->
+    <use href="#mini-cube" x="557.5" y="42.5" class="lvl2" />  <!-- Col 43, Row 1 -->
+    <use href="#mini-cube" x="557.5" y="67.5" class="lvl3" />  <!-- Col 43, Row 3 -->
+    <use href="#mini-cube" x="557.5" y="80.0" class="lvl2" />  <!-- Col 43, Row 4 -->
+    <use href="#mini-cube" x="570.0" y="55.0" class="lvl2" />  <!-- Col 44, Row 2 -->
+    <use href="#mini-cube" x="570.0" y="67.5" class="lvl1" />  <!-- Col 44, Row 3 -->
+    <use href="#mini-cube" x="570.0" y="92.5" class="lvl3" />  <!-- Col 44, Row 5 -->
+
+    <!-- June - July 2026 (Cols 45-52) (Heavy Commit Wall) -->
+    <!-- Col 45 -->
+    <use href="#mini-cube" x="582.5" y="42.5" class="lvl3" /><use href="#mini-cube" x="582.5" y="55.0" class="lvl2" /><use href="#mini-cube" x="582.5" y="80.0" class="lvl4" /><use href="#mini-cube" x="582.5" y="92.5" class="lvl2" /><use href="#mini-cube" x="582.5" y="105.0" class="lvl3" />
     <!-- Col 46 -->
-    <use href="#mini-cube" x="595.0" y="105" fill="#39d353" /><use href="#mini-cube" x="595.0" y="92.5" fill="#39d353" /><use href="#mini-cube" x="595.0" y="80" fill="#26a641" />
+    <use href="#mini-cube" x="595.0" y="30.0" class="lvl2" /><use href="#mini-cube" x="595.0" y="42.5" class="lvl3" /><use href="#mini-cube" x="595.0" y="55.0" class="lvl4" /><use href="#mini-cube" x="595.0" y="67.5" class="lvl3" /><use href="#mini-cube" x="595.0" y="92.5" class="lvl2" /><use href="#mini-cube" x="595.0" y="105.0" class="lvl4" />
     <!-- Col 47 -->
-    <use href="#mini-cube" x="607.5" y="105" fill="#26a641" /><use href="#mini-cube" x="607.5" y="92.5" fill="#26a641" /><use href="#mini-cube" x="607.5" y="80" fill="#006d32" />
+    <use href="#mini-cube" x="607.5" y="42.5" class="lvl4" /><use href="#mini-cube" x="607.5" y="55.0" class="lvl3" /><use href="#mini-cube" x="607.5" y="67.5" class="lvl2" /><use href="#mini-cube" x="607.5" y="80.0" class="lvl3" /><use href="#mini-cube" x="607.5" y="92.5" class="lvl2" />
     <!-- Col 48 -->
-    <use href="#mini-cube" x="620.0" y="105" fill="#39d353" /><use href="#mini-cube" x="620.0" y="92.5" fill="#006d32" />
+    <use href="#mini-cube" x="620.0" y="30.0" class="lvl2" /><use href="#mini-cube" x="620.0" y="55.0" class="lvl3" /><use href="#mini-cube" x="620.0" y="67.5" class="lvl4" /><use href="#mini-cube" x="620.0" y="80.0" class="lvl2" /><use href="#mini-cube" x="620.0" y="92.5" class="lvl3" /><use href="#mini-cube" x="620.0" y="105.0" class="lvl1" />
     <!-- Col 49 -->
-    <use href="#mini-cube" x="632.5" y="105" fill="#39d353" /><use href="#mini-cube" x="632.5" y="92.5" fill="#39d353" /><use href="#mini-cube" x="632.5" y="80" fill="#26a641" />
+    <use href="#mini-cube" x="632.5" y="42.5" class="lvl4" /><use href="#mini-cube" x="632.5" y="55.0" class="lvl3" /><use href="#mini-cube" x="632.5" y="67.5" class="lvl2" /><use href="#mini-cube" x="632.5" y="80.0" class="lvl4" /><use href="#mini-cube" x="632.5" y="92.5" class="lvl3" />
     <!-- Col 50 -->
-    <use href="#mini-cube" x="645.0" y="105" fill="#26a641" /><use href="#mini-cube" x="645.0" y="92.5" fill="#26a641" /><use href="#mini-cube" x="645.0" y="80" fill="#006d32" /><use href="#mini-cube" x="645.0" y="67.5" fill="#0e4429" />
+    <use href="#mini-cube" x="645.0" y="30.0" class="lvl2" /><use href="#mini-cube" x="645.0" y="55.0" class="lvl4" /><use href="#mini-cube" x="645.0" y="67.5" class="lvl3" /><use href="#mini-cube" x="645.0" y="80.0" class="lvl2" /><use href="#mini-cube" x="645.0" y="92.5" class="lvl3" /><use href="#mini-cube" x="645.0" y="105.0" class="lvl1" />
     <!-- Col 51 -->
-    <use href="#mini-cube" x="657.5" y="105" fill="#39d353" /><use href="#mini-cube" x="657.5" y="92.5" fill="#26a641" /><use href="#mini-cube" x="657.5" y="80" fill="#26a641" /><use href="#mini-cube" x="657.5" y="67.5" fill="#006d32" /><use href="#mini-cube" x="657.5" y="55" fill="#0e4429" />
-    <!-- Col 52 -->
-    <use href="#mini-cube" x="670.0" y="105" fill="#26a641" /><use href="#mini-cube" x="670.0" y="92.5" fill="#006d32" /><use href="#mini-cube" x="670.0" y="80" fill="#0e4429" />
+    <use href="#mini-cube" x="657.5" y="42.5" class="lvl4" /><use href="#mini-cube" x="657.5" y="55.0" class="lvl3" /><use href="#mini-cube" x="657.5" y="67.5" class="lvl4" /><use href="#mini-cube" x="657.5" y="80.0" class="lvl2" /><use href="#mini-cube" x="657.5" y="92.5" class="lvl3" />
+    <!-- Col 52 (Latest Week Static blocks) -->
+    <use href="#mini-cube" x="670.0" y="30.0" class="lvl2" />  <!-- Col 52, Row 0 -->
+    <use href="#mini-cube" x="670.0" y="92.5" class="lvl3" />  <!-- Col 52, Row 5 -->
+    <use href="#mini-cube" x="670.0" y="105.0" class="lvl1" /> <!-- Col 52, Row 6 -->
+  </g>
+
+  <!-- ================= ANIMATED FALLING TETRIS PIECE ================= -->
+  <!-- Falling I-Piece (3 blocks vertical) falling down Column 52 (x=670.0).
+       It lands and locks on Row 1, 2, and 3.
+       Blocks are drawn at top relative to y=30. Falling group shifts it by 12.5px.
+  -->
+  <g class="curr-week-fall" fill="#82ffb4">
+    <use href="#mini-cube" x="670.0" y="30" />    <!-- Target absolute y = 42.5 (Row 1) -->
+    <use href="#mini-cube" x="670.0" y="42.5" />  <!-- Target absolute y = 55.0 (Row 2) -->
+    <use href="#mini-cube" x="670.0" y="55.0" />  <!-- Target absolute y = 67.5 (Row 3) -->
   </g>
 
   <!-- ================= RIGHT PANEL: STATS DISPLAY ================= -->
