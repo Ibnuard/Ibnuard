@@ -114,7 +114,6 @@
     .font-sans-regular { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 500; }
     .buy-btn-text { pointer-events: none; }
     
-    /* Connect scoring tags to the animation classes */
     .trigger-mult { animation: mult-tag-trigger 8s infinite ease-in-out; transform-origin: 53px 154px; }
     .trigger-streak { animation: streak-tag-trigger 8s infinite ease-in-out; transform-origin: 53px 171px; }
   </style>
@@ -164,7 +163,6 @@
       <rect x="-105" y="-75" width="400" height="400" fill="url(#sweep-grad)" class="sweep-overlay" />
     </g>
 
-    <!-- Dynamic Mult Popup -->
     <text x="95" y="120" font-size="16" class="font-retro mult-pop" text-anchor="middle" font-weight="900">+1,143 Mult</text>
   </g>
 

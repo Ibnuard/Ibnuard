@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ibnuard - Dev Arcade</title>
+  <!-- Google Fonts for retro and clean typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Sleek Tokyo Night / Cyberpunk Theme */
+    :root {
+      --bg: #1a1b26;
+      --panel: #16161e;
+      --border: #414868;
+      --text: #c0caf5;
+      --primary: #bb9af7;
+      --green: #73daca;
+      --red: #f7768e;
+      --blue: #7db9f5;
+      --yellow: #e0af68;
+      --glow-pink: #f5c2e7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Scanlines / CRT overlay */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      z-index: 9999;
+      background-size: 100% 4px, 6px 100%;
+      pointer-events: none;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(187, 154, 247, 0.5);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #9aa5ce;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    /* Card/App Panels */
+    .panel {
+      background-color: var(--panel);
+      border: 3px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .panel-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.2rem;
+      color: var(--yellow);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    /* ================= JOKER SECTION ================= */
+    .joker-arcade {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* 3D Perspective Card Container */
+    .card-wrap {
+      perspective: 1000px;
+      width: 200px;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      border-radius: 16px;
+      background-color: #1e1e2e;
+      border: 4px solid var(--blue);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    /* Holographic sheen overlay */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: linear-gradient(
+        115deg,
+        transparent 20%,
+        rgba(255, 0, 85, 0.15) 30%,
+        rgba(255, 0, 255, 0.15) 40%,
+        rgba(127, 0, 255, 0.15) 50%,
+        rgba(0, 170, 255, 0.15) 60%,
+        rgba(0, 255, 136, 0.15) 70%,
+        transparent 80%
+      );
+      mix-blend-mode: color-dodge;
+      pointer-events: none;
+      transform: translate(var(--x, 0px), var(--y, 0px)) rotate(0deg);
+      transition: transform 0.1s ease;
+    }
+
+    /* Floating stars/glow */
+    .card-glow-layer {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      box-shadow: inset 0 0 20px rgba(125, 185, 245, 0.2);
+    }
+
+    .card-title {
+      background-color: #313244;
+      color: #cdd6f4;
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 0.75rem;
+      width: 100%;
+      text-align: center;
+      padding: 4px 0;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Inner pixel screen */
+    .card-screen {
+      width: 100%;
+      height: 110px;
+      background-color: #11111b;
+      border: 2px solid var(--glow-pink);
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px;
+      position: relative;
+    }
+
+    .card-screen::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+      background-size: 100% 3px;
+      pointer-events: none;
+    }
+
+    .card-terminal {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.7rem;
+      line-height: 1.3;
+    }
+
+    .term-prompt { color: #a6e3a1; font-weight: bold; }
+    .term-blue { color: #89b4fa; }
+    .term-pink { color: #f5c2e7; }
+    .term-yellow { color: #f9e2af; }
+    
+    .cursor {
+      display: inline-block;
+      width: 4px;
+      height: 8px;
+      background-color: #a6e3a1;
+      animation: blink 0.8s infinite;
+    }
+
+    /* Modifier Tags */
+    .card-mods {
+      width: 100%;
+      background-color: #11111b;
+      border: 1px solid #45475a;
+      border-radius: 6px;
+      padding: 8px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mod-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.65rem;
+      font-weight: bold;
+    }
+
+    .mod-pill {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #11111b;
+    }
+
+    .mod-pill.red { background-color: var(--red); }
+    .mod-pill.blue { background-color: var(--blue); }
+
+    .card-footer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.65rem;
+      color: #585b70;
+    }
+
+    /* Score Bounce Popups */
+    .mult-popup {
+      position: absolute;
+      top: 30%;
+      font-family: 'Fira Code', monospace;
+      font-weight: 800;
+      color: var(--red);
+      font-size: 1.5rem;
+      text-shadow: 0 0 10px rgba(247, 118, 142, 0.8);
+      pointer-events: none;
+      animation: bounce-fade 0.8s ease-out forwards;
+      z-index: 10;
+    }
+
+    /* Joker stats inspect column */
+    .joker-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .inspect-box {
+      border: 2px solid var(--border);
+      background-color: #11111b;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .inspect-box h3 {
+      color: var(--red);
+      font-family: 'Fira Code', monospace;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    .inspect-box p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .inspect-box span.mult { color: var(--red); font-weight: bold; }
+    .inspect-box span.x-mult { color: var(--blue); font-weight: bold; }
+    .inspect-box span.yellow { color: var(--yellow); font-weight: bold; }
+
+    .inspect-footer {
+      border-top: 1px dashed var(--border);
+      padding-top: 10px;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: #7982a9;
+    }
+
+    .stats-footer {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background-color: #11111b;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 16px;
+      min-width: 120px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .stat-pill small {
+      display: block;
+      font-size: 0.65rem;
+      color: #7982a9;
+      margin-bottom: 4px;
+    }
+
+    .stat-pill strong {
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+    
+    .stat-pill.active strong {
+      color: var(--green);
+    }
+
+    /* ================= BOMBERMAN SECTION ================= */
+    .bomberman-arcade {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .game-hud {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      background-color: #11111b;
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .hud-stat span {
+      color: var(--yellow);
+      font-weight: bold;
+    }
+
+    .canvas-wrap {
+      position: relative;
+      background-color: #0f0f15;
+      border: 4px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(187, 154, 247, 0.2);
+      overflow: hidden;
+      width: 100%;
+      max-width: 820px;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .controls-help {
+      font-size: 0.85rem;
+      color: #7982a9;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .controls-help kbd {
+      background-color: #313244;
+      color: #cdd6f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #45475a;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+    }
+
+    /* Animations */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes bounce-fade {
+      0% { transform: translateY(0) scale(0.8); opacity: 0; }
+      20% { transform: translateY(-30px) scale(1.1); opacity: 1; }
+      80% { transform: translateY(-50px) scale(1); opacity: 1; }
+      100% { transform: translateY(-70px) scale(0.9); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🕹️ IBNUARD ARCADE</h1>
+    <p>Dynamic Interactive Dev Dashboard & Mini-Games</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- ================= JOKER INSPECT PANEL ================= -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>🃏</span> The Hacker Joker
+      </div>
+      <div class="joker-arcade">
+        
+        <!-- Interactive 3D Card -->
+        <div class="card-wrap">
+          <div class="card" id="jokerCard">
+            <div class="card-glow-layer"></div>
+            <div class="card-title">IBNUARD JOKER</div>
+            
+            <div class="card-screen">
+              <div class="card-terminal">
+                <span class="term-prompt">&gt;_ ibnuard</span><br>
+                <span class="term-blue">stats: active</span><br>
+                <span class="term-pink">mindset: break</span><br>
+                <span class="term-yellow">ship: fast_dev</span><span class="cursor"></span>
+              </div>
+            </div>
+            
+            <div class="card-mods">
+              <div class="mod-row">
+                <span class="mod-pill red" id="multTag">+8 Mult</span>
+                <span>low-level hacks</span>
+              </div>
+              <div class="mod-row">
+                <span class="mod-pill blue" id="streakTag">x1.5 Mult</span>
+                <span>ship web/mobile</span>
+              </div>
+            </div>
+            
+            <div class="card-footer">
+              <span>#001</span>
+              <span>v2.0.0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details Column -->
+        <div class="joker-info">
+          <div class="inspect-box">
+            <h3>LEGENDARY JOKER (HOLOGRAPHIC)</h3>
+            <p>Each commit adds <span class="mult">+8 Mult</span> to score. Active daily streaks apply a <span class="x-mult">x1.5 Mult</span>. Low-level assembly/C hacks have a 1 in 4 chance to trigger <span class="yellow">+50 Mult</span> and compile with zero errors.</p>
+            <div class="inspect-footer">
+              "build ──> break ──> understand ──> ship"
+            </div>
+          </div>
+          <div class="stats-footer">
+            <div class="stat-pill">
+              <small>TOTAL COMMITS</small>
+              <strong id="totalCommitsStat">1,143</strong>
+            </div>
+            <div class="stat-pill active">
+              <small>DAILY STREAK</small>
+              <strong id="streakStat">10 Days</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ================= PLAYABLE BOMBERMAN PANEL ================= -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>👾</span> Playable Bomberman Contributions
+      </div>
+      <div class="bomberman-arcade">
+        
+        <div class="game-hud">
+          <div class="hud-stat">YEARLY COMMITS: <span id="hudYearly">1,143</span></div>
+          <div class="hud-stat">BRICKS CLEARED: <span id="hudCleared">0</span></div>
+          <div class="hud-stat">STATUS: <span id="hudStatus" style="color: var(--green);">PLAYING</span></div>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap">
+          <!-- Game Canvas -->
+          <canvas id="gameCanvas" width="820" height="150"></canvas>
+        </div>
+
+        <div class="controls-help">
+          Use Keyboard <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>Arrow Keys</kbd> to move.<br>
+          Press <kbd>Spacebar</kbd> to drop a bomb! Clay bricks get destroyed; green commits are solid metal!
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main Arcade Interactive JavaScript -->
+  <script>
+    // Global contribution data fallback
+    let contribData = {
+      total: "1,143",
+      days: []
+    };
+
+    // Load dynamic data from script output
+    fetch('./contributions.json')
+      .then(res => res.json())
+      .then(data => {
+        contribData = data;
+        updateUI();
+        initGame();
+      })
+      .catch(err => {
+        console.warn("Could not load contributions.json, running fallback setup:", err);
+        // generate dummy data
+        const dummyDays = [];
+        const start = new Date();
+        start.setDate(start.getDate() - 370);
+        for(let i=0; i<370; i++) {
+          const dateStr = start.toISOString().split('T')[0];
+          // sparse older, dense newer
+          const isNewer = i > 250;
+          const level = Math.random() < (isNewer ? 0.6 : 0.1) ? Math.floor(Math.random() * 5) : 0;
+          dummyDays.append({ date: dateStr, level: level });
+          start.setDate(start.getDate() + 1);
+        }
+        contribData.days = dummyDays;
+        updateUI();
+        initGame();
+      });
+
+    // Update inspect UI texts
+    function updateUI() {
+      document.getElementById('totalCommitsStat').innerText = contribData.total;
+      document.getElementById('hudYearly').innerText = contribData.total;
+    }
+
+    // ================= 3D JOKER CARD HOVER LOGIC =================
+    const jokerCard = document.getElementById('jokerCard');
+    
+    jokerCard.addEventListener('mousemove', (e) => {
+      const rect = jokerCard.getBoundingClientRect();
+      const x = e.clientX - rect.left; // x coordinate within client
+      const y = e.clientY - rect.top;  // y coordinate within client
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate rotation based on pointer position relative to center
+      const rotateX = -(y - centerY) / 8;
+      const rotateY = (x - centerX) / 8;
+      
+      // Set values
+      jokerCard.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+      
+      // Position the holographic shimmer
+      const sheenX = ((x / rect.width) * 100) - 50;
+      const sheenY = ((y / rect.height) * 100) - 50;
+      jokerCard.style.setProperty('--x', `${sheenX}%`);
+      jokerCard.style.setProperty('--y', `${sheenY}%`);
+    });
+
+    jokerCard.addEventListener('mouseleave', () => {
+      // Reset rotation
+      jokerCard.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
+      jokerCard.style.setProperty('--x', '0%');
+      jokerCard.style.setProperty('--y', '0%');
+    });
+
+    // Scoring click trigger
+    jokerCard.addEventListener('click', () => {
+      // Create popup mult text
+      const popup = document.createElement('div');
+      popup.className = 'mult-popup';
+      popup.innerText = `+${contribData.total} Mult`;
+      jokerCard.appendChild(popup);
+      
+      // Flash mult modifiers
+      const multTag = document.getElementById('multTag');
+      const streakTag = document.getElementById('streakTag');
+      
+      multTag.style.transform = 'scale(1.25)';
+      multTag.style.filter = 'brightness(2) drop-shadow(0 0 5px var(--red))';
+      
+      setTimeout(() => {
+        multTag.style.transform = 'scale(1)';
+        multTag.style.filter = 'none';
+        
+        streakTag.style.transform = 'scale(1.25)';
+        streakTag.style.filter = 'brightness(2) drop-shadow(0 0 5px var(--blue))';
+      }, 200);
+
+      setTimeout(() => {
+        streakTag.style.transform = 'scale(1)';
+        streakTag.style.filter = 'none';
+      }, 400);
+
+      // Clean up popup
+      setTimeout(() => {
+        popup.remove();
+      }, 800);
+    });
+
+    // ================= BOMBERMAN GAMEPLAY LOGIC =================
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    const CELL_SIZE = 12.5;
+    const GRID_COLS = 53;
+    const GRID_ROWS = 7;
+    
+    // Board offsets
+    const OFFSET_X = 20;
+    const OFFSET_Y = 25;
+    
+    let grid = [];
+    let player = { x: 0, y: 0, targetX: 0, targetY: 0, moveProgress: 0 };
+    let bombs = [];
+    let explosions = [];
+    let bricksCleared = 0;
+    let keysPressed = {};
+
+    function initGame() {
+      grid = [];
+      const days = contribData.days;
+      
+      if (!days || days.length === 0) return;
+      
+      // Determine starting weekday row offset
+      const startDate = new Date(days[0].date);
+      const startRow = startDate.getDay(); // 0 is Sunday
+      
+      let col = 0;
+      let row = startRow;
+      
+      for(let i=0; i<days.length; i++) {
+        if (col >= GRID_COLS) break;
+        grid.push({
+          col: col,
+          row: row,
+          level: days[i].level, // 0 to 4
+          isBrick: days[i].level === 0, // 0 commits represents soft destructible clay brick
+          isDestroyed: false
+        });
+        
+        row++;
+        if (row === GRID_ROWS) {
+          row = 0;
+          col++;
+        }
+      }
+      
+      // Find a starting safe empty spot for player on the left side
+      let foundStart = false;
+      for(let c=0; c<GRID_COLS; c++) {
+        for(let r=0; r<GRID_ROWS; r++) {
+          const cell = getCell(c, r);
+          if (cell && cell.isBrick) {
+            player.x = c;
+            player.y = r;
+            player.targetX = c;
+            player.targetY = r;
+            cell.isBrick = false; // clear starting block
+            foundStart = true;
+            break;
+          }
+        }
+        if (foundStart) break;
+      }
+      
+      bombs = [];
+      explosions = [];
+      bricksCleared = 0;
+      document.getElementById('hudCleared').innerText = bricksCleared;
+      document.getElementById('hudStatus').innerText = "PLAYING";
+      document.getElementById('hudStatus').style.color = "var(--green)";
+      
+      // Start loop
+      requestAnimationFrame(gameLoop);
+    }
+
+    function getCell(c, r) {
+      return grid.find(cell => cell.col === c && cell.row === r);
+    }
+
+    // Input handlers
+    window.addEventListener('keydown', (e) => {
+      keysPressed[e.key.toLowerCase()] = true;
+      if (e.key === " ") {
+        e.preventDefault();
+        spawnBomb();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      keysPressed[e.key.toLowerCase()] = false;
+    });
+
+    function spawnBomb() {
+      // Allow dropping only at current player cell
+      const px = Math.round(player.x);
+      const py = Math.round(player.y);
+      
+      // Check if bomb already at position
+      if (bombs.some(b => b.x === px && b.y === py)) return;
+      
+      bombs.push({
+        x: px,
+        y: py,
+        timer: 1500, // 1.5 seconds fuse
+        flashTimer: 0
+      });
+    }
+
+    function movePlayer() {
+      // Only process new move if player is stationary
+      if (player.x === player.targetX && player.y === player.targetY) {
+        let dx = 0;
+        let dy = 0;
+        
+        if (keysPressed['w'] || keysPressed['arrowup']) dy = -1;
+        else if (keysPressed['s'] || keysPressed['arrowdown']) dy = 1;
+        else if (keysPressed['a'] || keysPressed['arrowleft']) dx = -1;
+        else if (keysPressed['d'] || keysPressed['arrowright']) dx = 1;
+        
+        if (dx !== 0 || dy !== 0) {
+          const nx = player.x + dx;
+          const ny = player.y + dy;
+          
+          // Boundary checking
+          if (nx >= 0 && nx < GRID_COLS && ny >= 0 && ny < GRID_ROWS) {
+            const nextCell = getCell(nx, ny);
+            // Cannot walk through soft bricks or green commits
+            if (nextCell && !nextCell.isBrick && nextCell.level === 0) {
+              player.targetX = nx;
+              player.targetY = ny;
+              player.moveProgress = 0;
+            }
+          }
+        }
+      } else {
+        // Interpolate smooth movement
+        player.moveProgress += 0.2; // Speed divisor
+        if (player.moveProgress >= 1) {
+          player.x = player.targetX;
+          player.y = player.targetY;
+        } else {
+          player.x = player.x + (player.targetX - player.x) * 0.2;
+          player.y = player.y + (player.targetY - player.y) * 0.2;
+        }
+      }
+    }
+
+    let lastTime = 0;
+    function gameLoop(time) {
+      const dt = time - lastTime;
+      lastTime = time;
+      
+      update(dt);
+      draw();
+      
+      requestAnimationFrame(gameLoop);
+    }
+
+    function update(dt) {
+      movePlayer();
+      
+      // Update bombs
+      for (let i = bombs.length - 1; i >= 0; i--) {
+        const bomb = bombs[i];
+        bomb.timer -= dt;
+        bomb.flashTimer += dt;
+        
+        if (bomb.timer <= 0) {
+          // Explode!
+          triggerExplosion(bomb.x, bomb.y);
+          bombs.splice(i, 1);
+        }
+      }
+      
+      // Update explosions
+      for (let i = explosions.length - 1; i >= 0; i--) {
+        const exp = explosions[i];
+        exp.duration -= dt;
+        if (exp.duration <= 0) {
+          explosions.splice(i, 1);
+        }
+      }
+    }
+
+    function triggerExplosion(bx, by) {
+      const radius = 2; // blast radius 2 cells
+      const cellsToBlow = [[bx, by]];
+      
+      // Explode directions: Up, Down, Left, Right
+      const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+      
+      dirs.forEach(dir => {
+        for(let r=1; r<=radius; r++) {
+          const cx = bx + dir[0] * r;
+          const cy = by + dir[1] * r;
+          
+          if (cx >= 0 && cx < GRID_COLS && cy >= 0 && cy < GRID_ROWS) {
+            const cell = getCell(cx, cy);
+            cellsToBlow.push([cx, cy]);
+            
+            // Hard blocks block blast waves, soft bricks stop blast waves but get destroyed
+            if (cell) {
+              if (cell.level > 0) {
+                // Hard block triggers hits visual effect but stops blast wave
+                break;
+              }
+              if (cell.isBrick) {
+                // Soft brick breaks and stops blast wave
+                cell.isBrick = false;
+                cell.isDestroyed = true;
+                bricksCleared++;
+                document.getElementById('hudCleared').innerText = bricksCleared;
+                break;
+              }
+            }
+          }
+        }
+      });
+      
+      // Spawn blast particles for drawing
+      explosions.push({
+        center: { x: bx, y: by },
+        cells: cellsToBlow,
+        duration: 500 // half second blast
+      });
+      
+      // Check player death
+      const px = Math.round(player.x);
+      const py = Math.round(player.y);
+      const playerHit = cellsToBlow.some(c => c[0] === px && c[1] === py);
+      
+      if (playerHit) {
+        document.getElementById('hudStatus').innerText = "BLOWN UP!";
+        document.getElementById('hudStatus').style.color = "var(--red)";
+        
+        // Reset player after delay
+        setTimeout(() => {
+          initGame();
+        }, 1000);
+      }
+    }
+
+    function draw() {
+      // Clear canvas
+      ctx.fillStyle = '#0f0f15';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // 1. Draw Grid background dots
+      ctx.fillStyle = '#2d3139';
+      for(let col=0; col<GRID_COLS; col++) {
+        for(let row=0; row<GRID_ROWS; row++) {
+          const cx = OFFSET_X + col * CELL_SIZE + 6;
+          const cy = OFFSET_Y + row * CELL_SIZE + 6;
+          ctx.beginPath();
+          ctx.arc(cx, cy, 1.2, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }
+      
+      // 2. Draw Contribution blocks and bricks
+      grid.forEach(cell => {
+        const x = OFFSET_X + cell.col * CELL_SIZE;
+        const y = OFFSET_Y + cell.row * CELL_SIZE;
+        
+        if (cell.level > 0) {
+          // Hard block (Green Commit Day)
+          // Set HSL greens
+          if (cell.level === 1) ctx.fillStyle = '#145e39';
+          else if (cell.level === 2) ctx.fillStyle = '#1fb35a';
+          else if (cell.level === 3) ctx.fillStyle = '#3ee27b';
+          else if (cell.level === 4) ctx.fillStyle = '#9effc6';
+          
+          drawBeveledCube(x, y);
+        } else if (cell.isBrick) {
+          // Soft Block (Clay Brick)
+          ctx.fillStyle = '#45475a';
+          drawBeveledBrick(x, y);
+        }
+      });
+      
+      // 3. Draw active bombs
+      bombs.forEach(bomb => {
+        const x = OFFSET_X + bomb.x * CELL_SIZE + 6;
+        const y = OFFSET_Y + bomb.y * CELL_SIZE + 6;
+        
+        const isFlash = Math.floor(bomb.flashTimer / 200) % 2 === 0;
+        ctx.fillStyle = isFlash ? 'var(--red)' : '#313244';
+        
+        ctx.beginPath();
+        ctx.arc(x, y, 4.5, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Bomb fuse
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x + 1, y - 4);
+        ctx.quadraticCurveTo(x + 4, y - 6, x + 5, y - 8);
+        ctx.stroke();
+        
+        // Fuse spark
+        ctx.fillStyle = 'var(--yellow)';
+        ctx.beginPath();
+        ctx.arc(x + 5, y - 8, 1, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+      
+      // 4. Draw explosions (blast fire waves)
+      explosions.forEach(exp => {
+        exp.cells.forEach(cell => {
+          const x = OFFSET_X + cell[0] * CELL_SIZE + 1;
+          const y = OFFSET_Y + cell[1] * CELL_SIZE + 1;
+          
+          ctx.fillStyle = 'rgba(255, 112, 67, 0.8)';
+          ctx.fillRect(x, y, 10, 10);
+          ctx.fillStyle = 'rgba(255, 202, 40, 0.9)';
+          ctx.fillRect(x + 2, y + 2, 6, 6);
+        });
+      });
+      
+      // 5. Draw Player (Bomberman)
+      const px = OFFSET_X + player.x * CELL_SIZE + 5;
+      const py = OFFSET_Y + player.y * CELL_SIZE + 5;
+      
+      // Body
+      ctx.fillStyle = 'var(--blue)';
+      ctx.fillRect(px - 3, py, 6, 5);
+      
+      // Belt
+      ctx.fillStyle = 'var(--yellow)';
+      ctx.fillRect(px - 3, py + 3, 6, 1.5);
+      
+      // Helmet Head
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(px - 4, py - 7, 8, 7);
+      
+      // Pom-pom
+      ctx.fillStyle = 'var(--red)';
+      ctx.beginPath();
+      ctx.arc(px + 1, py - 9, 1.5, 0, 2 * Math.PI);
+      ctx.fill();
+      
+      // Eyes
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(px - 2, py - 4, 1, 3);
+      ctx.fillRect(px + 1, py - 4, 1, 3);
+    }
+
+    // Helper: Draw 3D beveled block
+    function drawBeveledCube(x, y) {
+      ctx.fillRect(x, y, 10, 10);
+      
+      // Light highlight (top & left)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.fillRect(x + 0.8, y + 0.8, 8.4, 1.2);
+      ctx.fillRect(x + 0.8, y + 0.8, 1.2, 8.4);
+      
+      // Dark shadow (bottom & right)
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      ctx.fillRect(x + 0.8, y + 8.0, 8.4, 1.2);
+      ctx.fillRect(x + 8.0, y + 0.8, 1.2, 8.4);
+    }
+
+    // Helper: Draw beveled brick texture
+    function drawBeveledBrick(x, y) {
+      ctx.fillRect(x, y, 10, 10);
+      
+      // Brick joint lines
+      ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+      ctx.lineWidth = 0.8;
+      ctx.beginPath();
+      ctx.moveTo(x, y + 4.5);
+      ctx.lineTo(x + 10, y + 4.5);
+      ctx.moveTo(x + 5, y);
+      ctx.lineTo(x + 5, y + 4.5);
+      ctx.moveTo(x + 3, y + 4.5);
+      ctx.lineTo(x + 3, y + 10);
+      ctx.moveTo(x + 7, y + 4.5);
+      ctx.lineTo(x + 7, y + 10);
+      ctx.stroke();
+      
+      // Bevels
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.fillRect(x + 0.5, y + 0.5, 9, 1);
+      ctx.fillRect(x + 0.5, y + 0.5, 1, 9);
+      
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+      ctx.fillRect(x + 0.5, y + 8.5, 9, 1);
+      ctx.fillRect(x + 8.5, y + 0.5, 1, 9);
+    }
+  </script>
+</body>
+</html>

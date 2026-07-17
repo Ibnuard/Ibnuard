@@ -13,7 +13,14 @@
 
 ---
 
-## 🕹️ The Dev Arcade
+## 🕹️ The Dev Arcade (Interactive Web App)
+
+👉 🌟 **[Click here to Enter the Interactive Dev Arcade!](https://ibnuard.github.io/Ibnuard/)**
+*(Play Bomberman using your keyboard, drop bombs to blast away empty days, and hover/click the Balatro card to score multipliers in real-time 3D!)*
+
+---
+
+## 🎮 Profile Widgets
 
 ### 🃏 The Hacker Joker
 <p align="center">
