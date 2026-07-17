@@ -37,7 +37,6 @@ try:
 except Exception as e:
     print(f"Error fetching data: {e}, using defaults.")
     contrib_count = "1,143"
-    # Fallback mock days if download fails
     days = [{'date': (datetime.date.today() - datetime.timedelta(days=i)).strftime('%Y-%m-%d'), 'level': 0} for i in range(370)]
     days.reverse()
 
@@ -92,25 +91,44 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
       0%, 100% {{ opacity: 0.2; transform: scale(0.8); }}
       50% {{ opacity: 0.9; transform: scale(1.2); }}
     }}
-    @keyframes mult-bounce-loop {{
-      0%, 75% {{ transform: translateY(0px) scale(0.8); opacity: 0; }}
-      80% {{ transform: translateY(-25px) scale(1.1); opacity: 1; }}
-      90% {{ transform: translateY(-40px) scale(1.0); opacity: 1; }}
-      95%, 100% {{ transform: translateY(-55px) scale(0.9); opacity: 0; }}
-    }}
-    @keyframes button-glow {{
-      0%, 100% {{ fill: #f5c2e7; filter: none; }}
-      50% {{ fill: #f8cde7; filter: url(#neon-glow); }}
-    }}
     @keyframes monitor-glitch {{
       0%, 100% {{ opacity: 0.95; }}
       50% {{ opacity: 0.7; }}
     }}
 
+    /* Balatro scoring sequence on an 8-second loop */
+    @keyframes mult-tag-trigger {{
+      0%, 12% {{ transform: scale(1); filter: none; }}
+      15%, 22% {{ transform: scale(1.15); fill: #ff0055; filter: url(#neon-glow); }}
+      25%, 100% {{ transform: scale(1); filter: none; }}
+    }}
+    @keyframes streak-tag-trigger {{
+      0%, 22% {{ transform: scale(1); filter: none; }}
+      25%, 32% {{ transform: scale(1.15); fill: #00ffff; filter: url(#neon-glow); }}
+      35%, 100% {{ transform: scale(1); filter: none; }}
+    }}
+    @keyframes popup-bounce-loop {{
+      0%, 35% {{ transform: translateY(0px) scale(0.8); opacity: 0; }}
+      40% {{ transform: translateY(-25px) scale(1.1); opacity: 1; }}
+      55% {{ transform: translateY(-40px) scale(1.0); opacity: 1; }}
+      60%, 100% {{ transform: translateY(-55px) scale(0.9); opacity: 0; }}
+    }}
+    @keyframes card-glitch-seq {{
+      0%, 34% {{ filter: none; }}
+      35% {{ filter: hue-rotate(90deg) brightness(1.5); }}
+      37% {{ filter: none; }}
+      39% {{ filter: hue-rotate(-90deg) brightness(1.3); }}
+      41%, 100% {{ filter: none; }}
+    }}
+    @keyframes button-glow {{
+      0%, 100% {{ fill: #f5c2e7; filter: none; }}
+      50% {{ fill: #f8cde7; filter: url(#neon-glow); }}
+    }}
+
     .joker-card-group {{
       transform-style: preserve-3d;
       transform-origin: 95px 125px;
-      animation: card-float 6s ease-in-out infinite;
+      animation: card-float 6s ease-in-out infinite, card-glitch-seq 8s infinite;
       cursor: pointer;
     }}
     .joker-card-group:hover {{
@@ -121,7 +139,7 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
     }}
     .mult-pop {{
       fill: #f38ba8;
-      animation: mult-bounce-loop 6s infinite ease-out;
+      animation: popup-bounce-loop 8s infinite ease-out;
       transform-origin: 95px 125px;
       pointer-events: none;
     }}
@@ -138,6 +156,10 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
     .font-sans-bold {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 700; }}
     .font-sans-regular {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 500; }}
     .buy-btn-text {{ pointer-events: none; }}
+    
+    /* Connect scoring tags to the animation classes */
+    .trigger-mult {{ animation: mult-tag-trigger 8s infinite ease-in-out; transform-origin: 53px 154px; }}
+    .trigger-streak {{ animation: streak-tag-trigger 8s infinite ease-in-out; transform-origin: 53px 171px; }}
   </style>
 
   <rect x="5" y="5" width="590" height="240" rx="12" ry="12" fill="#11111b" stroke="#313244" stroke-width="4" />
@@ -170,10 +192,10 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
     <polygon points="152,98 153,100 156,100 154,101 155,104 152,102 149,104 150,101 148,100 151,100" fill="#f9e2af" class="sparkle-star" style="animation-delay: 1.1s;" />
 
     <rect x="30" y="142" width="130" height="52" rx="6" fill="#11111b" stroke="#45475a" stroke-width="1" />
-    <rect x="36" y="148" width="34" height="12" rx="3" fill="#f38ba8" />
+    <rect x="36" y="148" width="34" height="12" rx="3" fill="#f38ba8" class="trigger-mult" />
     <text x="53" y="157" fill="#11111b" font-size="7" font-weight="900" text-anchor="middle" class="font-retro">+8 Mult</text>
     <text x="76" y="157" fill="#cdd6f4" font-size="7" class="font-sans-bold">low-level hacks</text>
-    <rect x="36" y="165" width="34" height="12" rx="3" fill="#89b4fa" />
+    <rect x="36" y="165" width="34" height="12" rx="3" fill="#89b4fa" class="trigger-streak" />
     <text x="53" y="174" fill="#11111b" font-size="7" font-weight="900" text-anchor="middle" class="font-retro">x1.5 Mult</text>
     <text x="76" y="174" fill="#cdd6f4" font-size="7" class="font-sans-bold">ship web/mobile</text>
 
@@ -185,7 +207,7 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
       <rect x="-105" y="-75" width="400" height="400" fill="url(#sweep-grad)" class="sweep-overlay" />
     </g>
 
-    <!-- Dynamic Mult Popup (Matches your actual yearly contribution count!) -->
+    <!-- Dynamic Mult Popup -->
     <text x="95" y="120" font-size="16" class="font-retro mult-pop" text-anchor="middle" font-weight="900">+{contrib_count} Mult</text>
   </g>
 
@@ -224,7 +246,6 @@ with open('balatro_joker.svg', 'w') as f:
 print("Saved balatro_joker.svg")
 
 # ================= BOMBERMAN SVG GENERATION =================
-# Set up starting offset
 if len(days) > 0:
     start_date = datetime.datetime.strptime(days[0]['date'], '%Y-%m-%d')
     start_row = (start_date.weekday() + 1) % 7
@@ -235,41 +256,54 @@ col = 0
 row = start_row
 cubes_xml = []
 
-# Define blast zone center
-# Let's target the right side (Column 47, Row 3)
-blast_col = 47
-blast_row = 3
+# Define blast zones for Bomb 1 and Bomb 2
+# Bomb 1 drops at Col 44, Row 3.
+blast1_col, blast1_row = 44, 3
+blast1_cells = []
+for c in range(blast1_col - 2, blast1_col + 3):
+    blast1_cells.append((c, blast1_row))
+for r in range(blast1_row - 2, blast1_row + 3):
+    blast1_cells.append((blast1_col, r))
 
-# Define cells inside the explosion blast radius (horizontal radius 2, vertical radius 2)
-blast_path = []
-for c in range(blast_col - 2, blast_col + 3):
-    blast_path.append((c, blast_row))
-for r in range(blast_row - 2, blast_row + 3):
-    blast_path.append((blast_col, r))
+# Bomb 2 drops at Col 48, Row 1.
+blast2_col, blast2_row = 48, 1
+blast2_cells = []
+for c in range(blast2_col - 2, blast2_col + 3):
+    blast2_cells.append((c, blast2_row))
+for r in range(blast2_row - 2, blast2_row + 3):
+    blast2_cells.append((blast2_col, r))
 
-# Map days to grid coordinates and build XML tags
+# Process grid blocks
 for i, day in enumerate(days):
-    if col >= 53: # safety cap
+    if col >= 53:
         break
     x = 20 + col * 12.5
     y = 30 + row * 12.5
     level = day['level']
-    is_in_blast = (col, row) in blast_path
+    cell = (col, row)
+    
+    in_b1 = cell in blast1_cells
+    in_b2 = cell in blast2_cells
 
     if level > 0:
         # Green block (Hard block)
-        if is_in_blast:
-            # Flashes briefly but survives
-            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit" />')
+        if in_b1 and in_b2:
+            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit-both" />')
+        elif in_b1:
+            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit-1" />')
+        elif in_b2:
+            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit-2" />')
         else:
             cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level}" />')
     else:
         # Empty space (Soft Brick block)
-        if is_in_blast:
-            # Gets blown up!
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick" />')
+        if in_b1 and in_b2:
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick-both" />')
+        elif in_b1:
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick-1" />')
+        elif in_b2:
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick-2" />')
         else:
-            # Static soft brick
             cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" fill="#242831" />')
 
     row += 1
@@ -279,6 +313,7 @@ for i, day in enumerate(days):
 
 cubes_svg_content = "\n    ".join(cubes_xml)
 
+# Complete Bomberman Board SVG with walk path and double explosion sequence
 bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="screen-glow" x="-10%" y="-10%" width="120%" height="120%">
@@ -308,13 +343,11 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
     <!-- 3D Beveled Soft Brick Block -->
     <g id="brick-cube">
       <rect x="0" y="0" width="10" height="10" rx="1" />
-      <!-- Texture lines representing joints -->
       <rect x="1" y="1" width="8" height="3" fill="#ffffff" opacity="0.15" />
       <line x1="5" y1="1" x2="5" y2="4" stroke="#000000" stroke-width="0.8" opacity="0.2" />
       <line x1="3" y1="5" x2="3" y2="9" stroke="#000000" stroke-width="0.8" opacity="0.2" />
       <line x1="7" y1="5" x2="7" y2="9" stroke="#000000" stroke-width="0.8" opacity="0.2" />
       <line x1="0" y1="4.5" x2="10" y2="4.5" stroke="#000000" stroke-width="0.8" opacity="0.3" />
-      <!-- Bevels -->
       <rect x="0.5" y="0.5" width="9" height="1" fill="#ffffff" opacity="0.25" />
       <rect x="0.5" y="0.5" width="1" height="9" fill="#ffffff" opacity="0.25" />
       <rect x="0.5" y="8.5" width="9" height="1" fill="#000000" opacity="0.4" />
@@ -325,61 +358,144 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
   <style>
     .retro-font {{ font-family: 'Fira Code', 'Courier New', Courier, monospace; font-weight: 900; }}
 
-    /* Tailored HSL Colors for high contrast */
-    .lvl1 {{ fill: #145e39; }} /* Vivid Dark Green */
-    .lvl2 {{ fill: #1fb35a; }} /* Fresh Green */
-    .lvl3 {{ fill: #3ee27b; }} /* Vibrant Mint Green */
-    .lvl4 {{ fill: #9effc6; }} /* Radiant Neon Green */
+    /* Vibrant customized greens */
+    .lvl1 {{ fill: #145e39; }}
+    .lvl2 {{ fill: #1fb35a; }}
+    .lvl3 {{ fill: #3ee27b; }}
+    .lvl4 {{ fill: #9effc6; }}
 
-    /* Animation Timings: 8 seconds loop */
+    /* ================= GAME TIMELINE: 16 SECONDS TOTAL ================= */
 
-    /* Active Bomb Flashing and scale heartbeat */
-    @keyframes bomb-pulse {{
-      0%, 40%, 80% {{ fill: #313244; transform: scale(1); }}
-      20%, 60% {{ fill: #f38ba8; transform: scale(1.15); filter: url(#neon-glow); }}
-      98% {{ opacity: 1; }}
-      100% {{ opacity: 0; }}
+    /* Bomberman Walking Path across the grid */
+    @keyframes bomberman-route {{
+      0% {{ transform: translate(495px, 66px); }} /* Stands at Col 38, Row 3 */
+      10% {{ transform: translate(495px, 66px); }}
+      20% {{ transform: translate(557px, 66px); }} /* Reaches Col 43 (3.2s) */
+      23% {{ transform: translate(557px, 66px); }} /* Drops Bomb 1 (3.6s) */
+      30% {{ transform: translate(520px, 66px); }} /* Runs away left to Col 40 (4.8s) */
+      35% {{ transform: translate(520px, 66px); }} /* Explosion 1 occurs (5.6s) */
+      45% {{ transform: translate(545px, 41px); }} /* Walks to Col 42, Row 1 (7.2s) */
+      55% {{ transform: translate(607px, 41px); }} /* Reaches Col 47, Row 1 (8.8s) */
+      58% {{ transform: translate(607px, 41px); }} /* Drops Bomb 2 (9.2s) */
+      65% {{ transform: translate(607px, 91px); }} /* Runs away down to Row 5 (10.4s) */
+      70% {{ transform: translate(607px, 91px); }} /* Explosion 2 occurs (11.2s) */
+      80% {{ transform: translate(495px, 66px); }} /* Walks back to start (12.8s) */
+      100% {{ transform: translate(495px, 66px); }}
     }}
-    .active-bomb {{
-      animation: bomb-pulse 2s steps(1) forwards;
-      transform-origin: 612.5px 72.5px; /* Center of Col 47, Row 3 (607.5 + 5, 67.5 + 5) */
-    }}
-
-    /* Explosion Flame Expansion */
-    @keyframes blast-expand {{
-      0%, 24% {{ opacity: 0; transform: scale(0.1); }}
-      25%, 35% {{ opacity: 1; transform: scale(1); }}
-      36%, 100% {{ opacity: 0; }}
-    }}
-    .blast-horiz {{
-      animation: blast-expand 8s infinite ease-out;
-      transform-origin: 612.5px 72.5px;
-    }}
-    .blast-vert {{
-      animation: blast-expand 8s infinite ease-out;
-      transform-origin: 612.5px 72.5px;
+    .bomberman-char {{
+      animation: bomberman-route 16s infinite ease-in-out;
+      transform-style: preserve-3d;
     }}
 
-    /* Soft Bricks getting destroyed */
-    @keyframes brick-shatter {{
-      0%, 24% {{ opacity: 1; }}
-      25%, 27% {{ fill: #ffffff; opacity: 1; }}
-      32% {{ opacity: 0; }}
+    /* Bomb 1 Flash and Explode */
+    @keyframes bomb1-glow {{
+      0%, 22% {{ opacity: 0; transform: scale(0); }}
+      23% {{ opacity: 1; transform: scale(1); fill: #313244; }}
+      27%, 31% {{ fill: #f38ba8; transform: scale(1.15); filter: url(#neon-glow); }}
+      25%, 29% {{ fill: #313244; transform: scale(1); filter: none; }}
+      34.9% {{ opacity: 1; }}
+      35%, 100% {{ opacity: 0; transform: scale(0); }}
+    }}
+    .bomb-1 {{
+      animation: bomb1-glow 16s infinite steps(1);
+      transform-origin: 576.5px 72.5px; /* Col 44, Row 3 center */
+    }}
+
+    /* Bomb 2 Flash and Explode */
+    @keyframes bomb2-glow {{
+      0%, 57% {{ opacity: 0; transform: scale(0); }}
+      58% {{ opacity: 1; transform: scale(1); fill: #313244; }}
+      62%, 66% {{ fill: #f38ba8; transform: scale(1.15); filter: url(#neon-glow); }}
+      60%, 64% {{ fill: #313244; transform: scale(1); filter: none; }}
+      69.9% {{ opacity: 1; }}
+      70%, 100% {{ opacity: 0; transform: scale(0); }}
+    }}
+    .bomb-2 {{
+      animation: bomb2-glow 16s infinite steps(1);
+      transform-origin: 626.5px 47.5px; /* Col 48, Row 1 center */
+    }}
+
+    /* Explosion 1 Fire Wave */
+    @keyframes blast1-expand {{
+      0%, 34.9% {{ opacity: 0; transform: scale(0.1); }}
+      35%, 42% {{ opacity: 1; transform: scale(1); }}
+      43%, 100% {{ opacity: 0; }}
+    }}
+    .b1-horiz, .b1-vert {{
+      animation: blast1-expand 16s infinite ease-out;
+      transform-origin: 576.5px 72.5px;
+    }}
+
+    /* Explosion 2 Fire Wave */
+    @keyframes blast2-expand {{
+      0%, 69.9% {{ opacity: 0; transform: scale(0.1); }}
+      70%, 77% {{ opacity: 1; transform: scale(1); }}
+      78%, 100% {{ opacity: 0; }}
+    }}
+    .b2-horiz, .b2-vert {{
+      animation: blast2-expand 16s infinite ease-out;
+      transform-origin: 626.5px 47.5px;
+    }}
+
+    /* Bricks cleared by Bomb 1 */
+    @keyframes brick1-clear {{
+      0%, 34.9% {{ opacity: 1; }}
+      35%, 37% {{ fill: #ffffff; opacity: 1; }}
+      42% {{ opacity: 0; }}
       95% {{ opacity: 0; }}
       100% {{ opacity: 1; }}
     }}
-    .destructible-brick {{
-      animation: brick-shatter 8s infinite steps(1);
+    .destructible-brick-1 {{
+      animation: brick1-clear 16s infinite steps(1);
     }}
 
-    /* Hard blocks flashing when hit by explosion */
-    @keyframes hard-block-flash {{
-      0%, 24% {{ filter: none; }}
-      25%, 28% {{ filter: brightness(2.5); }}
-      29%, 100% {{ filter: none; }}
+    /* Bricks cleared by Bomb 2 */
+    @keyframes brick2-clear {{
+      0%, 69.9% {{ opacity: 1; }}
+      70%, 72% {{ fill: #ffffff; opacity: 1; }}
+      77% {{ opacity: 0; }}
+      95% {{ opacity: 0; }}
+      100% {{ opacity: 1; }}
     }}
-    .hard-block-hit {{
-      animation: hard-block-flash 8s infinite;
+    .destructible-brick-2 {{
+      animation: brick2-clear 16s infinite steps(1);
+    }}
+
+    /* Bricks cleared by both (if overlapping, otherwise fallback) */
+    .destructible-brick-both {{
+      animation: brick1-clear 16s infinite steps(1);
+    }}
+
+    /* Hard blocks flashing when hit by Explosion 1 */
+    @keyframes hit1-flash {{
+      0%, 34.9% {{ filter: none; }}
+      35%, 38% {{ filter: brightness(2.5); }}
+      39%, 100% {{ filter: none; }}
+    }}
+    .hard-block-hit-1 {{
+      animation: hit1-flash 16s infinite;
+    }}
+
+    /* Hard blocks flashing when hit by Explosion 2 */
+    @keyframes hit2-flash {{
+      0%, 69.9% {{ filter: none; }}
+      70%, 73% {{ filter: brightness(2.5); }}
+      74%, 100% {{ filter: none; }}
+    }}
+    .hard-block-hit-2 {{
+      animation: hit2-flash 16s infinite;
+    }}
+
+    /* Hard blocks hit by both */
+    @keyframes hit-both-flash {{
+      0%, 34.9% {{ filter: none; }}
+      35%, 38% {{ filter: brightness(2.5); }}
+      39%, 69.9% {{ filter: none; }}
+      70%, 73% {{ filter: brightness(2.5); }}
+      74%, 100% {{ filter: none; }}
+    }}
+    .hard-block-hit-both {{
+      animation: hit-both-flash 16s infinite;
     }}
 
     @keyframes stat-pulse {{
@@ -408,37 +524,49 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
   <!-- ================= DYNAMIC GRID BLOCKS (BRICKS & COMMITS) ================= -->
   {cubes_svg_content}
 
-  <!-- ================= BOMB & EXPLOSION EFFECTS ================= -->
-  <!-- Active Bomb placed at Column 47, Row 3 (x=607.5, y=67.5) -->
-  <g class="active-bomb">
-    <circle cx="612.5" cy="72.5" r="4.5" />
-    <path d="M 613 68 L 615 65" stroke="#ffffff" stroke-width="1" />
-    <circle cx="616" cy="64" r="1" fill="#f9e2af" />
+  <!-- ================= BOMB 1 & EXPLOSION 1 ================= -->
+  <!-- Active Bomb 1 placed at Column 44, Row 3 (x=570.0, y=67.5) -->
+  <g class="bomb-1">
+    <circle cx="575.0" cy="72.5" r="4.5" />
+    <path d="M 575.5 68 L 577.5 65" stroke="#ffffff" stroke-width="1" />
+    <circle cx="578.5" cy="64" r="1" fill="#f9e2af" />
   </g>
 
-  <!-- Explosion Blast Waves (Fires at 2s) -->
-  <!-- Horizontal fire: spanning columns 45 to 49 (x=582.5 to 645.0) -->
-  <rect x="582.5" y="68.5" width="60" height="8" rx="2" fill="#ff7043" opacity="0" class="blast-horiz" />
-  <rect x="587.5" y="69.5" width="50" height="6" rx="2" fill="#ffca28" opacity="0" class="blast-horiz" />
-
+  <!-- Explosion 1 Blast Waves -->
+  <!-- Horizontal fire: spanning cols 42 to 46 (x=545.0 to 607.5) -->
+  <rect x="545.0" y="68.5" width="62.5" height="8" rx="2" fill="#ff7043" opacity="0" class="b1-horiz" />
+  <rect x="550.0" y="69.5" width="52.5" height="6" rx="2" fill="#ffca28" opacity="0" class="b1-horiz" />
   <!-- Vertical fire: spanning rows 1 to 5 (y=42.5 to 105.0) -->
-  <rect x="608.5" y="42.5" width="8" height="60" rx="2" fill="#ff7043" opacity="0" class="blast-vert" />
-  <rect x="609.5" y="47.5" width="6" height="50" rx="2" fill="#ffca28" opacity="0" class="blast-vert" />
+  <rect x="571.0" y="42.5" width="8" height="62.5" rx="2" fill="#ff7043" opacity="0" class="b1-vert" />
+  <rect x="572.0" y="47.5" width="6" height="52.5" rx="2" fill="#ffca28" opacity="0" class="b1-vert" />
+
+  <!-- ================= BOMB 2 & EXPLOSION 2 ================= -->
+  <!-- Active Bomb 2 placed at Column 48, Row 1 (x=620.0, y=42.5) -->
+  <g class="bomb-2">
+    <circle cx="625.0" cy="47.5" r="4.5" />
+    <path d="M 625.5 43 L 627.5 40" stroke="#ffffff" stroke-width="1" />
+    <circle cx="628.5" cy="39" r="1" fill="#f9e2af" />
+  </g>
+
+  <!-- Explosion 2 Blast Waves -->
+  <!-- Horizontal fire: spanning cols 46 to 50 (x=595.0 to 657.5) -->
+  <rect x="595.0" y="43.5" width="62.5" height="8" rx="2" fill="#ff7043" opacity="0" class="b2-horiz" />
+  <rect x="600.0" y="44.5" width="52.5" height="6" rx="2" fill="#ffca28" opacity="0" class="b2-horiz" />
+  <!-- Vertical fire: spanning rows 0 to 3 (y=30.0 to 80.0) -->
+  <rect x="621.0" y="30.0" width="8" height="50" rx="2" fill="#ff7043" opacity="0" class="b2-vert" />
+  <rect x="622.0" y="35.0" width="6" height="40" rx="2" fill="#ffca28" opacity="0" class="b2-vert" />
 
   <!-- ================= BOMBERMAN CHARACTER ================= -->
-  <!-- Pixel art Bomberman standing at Column 44, Row 3 (x=570.0, y=67.5) -->
-  <g transform="translate(569, 66)" class="glitch-monitor">
-    <!-- Casing head -->
-    <rect x="2" y="-1" width="8" height="8" rx="2" fill="#ffffff" stroke="#11111b" stroke-width="0.8" />
-    <!-- Pom-pom -->
-    <circle cx="6" cy="-3" r="1.5" fill="#f38ba8" stroke="#11111b" stroke-width="0.5" />
-    <!-- Eyes inside mask -->
-    <ellipse cx="4.5" cy="3" rx="0.5" ry="1.5" fill="#000000" />
-    <ellipse cx="7.5" cy="3" rx="0.5" ry="1.5" fill="#000000" />
-    <!-- Body/Outfit -->
-    <rect x="3" y="7" width="6" height="5" fill="#89b4fa" stroke="#11111b" stroke-width="0.8" />
-    <!-- Belt -->
-    <rect x="3" y="10" width="6" height="1.5" fill="#f9e2af" />
+  <!-- Walking Bomberman character, routes across the board -->
+  <g class="bomberman-char">
+    <g class="glitch-monitor">
+      <rect x="-3" y="-8" width="8" height="8" rx="2" fill="#ffffff" stroke="#11111b" stroke-width="0.8" />
+      <circle cx="1" cy="-10" r="1.5" fill="#f38ba8" stroke="#11111b" stroke-width="0.5" />
+      <ellipse cx="-0.5" cy="-4" rx="0.5" ry="1.5" fill="#000000" />
+      <ellipse cx="2.5" cy="-4" rx="0.5" ry="1.5" fill="#000000" />
+      <rect x="-2" y="0" width="6" height="5" fill="#89b4fa" stroke="#11111b" stroke-width="0.8" />
+      <rect x="-2" y="3" width="6" height="1.5" fill="#f9e2af" />
+    </g>
   </g>
 
   <!-- ================= RIGHT PANEL: STATS DISPLAY ================= -->
