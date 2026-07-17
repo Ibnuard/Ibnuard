@@ -212,62 +212,112 @@ else:
 
 col = 0
 row = start_row
-cubes_xml = []
+commit_blocks_xml = []
+brick_phase_xml = [[] for _ in range(5)]
+blast_points = [(7, 4), (17, 2), (28, 5), (39, 3), (48, 1)]
+phase_timings = [(18, 25), (31, 38), (44, 51), (57, 64), (70, 78)]
 
-# Define blast zones for Bomb 1 and Bomb 2
-blast1_col, blast1_row = 44, 3
-blast1_cells = []
-for c in range(blast1_col - 2, blast1_col + 3):
-    blast1_cells.append((c, blast1_row))
-for r in range(blast1_row - 2, blast1_row + 3):
-    blast1_cells.append((blast1_col, r))
 
-blast2_col, blast2_row = 48, 1
-blast2_cells = []
-for c in range(blast2_col - 2, blast2_col + 3):
-    blast2_cells.append((c, blast2_row))
-for r in range(blast2_row - 2, blast2_row + 3):
-    blast2_cells.append((blast2_col, r))
+def cell_center(c, r):
+    return (20 + c * 12.5 + 5, 30 + r * 12.5 + 5)
 
-# Build XML for every contribution cell. Empty days start as clay bricks, then
-# the animation clears them so the final state leaves only green commit blocks.
+
+def wave_keyframes(index, clear_start, clear_end):
+    return f"""    @keyframes brick-wave-{index}-clear {{
+      0%, {clear_start - 0.1:.1f}% {{ opacity: 1; }}
+      {clear_start}%, 95% {{ opacity: 0; }}
+      100% {{ opacity: 1; }}
+    }}
+    .brick-wave-{index} {{
+      animation: brick-wave-{index}-clear 16s infinite steps(1);
+    }}
+
+    @keyframes bomb-marker-{index}-blink {{
+      0%, {clear_start - 4.1:.1f}% {{ opacity: 0; transform: scale(0.6); }}
+      {clear_start - 4:.1f}%, {clear_start - 0.2:.1f}% {{ opacity: 1; transform: scale(1); }}
+      {clear_start}%, 100% {{ opacity: 0; transform: scale(0.6); }}
+    }}
+    .bomb-marker-{index} {{
+      animation: bomb-marker-{index}-blink 16s infinite steps(1);
+    }}
+
+    @keyframes blast-wave-{index}-pop {{
+      0%, {clear_start - 0.1:.1f}% {{ opacity: 0; transform: scale(0.2); }}
+      {clear_start}%, {clear_start + 2:.1f}% {{ opacity: 1; transform: scale(1); }}
+      {clear_end}%, 100% {{ opacity: 0; transform: scale(1.15); }}
+    }}
+    .blast-wave-{index} {{
+      animation: blast-wave-{index}-pop 16s infinite ease-out;
+    }}"""
+
+
+def blast_markup(index, col_index, row_index):
+    cx, cy = cell_center(col_index, row_index)
+    return f"""  <g class="blast-wave blast-wave-{index}" transform-origin="{cx}px {cy}px" filter="url(#neon-glow)">
+    <rect x="{cx - 31.25:.1f}" y="{cy - 4:.1f}" width="62.5" height="8" rx="2" fill="#ff7043" />
+    <rect x="{cx - 26.25:.1f}" y="{cy - 3:.1f}" width="52.5" height="6" rx="2" fill="#ffca28" />
+    <rect x="{cx - 4:.1f}" y="{cy - 31.25:.1f}" width="8" height="62.5" rx="2" fill="#ff7043" />
+    <rect x="{cx - 3:.1f}" y="{cy - 26.25:.1f}" width="6" height="52.5" rx="2" fill="#ffca28" />
+  </g>"""
+
+
+def bomb_markup(index, col_index, row_index):
+    cx, cy = cell_center(col_index, row_index)
+    return f"""  <g class="bomb-marker bomb-marker-{index}" transform-origin="{cx}px {cy}px">
+    <circle cx="{cx:.1f}" cy="{cy:.1f}" r="4.5" fill="#313244" />
+    <path d="M {cx + 0.5:.1f} {cy - 4.5:.1f} L {cx + 2.5:.1f} {cy - 7.5:.1f}" stroke="#ffffff" stroke-width="1" />
+    <circle cx="{cx + 3.5:.1f}" cy="{cy - 8.5:.1f}" r="1" fill="#f9e2af" />
+  </g>"""
+
+
+brick_wave_css = "\n".join(
+    wave_keyframes(index, clear_start, clear_end)
+    for index, (clear_start, clear_end) in enumerate(phase_timings)
+)
+blast_svg_content = "\n".join(
+    blast_markup(index, col_index, row_index)
+    for index, (col_index, row_index) in enumerate(blast_points)
+)
+bomb_svg_content = "\n".join(
+    bomb_markup(index, col_index, row_index)
+    for index, (col_index, row_index) in enumerate(blast_points)
+)
+
+route_points = [cell_center(c, r) for c, r in blast_points]
+route_points.append(route_points[0])
+bomberman_route_css = "\n".join(
+    f"      {round((index / (len(route_points) - 1)) * 100, 1)}% {{ transform: translate({x:.1f}px, {y:.1f}px); }}"
+    for index, (x, y) in enumerate(route_points)
+)
+
+# Build XML for every contribution cell. Empty days start as clay bricks, but
+# the bricks are animated in five group waves instead of per-cell animations.
 for i, day in enumerate(days):
     if col >= 53:
         break
     x = 20 + col * 12.5
     y = 30 + row * 12.5
     level = day['level']
-    cell = (col, row)
-    
-    in_b1 = cell in blast1_cells
-    in_b2 = cell in blast2_cells
 
-    # Only render green commit days to keep SVG extremely lightweight
     if level > 0:
-        if in_b1 and in_b2:
-            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit-both" />')
-        elif in_b1:
-            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit-1" />')
-        elif in_b2:
-            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level} hard-block-hit-2" />')
-        else:
-            cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level}" />')
+        commit_blocks_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level}" />')
     else:
-        if in_b1 and in_b2:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-both" />')
-        elif in_b1:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-1" />')
-        elif in_b2:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-2" />')
-        else:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-idle" />')
+        phase = min(4, col // 11)
+        brick_phase_xml[phase].append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick" />')
 
     row += 1
     if row == 7:
         row = 0
         col += 1
 
-cubes_svg_content = "\n    ".join(cubes_xml)
+brick_groups_xml = []
+for phase, brick_xml in enumerate(brick_phase_xml):
+    if brick_xml:
+        brick_groups_xml.append(
+            f'<g class="brick-wave brick-wave-{phase}">\n      ' + "\n      ".join(brick_xml) + "\n    </g>"
+        )
+
+cubes_svg_content = "\n    ".join(brick_groups_xml + commit_blocks_xml)
 
 bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -320,135 +370,14 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
     .destructible-brick {{ fill: #45475a; }}
 
     @keyframes bomberman-route {{
-      0% {{ transform: translate(495px, 66px); }}
-      10% {{ transform: translate(495px, 66px); }}
-      20% {{ transform: translate(557px, 66px); }}
-      23% {{ transform: translate(557px, 66px); }}
-      30% {{ transform: translate(520px, 66px); }}
-      35% {{ transform: translate(520px, 66px); }}
-      45% {{ transform: translate(545px, 41px); }}
-      55% {{ transform: translate(607px, 41px); }}
-      58% {{ transform: translate(607px, 41px); }}
-      65% {{ transform: translate(607px, 91px); }}
-      70% {{ transform: translate(607px, 91px); }}
-      80% {{ transform: translate(495px, 66px); }}
-      100% {{ transform: translate(495px, 66px); }}
+{bomberman_route_css}
     }}
     .bomberman-char {{
       animation: bomberman-route 16s infinite ease-in-out;
       transform-style: preserve-3d;
     }}
 
-    @keyframes bomb1-glow {{
-      0%, 22% {{ opacity: 0; transform: scale(0); }}
-      23% {{ opacity: 1; transform: scale(1); fill: #313244; }}
-      27%, 31% {{ fill: #f38ba8; transform: scale(1.15); filter: url(#neon-glow); }}
-      25%, 29% {{ fill: #313244; transform: scale(1); filter: none; }}
-      34.9% {{ opacity: 1; }}
-      35%, 100% {{ opacity: 0; transform: scale(0); }}
-    }}
-    .bomb-1 {{
-      animation: bomb1-glow 16s infinite steps(1);
-      transform-origin: 576.5px 72.5px;
-    }}
-
-    @keyframes bomb2-glow {{
-      0%, 57% {{ opacity: 0; transform: scale(0); }}
-      58% {{ opacity: 1; transform: scale(1); fill: #313244; }}
-      62%, 66% {{ fill: #f38ba8; transform: scale(1.15); filter: url(#neon-glow); }}
-      60%, 64% {{ fill: #313244; transform: scale(1); filter: none; }}
-      69.9% {{ opacity: 1; }}
-      70%, 100% {{ opacity: 0; transform: scale(0); }}
-    }}
-    .bomb-2 {{
-      animation: bomb2-glow 16s infinite steps(1);
-      transform-origin: 626.5px 47.5px;
-    }}
-
-    @keyframes blast1-expand {{
-      0%, 34.9% {{ opacity: 0; transform: scale(0.1); }}
-      35%, 42% {{ opacity: 1; transform: scale(1); }}
-      43%, 100% {{ opacity: 0; }}
-    }}
-    .b1-horiz, .b1-vert {{
-      animation: blast1-expand 16s infinite ease-out;
-      transform-origin: 576.5px 72.5px;
-    }}
-
-    @keyframes blast2-expand {{
-      0%, 69.9% {{ opacity: 0; transform: scale(0.1); }}
-      70%, 77% {{ opacity: 1; transform: scale(1); }}
-      78%, 100% {{ opacity: 0; }}
-    }}
-    .b2-horiz, .b2-vert {{
-      animation: blast2-expand 16s infinite ease-out;
-      transform-origin: 626.5px 47.5px;
-    }}
-
-    @keyframes brick1-clear {{
-      0%, 34.9% {{ opacity: 1; }}
-      35%, 37% {{ fill: #ffffff; opacity: 1; }}
-      42% {{ opacity: 0; }}
-      95% {{ opacity: 0; }}
-      100% {{ opacity: 1; }}
-    }}
-    .destructible-brick-1 {{
-      animation: brick1-clear 16s infinite steps(1);
-    }}
-
-    @keyframes brick2-clear {{
-      0%, 69.9% {{ opacity: 1; }}
-      70%, 72% {{ fill: #ffffff; opacity: 1; }}
-      77% {{ opacity: 0; }}
-      95% {{ opacity: 0; }}
-      100% {{ opacity: 1; }}
-    }}
-    .destructible-brick-2 {{
-      animation: brick2-clear 16s infinite steps(1);
-    }}
-
-    .destructible-brick-both {{
-      animation: brick1-clear 16s infinite steps(1);
-    }}
-
-    @keyframes brick-idle-clear {{
-      0%, 78% {{ opacity: 1; fill: #45475a; }}
-      79%, 82% {{ opacity: 1; fill: #f9e2af; }}
-      88%, 95% {{ opacity: 0; }}
-      100% {{ opacity: 1; fill: #45475a; }}
-    }}
-    .destructible-brick-idle {{
-      animation: brick-idle-clear 16s infinite steps(1);
-    }}
-
-    @keyframes hit1-flash {{
-      0%, 34.9% {{ filter: none; }}
-      35%, 38% {{ filter: brightness(2.5); }}
-      39%, 100% {{ filter: none; }}
-    }}
-    .hard-block-hit-1 {{
-      animation: hit1-flash 16s infinite;
-    }}
-
-    @keyframes hit2-flash {{
-      0%, 69.9% {{ filter: none; }}
-      70%, 73% {{ filter: brightness(2.5); }}
-      74%, 100% {{ filter: none; }}
-    }}
-    .hard-block-hit-2 {{
-      animation: hit2-flash 16s infinite;
-    }}
-
-    @keyframes hit-both-flash {{
-      0%, 34.9% {{ filter: none; }}
-      35%, 38% {{ filter: brightness(2.5); }}
-      39%, 69.9% {{ filter: none; }}
-      70%, 73% {{ filter: brightness(2.5); }}
-      74%, 100% {{ filter: none; }}
-    }}
-    .hard-block-hit-both {{
-      animation: hit-both-flash 16s infinite;
-    }}
+{brick_wave_css}
 
     @keyframes stat-pulse {{
       0%, 100% {{ fill: #9effc6; }}
@@ -475,31 +404,9 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
   <!-- Contribution Grid Blocks -->
   {cubes_svg_content}
 
-  <!-- Active Bomb 1 -->
-  <g class="bomb-1">
-    <circle cx="575.0" cy="72.5" r="4.5" />
-    <path d="M 575.5 68 L 577.5 65" stroke="#ffffff" stroke-width="1" />
-    <circle cx="578.5" cy="64" r="1" fill="#f9e2af" />
-  </g>
-
-  <!-- Bomb 1 Blast -->
-  <rect x="545.0" y="68.5" width="62.5" height="8" rx="2" fill="#ff7043" opacity="0" class="b1-horiz" />
-  <rect x="550.0" y="69.5" width="52.5" height="6" rx="2" fill="#ffca28" opacity="0" class="b1-horiz" />
-  <rect x="571.0" y="42.5" width="8" height="62.5" rx="2" fill="#ff7043" opacity="0" class="b1-vert" />
-  <rect x="572.0" y="47.5" width="6" height="52.5" rx="2" fill="#ffca28" opacity="0" class="b1-vert" />
-
-  <!-- Active Bomb 2 -->
-  <g class="bomb-2">
-    <circle cx="625.0" cy="47.5" r="4.5" />
-    <path d="M 625.5 43 L 627.5 40" stroke="#ffffff" stroke-width="1" />
-    <circle cx="628.5" cy="39" r="1" fill="#f9e2af" />
-  </g>
-
-  <!-- Bomb 2 Blast -->
-  <rect x="595.0" y="43.5" width="62.5" height="8" rx="2" fill="#ff7043" opacity="0" class="b2-horiz" />
-  <rect x="600.0" y="44.5" width="52.5" height="6" rx="2" fill="#ffca28" opacity="0" class="b2-horiz" />
-  <rect x="621.0" y="30.0" width="8" height="50" rx="2" fill="#ff7043" opacity="0" class="b2-vert" />
-  <rect x="622.0" y="35.0" width="6" height="40" rx="2" fill="#ffca28" opacity="0" class="b2-vert" />
+  <!-- Bomb markers and blast waves sweep across the grid in five lightweight groups -->
+{bomb_svg_content}
+{blast_svg_content}
 
   <!-- walking Bomberman -->
   <g class="bomberman-char">
