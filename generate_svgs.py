@@ -64,16 +64,17 @@ print("Saved contributions.json")
 # ================= BALATRO JOKER SVG GENERATION =================
 joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="holo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ff0055" stop-opacity="0.3" />
-      <stop offset="25%" stop-color="#ff00ff" stop-opacity="0.2" />
-      <stop offset="50%" stop-color="#7f00ff" stop-opacity="0.2" />
-      <stop offset="75%" stop-color="#00aaff" stop-opacity="0.2" />
-      <stop offset="100%" stop-color="#00ff88" stop-opacity="0.3" />
-    </linearGradient>
+    <radialGradient id="holo-grad" cx="35%" cy="20%" r="85%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.18" />
+      <stop offset="24%" stop-color="#f5c2e7" stop-opacity="0.16" />
+      <stop offset="52%" stop-color="#7aa2f7" stop-opacity="0.12" />
+      <stop offset="78%" stop-color="#73daca" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
     <linearGradient id="sweep-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
-      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.4" />
+      <stop offset="45%" stop-color="#f5c2e7" stop-opacity="0.28" />
+      <stop offset="55%" stop-color="#7aa2f7" stop-opacity="0.2" />
       <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
     </linearGradient>
     <clipPath id="card-clip">
@@ -86,13 +87,15 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
       0%, 100% {{ transform: translateY(0px) rotate(-0.5deg); }}
       50% {{ transform: translateY(-4px) rotate(0.5deg); }}
     }}
-    @keyframes foil-rotate {{
-      0% {{ transform: rotate(0deg); }}
-      100% {{ transform: rotate(360deg); }}
+    @keyframes foil-breathe {{
+      0%, 100% {{ opacity: 0.24; transform: translate(-8px, -3px) scale(1); }}
+      50% {{ opacity: 0.42; transform: translate(8px, 5px) scale(1.04); }}
     }}
     @keyframes light-sweep {{
-      0% {{ transform: translate(-150px, -150px); }}
-      100% {{ transform: translate(150px, 150px); }}
+      0% {{ opacity: 0; transform: translate(-92px, -20px); }}
+      30% {{ opacity: 0.7; }}
+      65% {{ opacity: 0.18; }}
+      100% {{ opacity: 0; transform: translate(120px, 36px); }}
     }}
     @keyframes popup-bounce-loop {{
       0%, 75% {{ transform: translateY(0px) scale(0.8); opacity: 0; }}
@@ -111,12 +114,12 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
       transform-origin: 95px 125px;
       pointer-events: none;
     }}
-    .foil-overlay {{
-      animation: foil-rotate 10s linear infinite;
+    .foil-aurora {{
+      animation: foil-breathe 8s ease-in-out infinite;
       transform-origin: 95px 125px;
-      mix-blend-mode: color-dodge;
+      mix-blend-mode: screen;
     }}
-    .sweep-overlay {{ animation: light-sweep 4s ease-in-out infinite; mix-blend-mode: overlay; }}
+    .sweep-overlay {{ animation: light-sweep 5.5s ease-in-out infinite; mix-blend-mode: screen; }}
     .font-retro {{ font-family: 'Fira Code', monospace; font-weight: 900; }}
     .font-sans-bold {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 700; }}
     .font-sans-regular {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 500; }}
@@ -155,8 +158,9 @@ joker_svg = f"""<svg viewBox="0 0 600 250" width="100%" height="250" xmlns="http
     <text x="155" y="210" fill="#585b70" font-size="7.5" class="font-retro" text-anchor="end">v2.0.0</text>
 
     <g clip-path="url(#card-clip)">
-      <rect x="-105" y="-75" width="400" height="400" fill="url(#holo-grad)" class="foil-overlay" />
-      <rect x="-105" y="-75" width="400" height="400" fill="url(#sweep-grad)" class="sweep-overlay" />
+      <ellipse cx="78" cy="86" rx="112" ry="168" fill="url(#holo-grad)" class="foil-aurora" />
+      <path d="M -18 185 C 36 120 76 118 122 52 C 145 18 171 10 210 -12"
+        fill="none" stroke="url(#sweep-grad)" stroke-width="34" stroke-linecap="round" class="sweep-overlay" />
     </g>
 
     <!-- Score popup -->
@@ -225,7 +229,8 @@ for c in range(blast2_col - 2, blast2_col + 3):
 for r in range(blast2_row - 2, blast2_row + 3):
     blast2_cells.append((blast2_col, r))
 
-# Build XML for active commit blocks ONLY (empty cells are handled by background dots)
+# Build XML for every contribution cell. Empty days start as clay bricks, then
+# the animation clears them so the final state leaves only green commit blocks.
 for i, day in enumerate(days):
     if col >= 53:
         break
@@ -248,13 +253,14 @@ for i, day in enumerate(days):
         else:
             cubes_xml.append(f'<use href="#mini-cube" x="{x}" y="{y}" class="lvl{level}" />')
     else:
-        # Only render bricks inside the active blast zones so we do not bloat the SVG
         if in_b1 and in_b2:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick-both" />')
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-both" />')
         elif in_b1:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick-1" />')
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-1" />')
         elif in_b2:
-            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick-2" />')
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-2" />')
+        else:
+            cubes_xml.append(f'<use href="#brick-cube" x="{x}" y="{y}" class="destructible-brick destructible-brick-idle" />')
 
     row += 1
     if row == 7:
@@ -311,6 +317,7 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
     .lvl2 {{ fill: #1fb35a; }}
     .lvl3 {{ fill: #3ee27b; }}
     .lvl4 {{ fill: #9effc6; }}
+    .destructible-brick {{ fill: #45475a; }}
 
     @keyframes bomberman-route {{
       0% {{ transform: translate(495px, 66px); }}
@@ -402,6 +409,16 @@ bomberman_svg = f"""<svg viewBox="0 0 820 180" width="100%" height="180" xmlns="
 
     .destructible-brick-both {{
       animation: brick1-clear 16s infinite steps(1);
+    }}
+
+    @keyframes brick-idle-clear {{
+      0%, 78% {{ opacity: 1; fill: #45475a; }}
+      79%, 82% {{ opacity: 1; fill: #f9e2af; }}
+      88%, 95% {{ opacity: 0; }}
+      100% {{ opacity: 1; fill: #45475a; }}
+    }}
+    .destructible-brick-idle {{
+      animation: brick-idle-clear 16s infinite steps(1);
     }}
 
     @keyframes hit1-flash {{
