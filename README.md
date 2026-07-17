@@ -20,9 +20,9 @@
   <img src="balatro_joker.svg" width="100%" alt="Balatro Joker" />
 </p>
 
-### 👾 Commit Tetris
+### 👾 Bomberman Contributions
 <p align="center">
-  <img src="tetris_contributions.svg" width="100%" alt="Commit Tetris" />
+  <img src="bomberman_contributions.svg" width="100%" alt="Bomberman Contributions" />
 </p>
 
 ---
