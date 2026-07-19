@@ -100,7 +100,7 @@
     </g>
 
     <!-- Score popup -->
-    <text x="95" y="120" font-size="16" class="font-retro mult-pop" text-anchor="middle" font-weight="900">+1,151 Mult</text>
+    <text x="95" y="120" font-size="16" class="font-retro mult-pop" text-anchor="middle" font-weight="900">+1,157 Mult</text>
   </g>
 
   <!-- Right Panel Info -->
@@ -118,7 +118,7 @@
   <g transform="translate(210, 178)">
     <rect x="0" y="0" width="112" height="46" rx="4" fill="#11111b" stroke="#313244" stroke-width="1" />
     <text x="10" y="14" fill="#a6adc8" font-size="8" class="font-retro">YEARLY MULT</text>
-    <text x="10" y="34" fill="#f38ba8" font-size="16" class="font-retro">+1,151</text>
+    <text x="10" y="34" fill="#f38ba8" font-size="16" class="font-retro">+1,157</text>
   </g>
 
   <g transform="translate(334, 178)">
