@@ -260,140 +260,141 @@
     <use href="#mini-cube" x="195.0" y="92.5" class="lvl1" />
     <use href="#mini-cube" x="195.0" y="105.0" class="lvl2" />
     <use href="#mini-cube" x="207.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="207.5" y="67.5" class="lvl1" />
-    <use href="#mini-cube" x="232.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="232.5" y="80.0" class="lvl1" />
-    <use href="#mini-cube" x="232.5" y="105.0" class="lvl1" />
-    <use href="#mini-cube" x="245.0" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="207.5" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="207.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="232.5" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="232.5" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="245.0" y="30.0" class="lvl1" />
     <use href="#mini-cube" x="245.0" y="80.0" class="lvl1" />
     <use href="#mini-cube" x="245.0" y="92.5" class="lvl1" />
     <use href="#mini-cube" x="245.0" y="105.0" class="lvl1" />
     <use href="#mini-cube" x="257.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="257.5" y="67.5" class="lvl3" />
-    <use href="#mini-cube" x="257.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="257.5" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="257.5" y="80.0" class="lvl3" />
     <use href="#mini-cube" x="257.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="270.0" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="270.0" y="55.0" class="lvl2" />
+    <use href="#mini-cube" x="257.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="270.0" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="270.0" y="67.5" class="lvl2" />
-    <use href="#mini-cube" x="270.0" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="282.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="282.5" y="55.0" class="lvl2" />
+    <use href="#mini-cube" x="270.0" y="80.0" class="lvl2" />
+    <use href="#mini-cube" x="270.0" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="282.5" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="282.5" y="67.5" class="lvl2" />
     <use href="#mini-cube" x="282.5" y="80.0" class="lvl2" />
-    <use href="#mini-cube" x="282.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="282.5" y="105.0" class="lvl2" />
-    <use href="#mini-cube" x="295.0" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="307.5" y="42.5" class="lvl2" />
-    <use href="#mini-cube" x="307.5" y="80.0" class="lvl1" />
-    <use href="#mini-cube" x="320.0" y="42.5" class="lvl1" />
-    <use href="#mini-cube" x="320.0" y="92.5" class="lvl4" />
-    <use href="#mini-cube" x="320.0" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="282.5" y="92.5" class="lvl2" />
+    <use href="#mini-cube" x="282.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="295.0" y="30.0" class="lvl2" />
+    <use href="#mini-cube" x="295.0" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="307.5" y="55.0" class="lvl2" />
+    <use href="#mini-cube" x="307.5" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="320.0" y="55.0" class="lvl1" />
+    <use href="#mini-cube" x="320.0" y="105.0" class="lvl4" />
     <use href="#mini-cube" x="332.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="332.5" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="332.5" y="80.0" class="lvl3" />
-    <use href="#mini-cube" x="332.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="332.5" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="332.5" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="332.5" y="92.5" class="lvl3" />
     <use href="#mini-cube" x="345.0" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="345.0" y="42.5" class="lvl2" />
+    <use href="#mini-cube" x="345.0" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="345.0" y="55.0" class="lvl2" />
     <use href="#mini-cube" x="345.0" y="67.5" class="lvl2" />
-    <use href="#mini-cube" x="345.0" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="345.0" y="80.0" class="lvl2" />
     <use href="#mini-cube" x="357.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="357.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="357.5" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="357.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="357.5" y="105.0" class="lvl3" />
-    <use href="#mini-cube" x="370.0" y="30.0" class="lvl1" />
+    <use href="#mini-cube" x="357.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="370.0" y="30.0" class="lvl3" />
     <use href="#mini-cube" x="370.0" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="370.0" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="370.0" y="80.0" class="lvl2" />
+    <use href="#mini-cube" x="370.0" y="67.5" class="lvl1" />
     <use href="#mini-cube" x="370.0" y="92.5" class="lvl2" />
-    <use href="#mini-cube" x="370.0" y="105.0" class="lvl3" />
+    <use href="#mini-cube" x="370.0" y="105.0" class="lvl2" />
     <use href="#mini-cube" x="382.5" y="30.0" class="lvl3" />
-    <use href="#mini-cube" x="382.5" y="42.5" class="lvl1" />
-    <use href="#mini-cube" x="382.5" y="55.0" class="lvl2" />
-    <use href="#mini-cube" x="382.5" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="382.5" y="42.5" class="lvl3" />
+    <use href="#mini-cube" x="382.5" y="55.0" class="lvl1" />
+    <use href="#mini-cube" x="382.5" y="67.5" class="lvl2" />
     <use href="#mini-cube" x="382.5" y="80.0" class="lvl1" />
-    <use href="#mini-cube" x="382.5" y="92.5" class="lvl2" />
-    <use href="#mini-cube" x="395.0" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="395.0" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="395.0" y="80.0" class="lvl2" />
-    <use href="#mini-cube" x="407.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="420.0" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="420.0" y="92.5" class="lvl2" />
-    <use href="#mini-cube" x="420.0" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="382.5" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="382.5" y="105.0" class="lvl2" />
+    <use href="#mini-cube" x="395.0" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="395.0" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="395.0" y="92.5" class="lvl2" />
+    <use href="#mini-cube" x="407.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="420.0" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="420.0" y="105.0" class="lvl2" />
     <use href="#mini-cube" x="432.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="432.5" y="55.0" class="lvl2" />
-    <use href="#mini-cube" x="432.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="432.5" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="432.5" y="67.5" class="lvl2" />
     <use href="#mini-cube" x="432.5" y="92.5" class="lvl1" />
     <use href="#mini-cube" x="432.5" y="105.0" class="lvl1" />
     <use href="#mini-cube" x="445.0" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="445.0" y="67.5" class="lvl1" />
-    <use href="#mini-cube" x="457.5" y="42.5" class="lvl2" />
-    <use href="#mini-cube" x="457.5" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="445.0" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="445.0" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="457.5" y="55.0" class="lvl2" />
     <use href="#mini-cube" x="457.5" y="80.0" class="lvl1" />
     <use href="#mini-cube" x="457.5" y="92.5" class="lvl1" />
     <use href="#mini-cube" x="457.5" y="105.0" class="lvl1" />
     <use href="#mini-cube" x="470.0" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="470.0" y="42.5" class="lvl2" />
-    <use href="#mini-cube" x="470.0" y="55.0" class="lvl4" />
-    <use href="#mini-cube" x="470.0" y="67.5" class="lvl3" />
-    <use href="#mini-cube" x="470.0" y="80.0" class="lvl2" />
+    <use href="#mini-cube" x="470.0" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="470.0" y="55.0" class="lvl2" />
+    <use href="#mini-cube" x="470.0" y="67.5" class="lvl4" />
+    <use href="#mini-cube" x="470.0" y="80.0" class="lvl3" />
     <use href="#mini-cube" x="470.0" y="92.5" class="lvl2" />
-    <use href="#mini-cube" x="470.0" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="470.0" y="105.0" class="lvl2" />
     <use href="#mini-cube" x="482.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="482.5" y="42.5" class="lvl2" />
-    <use href="#mini-cube" x="482.5" y="55.0" class="lvl1" />
+    <use href="#mini-cube" x="482.5" y="42.5" class="lvl1" />
+    <use href="#mini-cube" x="482.5" y="55.0" class="lvl2" />
     <use href="#mini-cube" x="482.5" y="67.5" class="lvl1" />
-    <use href="#mini-cube" x="482.5" y="80.0" class="lvl3" />
-    <use href="#mini-cube" x="482.5" y="105.0" class="lvl1" />
-    <use href="#mini-cube" x="495.0" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="482.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="482.5" y="92.5" class="lvl3" />
+    <use href="#mini-cube" x="495.0" y="30.0" class="lvl1" />
     <use href="#mini-cube" x="495.0" y="80.0" class="lvl1" />
-    <use href="#mini-cube" x="495.0" y="105.0" class="lvl1" />
-    <use href="#mini-cube" x="507.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="532.5" y="30.0" class="lvl1" />
+    <use href="#mini-cube" x="495.0" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="507.5" y="30.0" class="lvl1" />
+    <use href="#mini-cube" x="507.5" y="105.0" class="lvl1" />
     <use href="#mini-cube" x="532.5" y="42.5" class="lvl1" />
-    <use href="#mini-cube" x="532.5" y="55.0" class="lvl4" />
-    <use href="#mini-cube" x="532.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="532.5" y="55.0" class="lvl1" />
+    <use href="#mini-cube" x="532.5" y="67.5" class="lvl4" />
     <use href="#mini-cube" x="532.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="545.0" y="67.5" class="lvl4" />
-    <use href="#mini-cube" x="545.0" y="80.0" class="lvl1" />
-    <use href="#mini-cube" x="545.0" y="92.5" class="lvl2" />
-    <use href="#mini-cube" x="557.5" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="557.5" y="67.5" class="lvl3" />
-    <use href="#mini-cube" x="557.5" y="80.0" class="lvl4" />
-    <use href="#mini-cube" x="557.5" y="92.5" class="lvl2" />
-    <use href="#mini-cube" x="557.5" y="105.0" class="lvl3" />
-    <use href="#mini-cube" x="570.0" y="30.0" class="lvl2" />
-    <use href="#mini-cube" x="570.0" y="55.0" class="lvl1" />
+    <use href="#mini-cube" x="532.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="545.0" y="80.0" class="lvl4" />
+    <use href="#mini-cube" x="545.0" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="545.0" y="105.0" class="lvl2" />
+    <use href="#mini-cube" x="557.5" y="67.5" class="lvl1" />
+    <use href="#mini-cube" x="557.5" y="80.0" class="lvl3" />
+    <use href="#mini-cube" x="557.5" y="92.5" class="lvl4" />
+    <use href="#mini-cube" x="557.5" y="105.0" class="lvl2" />
+    <use href="#mini-cube" x="570.0" y="30.0" class="lvl3" />
+    <use href="#mini-cube" x="570.0" y="42.5" class="lvl2" />
     <use href="#mini-cube" x="570.0" y="67.5" class="lvl1" />
     <use href="#mini-cube" x="570.0" y="80.0" class="lvl1" />
     <use href="#mini-cube" x="570.0" y="92.5" class="lvl1" />
     <use href="#mini-cube" x="570.0" y="105.0" class="lvl1" />
     <use href="#mini-cube" x="582.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="595.0" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="582.5" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="607.5" y="30.0" class="lvl1" />
     <use href="#mini-cube" x="607.5" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="607.5" y="55.0" class="lvl1" />
-    <use href="#mini-cube" x="607.5" y="80.0" class="lvl1" />
+    <use href="#mini-cube" x="607.5" y="67.5" class="lvl1" />
     <use href="#mini-cube" x="607.5" y="92.5" class="lvl1" />
-    <use href="#mini-cube" x="620.0" y="42.5" class="lvl2" />
-    <use href="#mini-cube" x="620.0" y="67.5" class="lvl2" />
-    <use href="#mini-cube" x="620.0" y="80.0" class="lvl1" />
-    <use href="#mini-cube" x="620.0" y="92.5" class="lvl3" />
-    <use href="#mini-cube" x="632.5" y="30.0" class="lvl1" />
+    <use href="#mini-cube" x="607.5" y="105.0" class="lvl1" />
+    <use href="#mini-cube" x="620.0" y="55.0" class="lvl2" />
+    <use href="#mini-cube" x="620.0" y="80.0" class="lvl2" />
+    <use href="#mini-cube" x="620.0" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="620.0" y="105.0" class="lvl3" />
     <use href="#mini-cube" x="632.5" y="42.5" class="lvl1" />
-    <use href="#mini-cube" x="632.5" y="105.0" class="lvl3" />
-    <use href="#mini-cube" x="645.0" y="30.0" class="lvl1" />
+    <use href="#mini-cube" x="632.5" y="55.0" class="lvl1" />
+    <use href="#mini-cube" x="645.0" y="30.0" class="lvl3" />
     <use href="#mini-cube" x="645.0" y="42.5" class="lvl1" />
-    <use href="#mini-cube" x="645.0" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="645.0" y="55.0" class="lvl1" />
     <use href="#mini-cube" x="645.0" y="105.0" class="lvl1" />
     <use href="#mini-cube" x="657.5" y="30.0" class="lvl1" />
-    <use href="#mini-cube" x="657.5" y="42.5" class="lvl4" />
+    <use href="#mini-cube" x="657.5" y="42.5" class="lvl1" />
     <use href="#mini-cube" x="657.5" y="55.0" class="lvl4" />
-    <use href="#mini-cube" x="657.5" y="67.5" class="lvl2" />
+    <use href="#mini-cube" x="657.5" y="67.5" class="lvl4" />
     <use href="#mini-cube" x="657.5" y="80.0" class="lvl2" />
-    <use href="#mini-cube" x="657.5" y="92.5" class="lvl1" />
+    <use href="#mini-cube" x="657.5" y="92.5" class="lvl2" />
     <use href="#mini-cube" x="657.5" y="105.0" class="lvl1" />
-    <use href="#mini-cube" x="670.0" y="30.0" class="lvl2" />
+    <use href="#mini-cube" x="670.0" y="30.0" class="lvl1" />
+    <use href="#mini-cube" x="670.0" y="42.5" class="lvl2" />
 
   <!-- Bomb markers and blast waves sweep across the grid in five lightweight groups -->
   <g class="bomb-marker bomb-marker-0" transform-origin="112.5px 85.0px">
