@@ -483,7 +483,7 @@
   <g transform="translate(695, 75)">
     <rect x="0" y="0" width="105" height="42" rx="4" fill="#11111b" stroke="#313244" stroke-width="1.5" />
     <text x="10" y="14" fill="#a6adc8" font-size="7.5" class="retro-font">YEARLY</text>
-    <text x="10" y="32" fill="#a6e3a1" font-size="14" class="retro-font">1,487</text>
+    <text x="10" y="32" fill="#a6e3a1" font-size="14" class="retro-font">1,489</text>
   </g>
 
   <circle cx="705" cy="136" r="3" fill="#f38ba8" />
